@@ -1,9 +1,9 @@
 import React from 'react';
-import Logo from '../../src/components/logo';
-import BotaoBranco from '../../src/components/botaoBranco';
-import Input from '../../src/components/input';
-import Ou from '../../src/components/ou';
-import Icons from '../../src/components/icons';
+import Logo from '../../components/logo';
+import BotaoBranco from '../../components/botaoBranco';
+import Input from '../../components/input';
+import Ou from '../../components/ou';
+import Icons from '../../components/icons';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
 const App = () => {

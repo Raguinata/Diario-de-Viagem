@@ -1,7 +1,7 @@
 import React from 'react';
-import Logo from '../../src/components/logo';
-import MenuHamburguer from '../../src/components/menuHamburguer';
-import PontoInterrogacao from '../../src/components/pontoInterrogação';
+import Logo from '../../components/logo';
+import MenuHamburguer from '../../components/menuHamburguer';
+import PontoInterrogacao from '../../components/pontoInterrogação';
 import BotaoBranco from '../../components/botaoBranco';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 

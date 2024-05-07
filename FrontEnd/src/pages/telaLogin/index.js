@@ -4,7 +4,7 @@ import BotaoBranco from '../../src/components/botaoBranco';
 import Input from '../../src/components/input';
 import Ou from '../../src/components/ou';
 import Icons from '../../src/components/icons';
-import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
 const App = () => {
     return (
@@ -14,7 +14,7 @@ const App = () => {
                 style={styles.imagemFundo}>
             </ImageBackground>
             <View style={styles.overlayPreto}></View>
-            <View style={styles.conteudo}>
+            <ScrollView style={styles.conteudo}>
                 <View style={styles.header}>
                     <Logo cor={'black'} />
                     <Text style={styles.title}>Bem-Vindo(a) de volta!</Text>
@@ -33,7 +33,7 @@ const App = () => {
                         <Text style={{ color: 'blue', fontWeight: 'bold' }}>Cadastre-se</Text>
                     </Text>
                 </View>
-            </View>
+            </ScrollView>
         </View>
     );
 };
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
         height: '95%',
         borderRadius: 20,
         backgroundColor: 'white',
+        marginVertical: 10,
     },
 
     header: {

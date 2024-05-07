@@ -2,7 +2,9 @@ import React from 'react';
 import Logo from './src/components/logo';
 import BotaoBranco from './src/components/botaoBranco';
 import Input from './src/components/input';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import Ou from './src/components/ou';
+import Icons from './src/components/icons';
+import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 
 const App = () => {
   return (
@@ -14,21 +16,22 @@ const App = () => {
       <View style={styles.overlayPreto}></View>
       <View style={styles.conteudo}>
         <View style={styles.header}>
-        <Logo cor={'black'} />
+          <Logo cor={'black'} />
           <Text style={styles.title}>Bem-Vindo(a) de volta!</Text>
         </View>
         <View style={styles.main}>
-          <View style={styles.Inputs}>
-            <Text style={styles.title}>Email:</Text>
-            <Input value={undefined} onChangeText={undefined}/>
-          </View>
-          <View style={styles.Inputs}>
-            <Text style={styles.title}>Senha:</Text>
-            <Input value={undefined} onChangeText={undefined}/>
-          </View>
+          <Input texto={'Email:'} value={undefined} onChangeText={undefined} />
+          <Input texto={'Senha:'} value={undefined} onChangeText={undefined} />
+          <Text style={styles.textoEsqueceuSenha}>Esqueceu sua senha?</Text>
+          <BotaoBranco texto={'Login'} onPress={undefined} estilo={styles.botaoCinza} />
         </View>
         <View style={styles.footer}>
-          <BotaoBranco texto={'Login'} onPress={undefined} estilo={styles.botaoCinza} />
+          <Ou />
+          <Icons />
+          <Text>
+            Não tem uma conta?{' '}
+            <Text style={{ color: 'blue', fontWeight: 'bold' }}>Cadastre-se</Text>
+          </Text>
         </View>
       </View>
     </View>
@@ -63,24 +66,35 @@ const styles = StyleSheet.create({
 
   main: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
 
   footer: {
     width: '100%',
-    justifyContent: 'center',
+    height: 120,
+    justifyContent: 'space-around',
     alignItems: 'center',
-    marginBottom: 50,
+    
   },
 
   title: {
-    fontSize: 12,
+    fontSize: 16,
     textAlign: 'center',
     width: '80%',
-    margin: 10,
+    margin: 15,
     color: 'black',
   },
+
+  textoEsqueceuSenha: {
+    color: 'black',
+    fontWeight: 'bold', 
+    fontSize: 12, 
+    textAlign: 'right', 
+    width: '65%',
+    marginBottom: 5,
+  },
+
   overlayPreto: {
     ...StyleSheet.absoluteFillObject, // ocupa toda a tela
     backgroundColor: 'rgba(0, 0, 0, 0.77)',
@@ -89,8 +103,6 @@ const styles = StyleSheet.create({
   botaoCinza: {
     backgroundColor: '#D9D9D9',
   },
-
-  
 });
 
 export default App;

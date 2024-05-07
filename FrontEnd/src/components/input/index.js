@@ -1,13 +1,17 @@
 import React from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet, Text, View } from 'react-native';
 
-const input = ({ value, onChangeText }) => {
+const input = ({texto, value, onChangeText }) => {
     return (
-        <TextInput
+        <View>
+            <Text style={styles.textoInput}>{texto}</Text>
+            <TextInput
             value={value}
             onChangeText={onChangeText}
             style={styles.input}
         />
+        </View>
+        
     );
 };
 
@@ -19,6 +23,13 @@ const styles = StyleSheet.create({
         width: 280,
         paddingHorizontal: 10,
         marginBottom: 10,
+    },
+
+    textoInput: {
+        color: 'black',
+        fontSize: 12,
+        marginBottom: 5,
+        marginLeft: 10,
     },
 });
 

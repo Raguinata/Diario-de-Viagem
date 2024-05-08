@@ -2,29 +2,51 @@ import React from 'react';
 import Header from './src/components/header';
 import Footer from './src/components/footer';
 import BotaoBranco from './src/components/botaoBranco';
+import IconVoltar from './src/components/icon-voltar';
+import Input from './src/components/input';
+import InputDescricao from './src/components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
 const App = () => {
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'}/>
-            <View style={styles.conteudo}>
-                <View style={styles.containerPerfil}>
-                    <View>
-                        <Image source={require('./assets/images/global/header-icon.png')} style={{width: 102, height: 102, borderRadius: 50}} />
-                    </View>
+            <ScrollView style={styles.conteudoScroll}>
+                <View style={styles.conteudo}>
+                    <IconVoltar />
+                    <BotaoBranco texto={'Adicionar Parada'} onPress={undefined} estilo={undefined} icon={undefined}  />
+                    <Input
+                        placeholder={'Digite o nome do evento'}
+                        onChangeText={undefined}
+                        value={undefined} 
+                        texto={'Nome da parada:'}
+                        icon={require('./assets/images/global/icon-lapis.png')} 
+                        fontColor={undefined} 
+                        inputColor={'white'} 
+                        width={320}
+                        height={undefined}                                            
+                        />
 
-                    <View style={styles.informacaoPerfil}>
-                        <Text style={styles.textoInformacao}>Nome: Fulano de tal</Text>
-                        <Text style={styles.textoInformacao}>E-mail: fulano.de.tal@gmail.com</Text>
-                        <Text style={styles.textoInformacao}>Ingressou: 13/02/2024</Text>
-                    </View>
-                </View>
+                    <Input
+                        placeholder={'Digite um evento que deseja visitar'}
+                        onChangeText={undefined}
+                        value={undefined} 
+                        texto={'Pesquisar por evento:'}
+                        icon={require('./assets/images/global/icon-maps.png')} 
+                        fontColor={undefined} 
+                        inputColor={'white'} 
+                        width={320}
+                        height={undefined}                                           
+                        />
 
-                <View>
-                    <BotaoBranco icon={require('./assets/images/telaPerfil/icon-sair.png')} texto={'Sair do Aplicativo'} onPress={undefined} estilo={undefined} />
+                    <InputDescricao 
+                    value={undefined} 
+                    onChangeText={undefined} 
+                    placeholder={'Digite uma descrição do evento'} />
+                    
+                    
                 </View>
-            </View>
+            </ScrollView>
             <Footer />
         </View>
     );
@@ -35,17 +57,22 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#4c4c4c',
+    },
+
+    conteudoScroll: {
+        flex: 1,
+        marginVertical: 40,
+        width: '90%',
+        backgroundColor: '#D9D9D9',
+        borderRadius: 20,
     },
 
     conteudo: {
         flex: 1,
-        marginVertical: 40,
-        width: '90%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#D9D9D9',
-        borderRadius: 20,
+        width: '100%',
+        marginVertical: 20,
+        
     },
 
     titulo: {
@@ -54,27 +81,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Outfit-VariableFont_wght',
         fontWeight: 'bold',
         textAlign: 'center',
-    },
-
-    containerPerfil: {
-        flex: 1,
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'space-around',
-        marginVertical: 20,
-    },
-
-    informacaoPerfil: {
-        justifyContent: 'center',
-        height: 102,
-        
-    },
-
-    textoInformacao: {
-        fontSize: 16,
-        color: 'black',
-        textAlign: 'left',
     },
 });
 

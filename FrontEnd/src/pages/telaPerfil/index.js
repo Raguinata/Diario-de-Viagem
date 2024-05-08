@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './src/components/header';
-import Footer from './src/components/footer';
-import BotaoBranco from './src/components/botaoBranco';
+import Header from '../../src/components/header';
+import Footer from '../../src/components/footer';
+import BotaoBranco from '../../src/components/botaoBranco';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
 const App = () => {

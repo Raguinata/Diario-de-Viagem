@@ -13,7 +13,9 @@ const App = () => {
             <Header titulo={'Minhas Viagens'}/>
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
-                    <IconVoltar />
+                    <View style={styles.iconVoltar}>
+                        <IconVoltar/>
+                    </View>
                     <BotaoBranco texto={'Adicionar Parada'} onPress={undefined} estilo={undefined} icon={undefined}  />
                     <Input
                         placeholder={'Digite o nome do evento'}
@@ -44,7 +46,20 @@ const App = () => {
                     onChangeText={undefined} 
                     placeholder={'Digite uma descrição do evento'} />
                     
-                    
+                    <Input
+                        placeholder={'00:00'}
+                        onChangeText={undefined}
+                        value={undefined} 
+                        texto={'Hora:'}
+                        icon={require('./assets/images/global/icon-relogio.png')} 
+                        fontColor={undefined} 
+                        inputColor={'white'} 
+                        width={320}
+                        height={undefined}                                           
+                        />
+
+                    <BotaoBranco texto={'Salvar Parada'} onPress={undefined} estilo={undefined} icon={undefined}  />
+
                 </View>
             </ScrollView>
             <Footer />
@@ -72,7 +87,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         marginVertical: 20,
-        
+        alignItems: 'center',
     },
 
     titulo: {
@@ -81,6 +96,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Outfit-VariableFont_wght',
         fontWeight: 'bold',
         textAlign: 'center',
+    },
+
+    iconVoltar: {
+        width: '100%',
     },
 });
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from './src/components/header';
-import Footer from './src/components/footer';
-import BotaoBranco from './src/components/botaoBranco';
-import IconVoltar from './src/components/icon-voltar';
-import Input from './src/components/input';
-import InputDescricao from './src/components/inputDescricao';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
+import BotaoBranco from '../../components/botaoBranco';
+import IconVoltar from '../../components/icon-voltar';
+import Input from '../../components/input';
+import InputDescricao from '../../components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
 const App = () => {

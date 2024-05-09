@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Imports das telas
 import telaInicial from './src/pages/telaInicial';
 import telaLogin from './src/pages/telaLogin';
+import telaCadastro from './src/pages/telaCadastro';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +19,16 @@ const App = () => {
                     component={telaInicial} 
                     options={{ headerShown: false }} // Oculta o cabeçalho da tela inicial
                 />
-                <Stack.Screen name="Login" component={telaLogin} />
+                <Stack.Screen 
+                    name="telaLogin" 
+                    component={telaLogin}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaCadastro" 
+                    component={telaCadastro}
+                    options={{ headerShown: false }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );

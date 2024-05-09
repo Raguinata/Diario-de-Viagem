@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,7 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
-    @PostMapping("/")
+    @PostMapping("/login")
     public ResponseEntity<Usuario> findByEmailAndSenha(
             @RequestParam("email") String email,
             @RequestParam("senha") String senha) {
@@ -27,4 +28,11 @@ public class UsuarioController {
         Usuario usuario = usuarioService.findByEmailAndSenha(email, senha);
         return ResponseEntity.ok().body(usuario);
     }
+
+    @PostMapping("/cadastro")
+    public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
+        usuario = usuarioService.save(usuario);
+        return ResponseEntity.ok().body(usuario);
+    }
+
 }

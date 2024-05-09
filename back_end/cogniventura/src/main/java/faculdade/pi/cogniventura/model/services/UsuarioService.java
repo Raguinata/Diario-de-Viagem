@@ -10,12 +10,17 @@ import faculdade.pi.cogniventura.model.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
-    
+
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public Usuario findByEmailAndSenha(String email, String senha){
+    public Usuario findByEmailAndSenha(String email, String senha) {
         Optional<Usuario> usuario = usuarioRepository.findByEmailAndSenha(email, senha);
         return usuario.orElse(null);
     }
+
+    public Usuario save(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
 }

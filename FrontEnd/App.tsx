@@ -21,7 +21,7 @@ const App = () => {
                     <BotaoBranco texto={'Adicionar veículo'} onPress={undefined} estilo={undefined} icon={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-lapis.png')}
+                        icon={require('./assets/images/global/icon-modelo.png')}
                         texto={'Modelo:'}
                         placeholder={'Digite o modelo do veículo'}
                         onChangeText={undefined}
@@ -29,10 +29,10 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined} marginBottom={undefined}                    />
+                        height={undefined} marginBottom={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-lapis.png')}
+                        icon={require('./assets/images/global/icon-placa.png')}
                         texto={'Placa:'}
                         placeholder={'Digite a placa do veículo'}
                         onChangeText={undefined}
@@ -40,10 +40,10 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined} marginBottom={undefined}                    />
+                        height={undefined} marginBottom={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-lapis.png')}
+                        icon={require('./assets/images/global/icon-locadora.png')}
                         texto={'Locadora:'}
                         placeholder={'Digite a locadora do aluguel do veículo'}
                         onChangeText={undefined}
@@ -51,10 +51,10 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined} marginBottom={undefined}                    />
+                        height={undefined} marginBottom={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-lapis.png')}
+                        icon={require('./assets/images/global/icon-custo.png')}
                         texto={'Valor Total:'}
                         placeholder={'R$00,00'}
                         onChangeText={undefined}
@@ -62,13 +62,13 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined} marginBottom={undefined}                    />
+                        height={undefined} marginBottom={undefined} />
 
-                    <Text style={styles.texto}>Local de retirada</Text>
+                    <Text style={styles.texto}><Image source={require('./assets/images/global/icon-localRetirada.png')}/> Local de retirada</Text>
 
                     <View style={styles.viewDoisInputs}>
                         <Input
-                            icon={require('./assets/images/global/icon-lapis.png')}
+                            icon={require('./assets/images/global/icon-cep.png')}
                             texto={'CEP:'}
                             placeholder={'CEP do local de retirada'}
                             onChangeText={undefined}
@@ -76,10 +76,10 @@ const App = () => {
                             fontColor={undefined}
                             inputColor={'white'}
                             width={202}
-                            height={undefined} marginBottom={undefined}                        />
+                            height={undefined} marginBottom={undefined} />
 
                         <Input
-                            icon={require('./assets/images/global/icon-lapis.png')}
+                            icon={require('./assets/images/global/icon-numero.png')}
                             texto={'Número:'}
                             placeholder={'Número'}
                             onChangeText={undefined}
@@ -87,11 +87,11 @@ const App = () => {
                             fontColor={undefined}
                             inputColor={'white'}
                             width={108}
-                            height={undefined} marginBottom={undefined}                        />
+                            height={undefined} marginBottom={undefined} />
                     </View>
 
                     <Input
-                        icon={require('./assets/images/global/icon-lapis.png')}
+                        icon={require('./assets/images/global/icon-logradouro.png')}
                         texto={'Logradouro:'}
                         placeholder={'Digite o Logradouro'}
                         onChangeText={undefined}
@@ -99,10 +99,10 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined} marginBottom={undefined}                    />
+                        height={undefined} marginBottom={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-lapis.png')}
+                        icon={require('./assets/images/global/icon-bairro.png')}
                         texto={'Bairro:'}
                         placeholder={'Digite o Bairro'}
                         onChangeText={undefined}
@@ -110,11 +110,11 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined} marginBottom={undefined}                    />
+                        height={undefined} marginBottom={undefined} />
 
                     <View style={styles.viewDoisInputs}>
                         <Input
-                            icon={require('./assets/images/global/icon-lapis.png')}
+                            icon={require('./assets/images/global/icon-cidade.png')}
                             texto={'Cidade:'}
                             placeholder={'Digite a cidade'}
                             onChangeText={undefined}
@@ -122,10 +122,10 @@ const App = () => {
                             fontColor={undefined}
                             inputColor={'white'}
                             width={202}
-                            height={undefined} marginBottom={undefined}                        />
+                            height={undefined} marginBottom={undefined} />
 
                         <Input
-                            icon={require('./assets/images/global/icon-lapis.png')}
+                            icon={require('./assets/images/global/icon-uf.png')}
                             texto={'UF:'}
                             placeholder={'Digite a UF'}
                             onChangeText={undefined}
@@ -133,11 +133,11 @@ const App = () => {
                             fontColor={undefined}
                             inputColor={'white'}
                             width={108}
-                            height={undefined} marginBottom={undefined}                        />
+                            height={undefined} marginBottom={undefined} />
                     </View>
 
                     <Input
-                        icon={require('./assets/images/global/icon-lapis.png')}
+                        icon={require('./assets/images/global/icon-complemento.png')}
                         texto={'Complemento:'}
                         placeholder={'Digite o Complemento (Opcional)'}
                         onChangeText={undefined}
@@ -145,17 +145,102 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined} marginBottom={undefined}                    />
+                        height={undefined} marginBottom={undefined} />
+
+                    <Text style={styles.texto}><Image source={require('./assets/images/global/icon-localRetirada.png')}/> Local de entrega</Text>
 
                     <View style={styles.viewDoisInputs}>
-                        <DataHora 
-                        texto={'Retirada:'}
-                        icon={require('./assets/images/global/icon-lapis.png')}/>
+                        <Input
+                            icon={require('./assets/images/global/icon-cep.png')}
+                            texto={'CEP:'}
+                            placeholder={'CEP do local de retirada'}
+                            onChangeText={undefined}
+                            value={undefined}
+                            fontColor={undefined}
+                            inputColor={'white'}
+                            width={202}
+                            height={undefined} marginBottom={undefined} />
 
-                        <DataHora 
-                        texto={'Entrega'} 
-                        icon={require('./assets/images/global/icon-lapis.png')}/>
+                        <Input
+                            icon={require('./assets/images/global/icon-numero.png')}
+                            texto={'Número:'}
+                            placeholder={'Número'}
+                            onChangeText={undefined}
+                            value={undefined}
+                            fontColor={undefined}
+                            inputColor={'white'}
+                            width={108}
+                            height={undefined} marginBottom={undefined} />
                     </View>
+
+                    <Input
+                        icon={require('./assets/images/global/icon-logradouro.png')}
+                        texto={'Logradouro:'}
+                        placeholder={'Digite o Logradouro'}
+                        onChangeText={undefined}
+                        value={undefined}
+                        fontColor={undefined}
+                        inputColor={'white'}
+                        width={320}
+                        height={undefined} marginBottom={undefined} />
+
+                    <Input
+                        icon={require('./assets/images/global/icon-bairro.png')}
+                        texto={'Bairro:'}
+                        placeholder={'Digite o Bairro'}
+                        onChangeText={undefined}
+                        value={undefined}
+                        fontColor={undefined}
+                        inputColor={'white'}
+                        width={320}
+                        height={undefined} marginBottom={undefined} />
+
+                    <View style={styles.viewDoisInputs}>
+                        <Input
+                            icon={require('./assets/images/global/icon-cidade.png')}
+                            texto={'Cidade:'}
+                            placeholder={'Digite a cidade'}
+                            onChangeText={undefined}
+                            value={undefined}
+                            fontColor={undefined}
+                            inputColor={'white'}
+                            width={202}
+                            height={undefined} marginBottom={undefined} />
+
+                        <Input
+                            icon={require('./assets/images/global/icon-uf.png')}
+                            texto={'UF:'}
+                            placeholder={'Digite a UF'}
+                            onChangeText={undefined}
+                            value={undefined}
+                            fontColor={undefined}
+                            inputColor={'white'}
+                            width={108}
+                            height={undefined} marginBottom={undefined} />
+                    </View>
+
+                    <Input
+                        icon={require('./assets/images/global/icon-complemento.png')}
+                        texto={'Complemento:'}
+                        placeholder={'Digite o Complemento (Opcional)'}
+                        onChangeText={undefined}
+                        value={undefined}
+                        fontColor={undefined}
+                        inputColor={'white'}
+                        width={320}
+                        height={undefined} marginBottom={undefined} />
+
+                    <View style={styles.viewDoisInputs}>
+                        <DataHora
+                            texto={'Retirada:'}
+                            icon={require('./assets/images/global/icon-retirada.png')} />
+
+                        <DataHora
+                            texto={'Entrega'}
+                            icon={require('./assets/images/global/icon-entrega.png')} />
+                    </View>
+
+                    <BotaoBranco texto={'Adicionar'} onPress={undefined} estilo={undefined} icon={undefined} />
 
                 </View>
             </ScrollView>
@@ -193,9 +278,12 @@ const styles = StyleSheet.create({
 
     texto: {
         color: 'black',
-        fontSize: 20,
+        width: '83%',
+        fontSize: 16,
+        fontFamily: 'Outfit-VariableFont_wght',
         fontWeight: 'bold',
         marginVertical: 20,
+        textAlign: 'left',
     },
 
     viewDoisInputs: {

@@ -2,7 +2,7 @@
 
 <h2>Nome de Pastas e Arquivos:</h2>
 
-> - <p>Todas as pastas e arquivos são nomeados em <strong>snake_case</strong>, exceto arquivos de classe java, que estão em <strong>camelCase</strong>.</p>
+> - <p>Todas as pastas e arquivos são nomeados em <strong>snake_case</strong>, exceto arquivos de classe java, que estão em <strong>PascalCase</strong>.</p>
 > - <p>Tenha atenção ao adicionar um novo arquivo ou pasta, é importante categorizar de maneira clara,<br>deixando nítido o propósito e o relacionamento.</p>
 
 <h2>Variáveis e Funções</h2>

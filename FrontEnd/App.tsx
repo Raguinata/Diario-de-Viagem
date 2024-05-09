@@ -16,12 +16,12 @@ const App = () => {
                     <View style={styles.iconVoltar}>
                         <IconVoltar/>
                     </View>
-                    <BotaoBranco texto={'Adicionar Cronograma'} onPress={undefined} estilo={undefined} icon={undefined}  />
+                    <BotaoBranco texto={'Adicionar Roteiro'} onPress={undefined} estilo={undefined} icon={undefined}  />
                     <Input
-                        placeholder={'Digite o nome do evento'}
+                        placeholder={'Digite o nome do roteiro'}
                         onChangeText={undefined}
                         value={undefined} 
-                        texto={'Nome do Cronograma:'}
+                        texto={'Nome do roteiro:'}
                         icon={require('./assets/images/global/icon-lapis.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
@@ -29,36 +29,7 @@ const App = () => {
                         height={undefined}                                            
                         />
 
-                    <Input
-                        placeholder={'Digite a cidadde que o evento está localizado'}
-                        onChangeText={undefined}
-                        value={undefined} 
-                        texto={'Cidade:'}
-                        icon={require('./assets/images/global/icon-maps.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
-                        width={320}
-                        height={undefined}                                           
-                        />
-
-                    <Input
-                        placeholder={'_/_/____'}
-                        onChangeText={undefined}
-                        value={undefined} 
-                        texto={'Data:'}
-                        icon={require('./assets/images/global/icon-data.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
-                        width={320}
-                        height={undefined}                                           
-                        />
-
-                    <InputDescricao 
-                        value={undefined} 
-                        onChangeText={undefined} 
-                        placeholder={'Digite uma descrição do evento'} />
-
-                    <BotaoBranco texto={'Salvar Evento'} onPress={undefined} estilo={undefined} icon={undefined}  />
+                    <BotaoBranco texto={'Salvar Roteiro'} onPress={undefined} estilo={undefined} icon={undefined}  />
 
                 </View>
             </ScrollView>
@@ -77,7 +48,7 @@ const styles = StyleSheet.create({
 
     conteudoScroll: {
         flex: 1,
-        marginVertical: 40,
+        marginVertical: 145,
         width: '90%',
         backgroundColor: '#D9D9D9',
         borderRadius: 20,

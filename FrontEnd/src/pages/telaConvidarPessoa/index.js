@@ -1,7 +1,10 @@
 import React from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
+import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
+import Input from '../../components/input';
+import InputDescricao from './src/components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
 const App = () => {
@@ -13,7 +16,20 @@ const App = () => {
                     <View style={styles.iconVoltar}>
                         <IconVoltar/>
                     </View>
-                    
+                    <BotaoBranco texto={'Convidar pessoa ao grupo'} onPress={undefined} estilo={undefined} icon={undefined}  />
+                    <Input
+                        placeholder={'Digite o email do usuário'}
+                        onChangeText={undefined}
+                        value={undefined} 
+                        texto={'Email do Usuário:'}
+                        icon={require('./assets/images/global/icon-email.png')} 
+                        fontColor={undefined} 
+                        inputColor={'white'} 
+                        width={320}
+                        height={undefined}                                            
+                        />
+
+                    <BotaoBranco texto={'Convidar'} onPress={undefined} estilo={undefined} icon={undefined}  />
 
                 </View>
             </ScrollView>

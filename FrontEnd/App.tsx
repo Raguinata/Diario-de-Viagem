@@ -1,13 +1,18 @@
 import React from 'react';
 import Header from './src/components/header';
 import Footer from './src/components/footer';
-import BotaoBranco from './src/components/botaoBranco';
 import IconVoltar from './src/components/icon-voltar';
-import Input from './src/components/input';
-import InputDescricao from './src/components/inputDescricao';
-import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 const App = () => {
+    const handleSimPress = () => {
+        console.log('Sim');
+    };
+
+    const handleNaoPress = () => {
+        console.log('Não');
+    };
+
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'}/>
@@ -16,21 +21,17 @@ const App = () => {
                     <View style={styles.iconVoltar}>
                         <IconVoltar/>
                     </View>
-                    <BotaoBranco texto={'Convidar pessoa ao grupo'} onPress={undefined} estilo={undefined} icon={undefined}  />
-                    <Input
-                        placeholder={'Digite o email do usuário'}
-                        onChangeText={undefined}
-                        value={undefined} 
-                        texto={'Email do Usuário:'}
-                        icon={require('./assets/images/global/icon-email.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
-                        width={320}
-                        height={undefined}                                            
-                        />
+                    
+                    <Text style={styles.titulo}>Tem certeza que deseja excluir esse item?</Text>
 
-                    <BotaoBranco texto={'Convidar'} onPress={undefined} estilo={undefined} icon={undefined}  />
-
+                    <View style={styles.botoesContainer}>
+                        <TouchableOpacity style={[styles.botao, styles.botaoSim]} onPress={handleSimPress}>
+                            <Text style={styles.textoBotao}>Sim</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.botao, styles.botaoNao]} onPress={handleNaoPress}>
+                            <Text style={styles.textoBotao}>Não</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </ScrollView>
             <Footer />
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
 
     conteudoScroll: {
         flex: 1,
-        marginVertical: 145,
+        marginVertical: 180,
         width: '90%',
         backgroundColor: '#D9D9D9',
         borderRadius: 20,
@@ -62,15 +63,45 @@ const styles = StyleSheet.create({
     },
 
     titulo: {
-        fontSize: 32,
+        fontSize: 16,
         color: 'black',
         fontFamily: 'Outfit-VariableFont_wght',
         fontWeight: 'bold',
         textAlign: 'center',
+        marginVertical: 20,
     },
 
     iconVoltar: {
         width: '100%',
+    },
+
+    botoesContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+    },
+
+    botao: {
+        borderRadius: 100,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: 150,
+    },
+
+    textoBotao: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+
+    botaoSim: {
+        backgroundColor: '#38b000',
+    },
+
+    botaoNao: {
+        backgroundColor: '#b00000',
     },
 });
 

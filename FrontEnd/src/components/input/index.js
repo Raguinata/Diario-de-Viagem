@@ -5,7 +5,7 @@ const Input = ({ texto, value, onChangeText, icon, fontColor, inputColor, width,
     return (
         <View style={styles.container}>
 
-            <Text style={[styles.textoInput, { color: fontColor || 'black' }]}>{icon && <Image source={icon} style={styles.icon} />}   {texto}</Text>
+            <Text style={[styles.textoInput]}>{icon && <Image source={icon} style={styles.icon} />}   {texto}</Text>
             <TextInput
                 value={value}
                 onChangeText={onChangeText}
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontWeight: 'bold',
         fontFamily: 'Outfit-VariableFont_wght',
+        color: 'black',
     },
     icon: {
         position: 'absolute',

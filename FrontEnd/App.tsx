@@ -5,6 +5,7 @@ import IconVoltar from './src/components/icon-voltar';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
 import BotaoBranco from './src/components/botaoBranco';
 import Input from './src/components/input';
+import DataHora from './src/components/dataHora';
 
 const App = () => {
 
@@ -107,7 +108,7 @@ const App = () => {
                         height={undefined}
                     />
 
-<Input
+                    <Input
                         icon={require('./assets/images/global/icon-lapis.png')}
                         texto={'Bairro:'}
                         placeholder={'Digite o Bairro'}
@@ -119,7 +120,7 @@ const App = () => {
                         height={undefined}
                     />
 
-<View style={styles.viewDoisInputs}>
+                    <View style={styles.viewDoisInputs}>
                         <Input
                             icon={require('./assets/images/global/icon-lapis.png')}
                             texto={'Cidade:'}
@@ -156,6 +157,14 @@ const App = () => {
                         width={320}
                         height={undefined}
                     />
+
+                    <View style={styles.viewDoisInputs}>
+                        <DataHora 
+                        texto={'Retirada:'}
+                        icon={require('./assets/images/global/icon-lapis.png')}/>
+
+                        <DataHora/>
+                    </View>
 
                 </View>
             </ScrollView>

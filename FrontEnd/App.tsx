@@ -29,8 +29,7 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined}
-                    />
+                        height={undefined} marginBottom={undefined}                    />
 
                     <Input
                         icon={require('./assets/images/global/icon-lapis.png')}
@@ -41,8 +40,7 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined}
-                    />
+                        height={undefined} marginBottom={undefined}                    />
 
                     <Input
                         icon={require('./assets/images/global/icon-lapis.png')}
@@ -53,8 +51,7 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined}
-                    />
+                        height={undefined} marginBottom={undefined}                    />
 
                     <Input
                         icon={require('./assets/images/global/icon-lapis.png')}
@@ -65,8 +62,7 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined}
-                    />
+                        height={undefined} marginBottom={undefined}                    />
 
                     <Text style={styles.texto}>Local de retirada</Text>
 
@@ -80,8 +76,7 @@ const App = () => {
                             fontColor={undefined}
                             inputColor={'white'}
                             width={202}
-                            height={undefined}
-                        />
+                            height={undefined} marginBottom={undefined}                        />
 
                         <Input
                             icon={require('./assets/images/global/icon-lapis.png')}
@@ -92,8 +87,7 @@ const App = () => {
                             fontColor={undefined}
                             inputColor={'white'}
                             width={108}
-                            height={undefined}
-                        />
+                            height={undefined} marginBottom={undefined}                        />
                     </View>
 
                     <Input
@@ -105,8 +99,7 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined}
-                    />
+                        height={undefined} marginBottom={undefined}                    />
 
                     <Input
                         icon={require('./assets/images/global/icon-lapis.png')}
@@ -117,8 +110,7 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined}
-                    />
+                        height={undefined} marginBottom={undefined}                    />
 
                     <View style={styles.viewDoisInputs}>
                         <Input
@@ -130,8 +122,7 @@ const App = () => {
                             fontColor={undefined}
                             inputColor={'white'}
                             width={202}
-                            height={undefined}
-                        />
+                            height={undefined} marginBottom={undefined}                        />
 
                         <Input
                             icon={require('./assets/images/global/icon-lapis.png')}
@@ -142,8 +133,7 @@ const App = () => {
                             fontColor={undefined}
                             inputColor={'white'}
                             width={108}
-                            height={undefined}
-                        />
+                            height={undefined} marginBottom={undefined}                        />
                     </View>
 
                     <Input
@@ -155,15 +145,16 @@ const App = () => {
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined}
-                    />
+                        height={undefined} marginBottom={undefined}                    />
 
                     <View style={styles.viewDoisInputs}>
                         <DataHora 
                         texto={'Retirada:'}
                         icon={require('./assets/images/global/icon-lapis.png')}/>
 
-                        <DataHora/>
+                        <DataHora 
+                        texto={'Entrega'} 
+                        icon={require('./assets/images/global/icon-lapis.png')}/>
                     </View>
 
                 </View>

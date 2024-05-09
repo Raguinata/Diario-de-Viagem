@@ -1,11 +1,15 @@
 import React from 'react';
 import { TextInput, StyleSheet, Text, View, Image } from 'react-native';
 
-const Input = ({ texto, value, onChangeText, icon, fontColor, inputColor, width, height, placeholder }) => {
+const Input = ({ texto, value, onChangeText, icon, fontColor, inputColor, width, height, placeholder, marginBottom }) => {
     return (
-        <View style={styles.container}>
-
-            <Text style={[styles.textoInput]}>{icon && <Image source={icon} style={styles.icon} />}   {texto}</Text>
+        <View style={[styles.container, {marginBottom: marginBottom !== undefined ? marginBottom : 10}]}>
+            {/* Verifica se o texto e o ícone estão definidos antes de renderizar */}
+            {texto || icon ? (
+                <Text style={[styles.textoInput]}>
+                    {icon && <Image source={icon} style={styles.icon} />}   {texto}
+                </Text>
+            ) : null}
             <TextInput
                 value={value}
                 onChangeText={onChangeText}
@@ -22,7 +26,7 @@ const Input = ({ texto, value, onChangeText, icon, fontColor, inputColor, width,
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 10,
+        // marginBottom padrão definido como 10
     },
     input: {
         borderRadius: 50,
@@ -38,11 +42,9 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     icon: {
-        position: 'absolute',
-        left: 10,
-        top: 14,
         width: 15,
         height: 15,
+        marginRight: 5, // Adiciona um espaço entre o ícone e o texto
     },
 });
 

@@ -1,7 +1,6 @@
 package faculdade.pi.cogniventura.model.entities;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,8 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.ToString;
@@ -48,11 +45,5 @@ public class Veiculo {
     referencedColumnName = "id_termino_locacao", 
     nullable = false)
     private TerminoLocacao terminoLocacao;
-
-    @ManyToMany
-    @JoinTable(name = "veiculo_programa",
-    joinColumns = @JoinColumn(name = "id_veiculo"),
-    inverseJoinColumns = @JoinColumn(name = "id_programa_de_viagem"))
-    private List<ProgramaDeViagem> programasDeViagems;
 
 }

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,12 +36,12 @@ public class ProgramaDeViagem {
     @Column(name = "orcamento", precision = 10, scale = 2)
     private BigDecimal orcamento;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @Column(name = "data_chegada", nullable = false)
     private Date dataChegada;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @Column(name = "data_partida", nullable = false)
     private Date dataPartida;
@@ -62,4 +62,7 @@ public class ProgramaDeViagem {
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     private Estado estado;
 
+    @ManyToOne
+    @JoinColumn(name = "lider", referencedColumnName = "id_usuario")
+    private Usuario lider;
 }

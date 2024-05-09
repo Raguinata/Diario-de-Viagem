@@ -9,7 +9,7 @@ const App = () => {
     return (
         <View style={styles.container}>
             <ImageBackground
-                source={require('./assets/images/telaInicial/background-image.png')}
+                source={require('../../../assets/images/telaInicial/background-image.png')}
                 style={styles.imagemFundo}>
             </ImageBackground>
             <View style={styles.overlay}></View>

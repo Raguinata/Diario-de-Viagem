@@ -3,8 +3,6 @@ package faculdade.pi.cogniventura.model.entities;
 import java.sql.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
@@ -44,9 +42,4 @@ public class Usuario {
     @Column(name = "nascimento", nullable = false)
     private Date nascimento;
 
-    @ManyToMany
-    @JoinTable(name = "usuario_programa",
-    joinColumns = @JoinColumn(name = "id_usuario"),
-    inverseJoinColumns = @JoinColumn(name = "id_programa_de_viagem"))
-    private List<ProgramaDeViagem> programasDeViagem;
 }

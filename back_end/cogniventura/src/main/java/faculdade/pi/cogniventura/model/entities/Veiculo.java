@@ -49,10 +49,4 @@ public class Veiculo {
     nullable = false)
     private TerminoLocacao terminoLocacao;
 
-    @ManyToMany
-    @JoinTable(name = "veiculo_programa",
-    joinColumns = @JoinColumn(name = "id_veiculo"),
-    inverseJoinColumns = @JoinColumn(name = "id_programa_de_viagem"))
-    private List<ProgramaDeViagem> programasDeViagems;
-
 }

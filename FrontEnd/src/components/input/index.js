@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     input: {
         borderRadius: 50,
         paddingHorizontal: 10,
+        fontSize: 12,
     },
     textoInput: {
         fontSize: 14,

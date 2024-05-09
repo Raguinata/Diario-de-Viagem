@@ -19,7 +19,7 @@ public class UsuarioService {
         return usuario.orElse(null);
     }
 
-    public Usuario save(Usuario usuario) {
+    public Usuario cadastro(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 

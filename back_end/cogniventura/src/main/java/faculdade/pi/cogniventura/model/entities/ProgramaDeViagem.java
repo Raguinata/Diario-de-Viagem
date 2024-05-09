@@ -62,4 +62,7 @@ public class ProgramaDeViagem {
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     private Estado estado;
 
+    @ManyToOne
+    @JoinColumn(name = "lider", referencedColumnName = "id_usuario")
+    private Usuario lider;
 }

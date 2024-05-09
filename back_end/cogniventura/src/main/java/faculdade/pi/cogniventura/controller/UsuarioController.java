@@ -30,8 +30,8 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
-        usuario = usuarioService.save(usuario);
+    public ResponseEntity<Usuario> cadastro(@RequestBody Usuario usuario) {
+        usuario = usuarioService.cadastro(usuario);
         return ResponseEntity.ok().body(usuario);
     }
 

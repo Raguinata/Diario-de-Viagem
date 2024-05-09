@@ -18,20 +18,7 @@ const App = () => {
             <Header titulo={'Minhas Viagens'}/>
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
-                    <View style={styles.iconVoltar}>
-                        <IconVoltar/>
-                    </View>
                     
-                    <Text style={styles.titulo}>Tem certeza que deseja excluir esse item?</Text>
-
-                    <View style={styles.botoesContainer}>
-                        <TouchableOpacity style={[styles.botao, styles.botaoSim]} onPress={handleSimPress}>
-                            <Text style={styles.textoBotao}>Sim</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.botao, styles.botaoNao]} onPress={handleNaoPress}>
-                            <Text style={styles.textoBotao}>Não</Text>
-                        </TouchableOpacity>
-                    </View>
                 </View>
             </ScrollView>
             <Footer />
@@ -60,48 +47,6 @@ const styles = StyleSheet.create({
         width: '100%',
         marginVertical: 20,
         alignItems: 'center',
-    },
-
-    titulo: {
-        fontSize: 16,
-        color: 'black',
-        fontFamily: 'Outfit-VariableFont_wght',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginVertical: 20,
-    },
-
-    iconVoltar: {
-        width: '100%',
-    },
-
-    botoesContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '100%',
-    },
-
-    botao: {
-        borderRadius: 100,
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: 150,
-    },
-
-    textoBotao: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-
-    botaoSim: {
-        backgroundColor: '#38b000',
-    },
-
-    botaoNao: {
-        backgroundColor: '#b00000',
     },
 });
 

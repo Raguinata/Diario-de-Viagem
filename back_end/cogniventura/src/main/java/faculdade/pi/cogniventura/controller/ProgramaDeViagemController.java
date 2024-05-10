@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import faculdade.pi.cogniventura.model.DTOs.ProgramaVeiculoDTO;
 import faculdade.pi.cogniventura.model.entities.ProgramaDeViagem;
 import faculdade.pi.cogniventura.model.services.ProgramaDeViagemService;
 
@@ -30,8 +32,14 @@ public class ProgramaDeViagemController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<ProgramaDeViagem> save(@RequestBody ProgramaDeViagem programaDeViagem) {
-        programaDeViagem = programaDeViagemService.save(programaDeViagem);
+    public ResponseEntity<ProgramaDeViagem> cadastro(@RequestBody ProgramaDeViagem programaDeViagem) {
+        programaDeViagem = programaDeViagemService.cadastro(programaDeViagem);
         return ResponseEntity.ok().body(programaDeViagem);
+    }
+
+    @PutMapping("veiculo/adcionaOuAtualiza")
+    public ResponseEntity<ProgramaDeViagem> saveOrMergeVeiculo(@RequestBody ProgramaVeiculoDTO dto) {
+        ProgramaDeViagem programa = programaDeViagemService.saveOrMergeVeiculo(dto);
+        return ResponseEntity.ok().body(programa);
     }
 }

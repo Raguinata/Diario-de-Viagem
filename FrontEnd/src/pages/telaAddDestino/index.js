@@ -1,15 +1,16 @@
 import React from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
+import BotaoBranco from '../../components/botaoBranco';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
-const App = () => {
+const telaAddDestino = () => {
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'}/>
             <View style={styles.conteudo}>
-                <Image source={require('../../../assets/images/telaErro/alerta.png')} style={{width: 142, height: 135}}/>
-                <Text style={styles.titulo}>Fora do Escopo</Text>
+                <Image source={require('../../../assets/images/telaAddDestino/icon-add.png')} style={{width: 70, height: 70}} />
+                <Text style={styles.titulo}>Adicionar novo destino!</Text>
             </View>
             <Footer />
         </View>
@@ -21,23 +22,27 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'yellow',
+        backgroundColor: 'white',
     },
 
     conteudo: {
         flex: 1,
-        width: '100%',
+        marginVertical: 40,
+        width: '90%',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#A9A9A9',
+        borderRadius: 20,
     },
 
     titulo: {
-        fontSize: 32,
+        fontSize: 18,
         color: 'black',
         fontFamily: 'Outfit-VariableFont_wght',
         fontWeight: 'bold',
         textAlign: 'center',
+        marginTop: 20,
     },
 });
 
-export default App;
+export default telaAddDestino;

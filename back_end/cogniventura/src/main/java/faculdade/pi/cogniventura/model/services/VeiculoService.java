@@ -29,5 +29,9 @@ public class VeiculoService {
         veiculo.setTerminoLocacao(termino);
         return veiculoRepository.save(veiculo);
     }
+
+    public void deletar(int veiculo){
+		veiculoRepository.deleteById(veiculo);
+	}
     
 }

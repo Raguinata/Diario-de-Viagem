@@ -1,6 +1,8 @@
 package faculdade.pi.cogniventura.model.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,17 @@ public class ProgramaDeViagemService {
         veiculos.add(veiculo);
         dto.getProgramaDeViagem().setVeiculos(veiculos);
         return programaDeViagemRepository.save(dto.getProgramaDeViagem());
+    }
+
+    // Não é possível que não exista outra forma, isso está horrivel
+    @Transactional
+    public void deletaVeiculoDoPrograma(ProgramaVeiculoDTO dto){
+        ProgramaDeViagem programa = dto.getProgramaDeViagem();
+        Veiculo veiculo = dto.getVeiculo();
+        // programa.getVeiculos().remove(veiculo);
+        programa.setVeiculos(new ArrayList<Veiculo>());
+        programaDeViagemRepository.save(programa);
+        veiculoService.deletar(veiculo.getIdVeiculo());
     }
 
 }

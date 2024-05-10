@@ -1,17 +1,17 @@
 import React from 'react';
-import Header from '../../src/components/header';
-import Footer from '../../src/components/footer';
-import BotaoBranco from '../../src/components/botaoBranco';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
+import BotaoBranco from '../../components/botaoBranco';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
-const App = () => {
+const telaPerfil = () => {
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'}/>
             <View style={styles.conteudo}>
                 <View style={styles.containerPerfil}>
                     <View>
-                        <Image source={require('./assets/images/global/header-icon.png')} style={{width: 102, height: 102, borderRadius: 50}} />
+                        <Image source={require('../../../assets/images/global/header-icon.png')} style={{width: 102, height: 102, borderRadius: 50}} />
                     </View>
 
                     <View style={styles.informacaoPerfil}>
@@ -22,7 +22,7 @@ const App = () => {
                 </View>
 
                 <View>
-                    <BotaoBranco icon={require('./assets/images/telaPerfil/icon-sair.png')} texto={'Sair do Aplicativo'} onPress={undefined} estilo={undefined} />
+                    <BotaoBranco icon={require('../../../assets/images/telaPerfil/icon-sair.png')} texto={'Sair do Aplicativo'} onPress={undefined} estilo={undefined} />
                 </View>
             </View>
             <Footer />
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default telaPerfil;

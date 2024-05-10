@@ -9,7 +9,7 @@ import Ou from '../../components/ou';
 import Icons from '../../components/icons';
 
 // Tela de Login
-const TelaLogin = () => {
+const TelaLogin = ( { navigation } ) => {
     return (
         <View style={styles.container}>
             {/* Imagem de fundo */}
@@ -30,7 +30,7 @@ const TelaLogin = () => {
                     <Input texto={'Email:'} value={undefined} onChangeText={undefined} />
                     <Input texto={'Senha:'} value={undefined} onChangeText={undefined} />
                     <Text style={styles.textoEsqueceuSenha}>Esqueceu sua senha?</Text>
-                    <BotaoBranco texto={'Login'} onPress={undefined} estilo={styles.botaoCinza} />
+                    <BotaoBranco texto={'Login'} onPress={() => navigation.navigate('telaAddDestino')} estilo={styles.botaoCinza} />
                 </View>
                 {/* Rodapé */}
                 <View style={styles.footer}>

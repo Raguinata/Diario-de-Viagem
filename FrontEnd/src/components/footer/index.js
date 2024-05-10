@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import MenuHamburguer from '../menuHamburguer';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Footer = () => {
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             <View style={styles.conjuntoIcons}>
+                <TouchableOpacity onPress={() => navigation.navigate('telaAddDestino')}>
                 <Image source={require('../../../assets/images/footer/home-icon.png')} style={{width: 18, height: 30, marginHorizontal: 30}}/>
+                </TouchableOpacity>
                 <Image source={require('../../../assets/images/footer/explorar-icon.png')} style={{width: 24, height: 30, marginHorizontal: 30}}/>
             </View>
 
@@ -16,7 +20,9 @@ const Footer = () => {
 
             <View style={styles.conjuntoIcons}>
                 <Image source={require('../../../assets/images/footer/avisos-icon.png')} style={{width: 19, height: 30, marginHorizontal: 30}}/>
-                <Image source={require('../../../assets/images/footer/perfil-icon.png')} style={{width: 16, height: 30, marginHorizontal: 30}}/>
+                <TouchableOpacity onPress={() => navigation.navigate('telaPerfil')}>
+                    <Image source={require('../../../assets/images/footer/perfil-icon.png')} style={{ width: 16, height: 30, marginHorizontal: 30 }} />
+                </TouchableOpacity>
             </View>
         </View>
     );

@@ -7,6 +7,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import telaInicial from './src/pages/telaInicial';
 import telaLogin from './src/pages/telaLogin';
 import telaCadastro from './src/pages/telaCadastro';
+import telaAddDestino from './src/pages/telaAddDestino';
+import telaPerfil from './src/pages/telaPerfil';
+import Footer from './src/components/footer';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +30,21 @@ const App = () => {
                 <Stack.Screen 
                     name="telaCadastro" 
                     component={telaCadastro}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaAddDestino" 
+                    component={telaAddDestino}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaPerfil" 
+                    component={telaPerfil}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="Footer" 
+                    component={Footer}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

@@ -9,7 +9,7 @@ import Ou from '../../components/ou';
 import Icons from '../../components/icons';
 
 // Tela de Cadastro
-const TelaCadastro = () => {
+const TelaCadastro = ( { navigation } ) => {
     return (
         <View style={styles.container}>
             {/* Imagem de fundo */}
@@ -30,7 +30,7 @@ const TelaCadastro = () => {
                     <Input texto={'Data de Nascimento:'} value={undefined} onChangeText={undefined} />
                     <Input texto={'Email:'} value={undefined} onChangeText={undefined} />
                     <Input texto={'Senha:'} value={undefined} onChangeText={undefined} />
-                    <BotaoBranco texto={'Cadastrar'} onPress={undefined} estilo={styles.botaoCinza} />
+                    <BotaoBranco texto={'Cadastrar'} onPress={() => navigation.navigate('telaAddDestino')} estilo={styles.botaoCinza} />
                 </View>
                 {/* Rodapé */}
                 <View style={styles.footer}>

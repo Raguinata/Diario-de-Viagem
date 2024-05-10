@@ -2,16 +2,16 @@ import React from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
-import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
 
-const telaAddDestino = () => {
+const telaAddDestino = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'}/>
-            <View style={styles.conteudo}>
+            <TouchableOpacity style={styles.conteudo} onPress={() => navigation.navigate('telaAddViagem')}>
                 <Image source={require('../../../assets/images/telaAddDestino/icon-add.png')} style={{width: 70, height: 70}} />
                 <Text style={styles.titulo}>Adicionar novo destino!</Text>
-            </View>
+            </TouchableOpacity>
             <Footer />
         </View>
     );

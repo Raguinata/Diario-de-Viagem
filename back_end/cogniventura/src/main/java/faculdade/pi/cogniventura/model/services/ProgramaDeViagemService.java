@@ -47,9 +47,13 @@ public class ProgramaDeViagemService {
     @Transactional
     public void deletaVeiculoDoPrograma(ProgramaVeiculoDTO dto){
         ProgramaDeViagem programa = dto.getProgramaDeViagem();
+        List<Veiculo> veiculos = programa.getVeiculos();
         Veiculo veiculo = dto.getVeiculo();
-        // programa.getVeiculos().remove(veiculo);
-        programa.setVeiculos(new ArrayList<Veiculo>());
+        for(int i = 0; i < veiculos.size(); i++){
+            if(veiculo.getIdVeiculo() == veiculos.get(i).getIdVeiculo()){
+                veiculos.remove(i);
+            }
+        }
         programaDeViagemRepository.save(programa);
         veiculoService.deletar(veiculo.getIdVeiculo());
     }

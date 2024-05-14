@@ -1,5 +1,6 @@
 package faculdade.pi.cogniventura.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,15 @@ public class ProgramaDeViagemController {
     public ResponseEntity<Void> deletarVeiculo(
             @RequestBody ProgramaVeiculoDTO programaVeiculoDTO) {
 
-                programaDeViagemService.deletaVeiculoDoPrograma(programaVeiculoDTO);
-                return ResponseEntity.ok().build();
+        programaDeViagemService.deletaVeiculoDoPrograma(programaVeiculoDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/atualizar-orcamento")
+    public ResponseEntity<Integer> atualizarOrcamento(
+            @RequestParam int idProgramaDeViagem,
+            @RequestParam BigDecimal orcamento) {
+        int status = programaDeViagemService.atualizarOrcamento(idProgramaDeViagem, orcamento);
+        return ResponseEntity.ok().body(status);
     }
 }

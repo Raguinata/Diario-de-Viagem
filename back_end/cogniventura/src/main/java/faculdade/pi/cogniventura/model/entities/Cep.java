@@ -16,7 +16,7 @@ public class Cep {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_cep")
-    private int id;
+    private int idCep;
 
     @Column(name = "cep", length = 8, nullable = false, unique = true)
     private String cep;

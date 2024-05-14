@@ -1,8 +1,7 @@
 package faculdade.pi.cogniventura.model.services;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +55,10 @@ public class ProgramaDeViagemService {
         }
         programaDeViagemRepository.save(programa);
         veiculoService.deletar(veiculo.getIdVeiculo());
+    }
+
+    public int atualizarOrcamento(int id_programa_de_viagem, BigDecimal orcamento) {
+        return programaDeViagemRepository.atualizarOrcamento(id_programa_de_viagem, orcamento);
     }
 
 }

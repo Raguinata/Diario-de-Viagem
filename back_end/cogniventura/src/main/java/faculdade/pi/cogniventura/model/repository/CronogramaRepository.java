@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import faculdade.pi.cogniventura.model.entities.Cronograma;
+import faculdade.pi.cogniventura.model.entities.Roteiro;
 
 public interface CronogramaRepository extends JpaRepository<Cronograma, Integer> {
 
@@ -15,4 +16,6 @@ public interface CronogramaRepository extends JpaRepository<Cronograma, Integer>
             ro.id_programa_de_viagem = :id_programa_de_viagem
             """, nativeQuery = true)
     List<Cronograma> findCronogramaByProgramaId(int id_programa_de_viagem);
+
+    void deleteByRoteiro(Roteiro roteiro);
 }

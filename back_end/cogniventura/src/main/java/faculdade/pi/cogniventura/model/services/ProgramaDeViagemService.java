@@ -20,6 +20,9 @@ public class ProgramaDeViagemService {
     ProgramaDeViagemRepository programaDeViagemRepository;
 
     @Autowired
+    UsuarioService usuarioService;
+
+    @Autowired
     VeiculoService veiculoService;
 
     public ProgramaDeViagem cadastro(ProgramaDeViagem programaDeViagem) {
@@ -53,6 +56,7 @@ public class ProgramaDeViagemService {
                 veiculos.remove(i);
             }
         }
+        //Verificar esse endpoint, talvez faltando setVeiculos
         programaDeViagemRepository.save(programa);
         veiculoService.deletar(veiculo.getIdVeiculo());
     }
@@ -61,4 +65,24 @@ public class ProgramaDeViagemService {
         return programaDeViagemRepository.atualizarOrcamento(id_programa_de_viagem, orcamento);
     }
 
+    @Transactional
+    public ProgramaDeViagem adicionarPorEmail(String email, ProgramaDeViagem programa) {
+        Usuario usuario = usuarioService.findByEmail(email);
+        if(usuario != null){
+            programa.getUsuarios().add(usuario);
+            return programaDeViagemRepository.save(programa);
+        }
+        return null;
+    }
+
+    public ProgramaDeViagem deletarDoGrupo(int id_usuario, ProgramaDeViagem programa) {
+        List<Usuario> usuarios = programa.getUsuarios();
+        for(int i = 0; i < usuarios.size(); i++){
+            if(id_usuario == usuarios.get(i).getIdUsuario()){
+                usuarios.remove(i);
+            }
+        }
+        programa.setUsuarios(usuarios);
+        return programaDeViagemRepository.save(programa);
+    }
 }

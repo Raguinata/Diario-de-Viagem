@@ -61,4 +61,21 @@ public class ProgramaDeViagemController {
         int status = programaDeViagemService.atualizarOrcamento(idProgramaDeViagem, orcamento);
         return ResponseEntity.ok().body(status);
     }
+
+    @PutMapping("/grupo/adicionar-por-email")
+    public ResponseEntity<ProgramaDeViagem> adicionarPorEmail(
+        @RequestBody ProgramaDeViagem programa,
+        @RequestParam String email) {
+            programa = programaDeViagemService.adicionarPorEmail(email, programa);
+            return ResponseEntity.ok().body(programa);
+    }
+
+    @DeleteMapping("/grupo/deletar")
+    public ResponseEntity<ProgramaDeViagem> deletarDoGrupo(
+        @RequestBody ProgramaDeViagem programa,
+        @RequestParam int id_usuario) {
+            programa = programaDeViagemService.deletarDoGrupo(id_usuario, programa);
+            return ResponseEntity.ok().body(programa);
+    }
+
 }

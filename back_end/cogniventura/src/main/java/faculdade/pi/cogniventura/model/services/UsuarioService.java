@@ -23,4 +23,9 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public Usuario findByEmail(String email) {
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+        return usuario.orElse(null);
+    }
+
 }

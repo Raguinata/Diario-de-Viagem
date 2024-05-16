@@ -2,7 +2,7 @@ package faculdade.pi.cogniventura.model.entities;
 
 import java.sql.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +26,7 @@ public class Cronograma {
     @Column(name = "id_cronograma")
     private int idCronograma;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @Column(name = "data", nullable = false)
     private Date data;

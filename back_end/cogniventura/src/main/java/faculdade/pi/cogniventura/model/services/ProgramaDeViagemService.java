@@ -56,7 +56,7 @@ public class ProgramaDeViagemService {
                 veiculos.remove(i);
             }
         }
-        //Verificar esse endpoint, talvez faltando setVEiculos
+        //Verificar esse endpoint, talvez faltando setVeiculos
         programaDeViagemRepository.save(programa);
         veiculoService.deletar(veiculo.getIdVeiculo());
     }

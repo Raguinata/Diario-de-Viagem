@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import faculdade.pi.cogniventura.model.DTOs.CroRoteCidDTO;
 import faculdade.pi.cogniventura.model.entities.Cronograma;
 import faculdade.pi.cogniventura.model.services.CronogramaService;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping(value = "/cronograma")
@@ -28,9 +31,16 @@ public class CronogramaController {
         return ResponseEntity.ok().body(cronogramas);
     }
 
-    @DeleteMapping("/{id_roteiro}")
-    public void deleteByIdRoteiro(@PathVariable int id_roteiro) {
-        cronogramaService.deleteByRoteiro(id_roteiro);
+    @DeleteMapping("/{id_cronograma}")
+    public void deleteByIdRoteiro(@PathVariable int id_cronograma) {
+        cronogramaService.deleteById(id_cronograma);
     }
+
+    @PutMapping("/adicionar-atualizar")
+    public ResponseEntity<Cronograma> saveOrMerge(@RequestBody CroRoteCidDTO dto) {
+        Cronograma cronograma = cronogramaService.saveOrMerge(dto.getCronograma(), dto.getRoteiro(), dto.getCidade());
+        return ResponseEntity.ok().body(cronograma);
+    }
+    
 
 }

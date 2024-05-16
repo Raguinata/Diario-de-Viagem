@@ -1,5 +1,7 @@
 package faculdade.pi.cogniventura.model.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +28,9 @@ public class RoteiroService {
     public void deleteByid(int id_roteiro) {
         cronogramaService.deleteByRoteiro(id_roteiro);
         roteiroRepository.deleteById(id_roteiro);
+    }
+
+    public List<Roteiro> findByPrograma(ProgramaDeViagem programaDeViagem) {
+        return roteiroRepository.findByProgramaDeViagem(programaDeViagem);
     }
 }

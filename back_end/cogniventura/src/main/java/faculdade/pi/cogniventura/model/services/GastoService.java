@@ -33,4 +33,8 @@ public class GastoService {
         }
         return gasto_total_atual;
     }
+
+    public void deleteById(int id_gasto) {
+        gastoRepository.deleteById(id_gasto);
+    }
 }

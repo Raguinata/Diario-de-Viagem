@@ -25,6 +25,9 @@ public class CronogramaController {
     @Autowired
     CronogramaService cronogramaService;
 
+    //Está sendo utilizado o id do programa, pois cronogramas já retorna os roteiros
+    //Isso possibilitaria não utilizar os endpoints de busca de roteiros
+    //Mas talvez não seja uma boa solução, já que o usuário pode adicionar roteiros, sem adicionar cronogramas.
     @GetMapping("/{id_programa}")
     public ResponseEntity<List<Cronograma>> findCronogramaByProgramaId(@PathVariable int id_programa) {
         List<Cronograma> cronogramas = cronogramaService.findCronogramaByProgramaId(id_programa);

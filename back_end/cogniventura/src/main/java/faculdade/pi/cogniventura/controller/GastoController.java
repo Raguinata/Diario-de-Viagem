@@ -1,11 +1,13 @@
 package faculdade.pi.cogniventura.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +36,13 @@ public class GastoController {
     public ResponseEntity<List<Gasto>> findByCronograma(@RequestBody Cronograma cronograma) {
         List<Gasto> gastos = gastoService.findByCronograma(cronograma);
         return ResponseEntity.ok().body(gastos);
+    }
+
+    //Lista todos os gastos relacionados a um programa, para implementar na tela de orçamento
+    //Permite que o usuário visualize todos os gastos realizados na viagem
+    @GetMapping("/{id_programa}")
+    public ResponseEntity<BigDecimal> findByIdPrograma(@PathVariable int id_programa) {
+        BigDecimal gasto_total_atual = gastoService.findByIdPrograma(id_programa);
+        return ResponseEntity.ok().body(gasto_total_atual);
     }
 }

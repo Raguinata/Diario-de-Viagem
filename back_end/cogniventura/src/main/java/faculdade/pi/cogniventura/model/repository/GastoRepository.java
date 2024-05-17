@@ -3,6 +3,8 @@ package faculdade.pi.cogniventura.model.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import faculdade.pi.cogniventura.model.entities.Cronograma;
 import faculdade.pi.cogniventura.model.entities.Gasto;
@@ -10,6 +12,10 @@ import faculdade.pi.cogniventura.model.entities.Gasto;
 public interface GastoRepository extends JpaRepository<Gasto, Integer>{
 
     List<Gasto> findByCronograma(Cronograma cronograma);
+
+    @Query("SELECT gasto FROM Gasto gasto WHERE " 
+    + " gasto.cronograma.roteiro.programaDeViagem.idProgramaDeViagem = :id_programa")
+    public List<Gasto> findByIdPrograma(@Param("id_programa") int id_programa);
 
     
 }

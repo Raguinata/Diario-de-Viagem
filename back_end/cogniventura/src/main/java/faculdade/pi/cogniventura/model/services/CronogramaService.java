@@ -20,6 +20,9 @@ public class CronogramaService {
     @Autowired
     ParadaService paradaService;
 
+    @Autowired
+    GastoService gastoService;
+
 
     public List<Cronograma> findCronogramaByProgramaId(int id_programa_de_viagem){
         return cronogramaRepository.findCronogramaByProgramaId(id_programa_de_viagem);
@@ -29,6 +32,7 @@ public class CronogramaService {
     @Transactional
     public void deleteByRoteiro(int id_roteiro) {
         paradaService.deleteByIdRoteiro(id_roteiro);
+        gastoService.deleteByIdRoteiro(id_roteiro);
         Roteiro roteiro = new Roteiro();
         roteiro.setIdRoteiro(id_roteiro);
         cronogramaRepository.deleteByRoteiro(roteiro);
@@ -38,6 +42,7 @@ public class CronogramaService {
     public void deleteById(int id_cronograma) {
         Cronograma cronograma = new Cronograma();
         cronograma.setIdCronograma(id_cronograma);
+        gastoService.deleteByCronograma(cronograma);
         paradaService.deleteByCronograma(cronograma);
         cronogramaRepository.deleteById(id_cronograma);
     }

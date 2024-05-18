@@ -37,4 +37,13 @@ public class GastoService {
     public void deleteById(int id_gasto) {
         gastoRepository.deleteById(id_gasto);
     }
+
+    public void deleteByCronograma(Cronograma cronograma) {
+        gastoRepository.deleteByCronograma(cronograma);
+    }
+
+    //Utilizado para deletar as paradas relacionadas aos cronogramas deletados quando um roteiro é deletado
+    public void deleteByIdRoteiro(int id_roteiro) {
+        gastoRepository.deleteByIdRoteiro(id_roteiro);
+    }
 }

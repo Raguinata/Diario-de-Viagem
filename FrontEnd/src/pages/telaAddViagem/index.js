@@ -10,38 +10,64 @@ import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'reac
 const telaAddViagem = () => {
     return (
         <View style={styles.container}>
-            <Header titulo={'Minhas Viagens'}/>
+            <Header titulo={'Minhas Viagens'} />
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
                     <View style={styles.iconVoltar}>
-                        <IconVoltar/>
+                        <IconVoltar />
                     </View>
-                    <BotaoBranco texto={'Novo Programa'} onPress={undefined} estilo={undefined} icon={undefined}  />
+                    <BotaoBranco texto={'Novo Programa'} onPress={undefined} estilo={undefined} icon={undefined} />
                     <Input
-                        placeholder={'Digite onome da sua viagem'}
+                        placeholder={'Digite o nome da sua viagem'}
                         onChangeText={undefined}
-                        value={undefined} 
+                        value={undefined}
                         texto={'Nome da viagem:'}
-                        icon={require('../../../assets/images/global/icon-maps.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
+                        icon={require('../../../assets/images/global/icon-maps.png')}
+                        fontColor={undefined}
+                        inputColor={'white'}
                         width={320}
-                        height={undefined}                                            
-                        />
+                        height={undefined}
+                    />
 
                     <Input
                         placeholder={'Digite uma cidade ou estado do Brasil'}
                         onChangeText={undefined}
-                        value={undefined} 
+                        value={undefined}
                         texto={'Pesquisar por evento:'}
-                        icon={require('../../../assets/images/global/icon-cep.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
+                        icon={require('../../../assets/images/global/icon-cep.png')}
+                        fontColor={undefined}
+                        inputColor={'white'}
                         width={320}
-                        height={undefined}                                           
+                        height={undefined}
+                    />
+
+                    <View style={styles.inputData}>
+                        <Input
+                            placeholder={'Chegada - DD/MM/AAAA'}
+                            onChangeText={undefined}
+                            value={undefined}
+                            texto={'Datas (Opicional):'}
+                            icon={require('../../../assets/images/global/icon-data.png')}
+                            fontColor={undefined}
+                            inputColor={'white'}
+                            width={150}
+                            height={undefined}
                         />
 
-                    <BotaoBranco texto={'Adicionar Destino'} onPress={undefined} estilo={undefined} icon={undefined}  />
+                        <Input
+                            placeholder={'Partida - DD/MM/AAAA'}
+                            onChangeText={undefined}
+                            value={undefined}
+                            texto={'ㅤ'}
+                            icon={undefined}
+                            fontColor={undefined}
+                            inputColor={'white'}
+                            width={150}
+                            height={undefined}
+                        />
+                    </View>
+
+                    <BotaoBranco texto={'Adicionar Destino'} onPress={undefined} estilo={undefined} icon={undefined} />
 
                 </View>
             </ScrollView>
@@ -83,6 +109,13 @@ const styles = StyleSheet.create({
 
     iconVoltar: {
         width: '100%',
+    },
+
+    inputData: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '90%',
+        marginVertical: 20,
     },
 });
 

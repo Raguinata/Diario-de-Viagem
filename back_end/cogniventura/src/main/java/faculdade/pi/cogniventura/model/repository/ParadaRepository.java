@@ -8,16 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import faculdade.pi.cogniventura.model.entities.Cronograma;
-import faculdade.pi.cogniventura.model.entities.Gasto;
+import faculdade.pi.cogniventura.model.entities.Parada;
 import jakarta.transaction.Transactional;
 
-public interface GastoRepository extends JpaRepository<Gasto, Integer>{
+public interface ParadaRepository extends JpaRepository<Parada, Integer>{
 
-    List<Gasto> findByCronograma(Cronograma cronograma);
-
-    @Query("SELECT gasto FROM Gasto gasto WHERE " 
-    + " gasto.cronograma.roteiro.programaDeViagem.idProgramaDeViagem = :id_programa")
-    public List<Gasto> findByIdPrograma(@Param("id_programa") int id_programa);
+    List<Parada> findByCronograma(Cronograma cronograma);
 
     void deleteByCronograma(Cronograma cronograma);
 
@@ -25,8 +21,9 @@ public interface GastoRepository extends JpaRepository<Gasto, Integer>{
     @Transactional
     @Query(value = 
         """
-            DELETE FROM Gasto gasto WHERE 
-            gasto.cronograma.roteiro.idRoteiro = :id_roteiro
+            DELETE FROM Parada parada WHERE 
+            parada.cronograma.roteiro.idRoteiro = :id_roteiro
         """)
     public void deleteByIdRoteiro(@Param("id_roteiro") int id_roteiro);
+    
 }

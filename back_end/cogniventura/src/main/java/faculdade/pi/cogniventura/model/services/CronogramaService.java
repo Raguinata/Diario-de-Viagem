@@ -17,13 +17,22 @@ public class CronogramaService {
     @Autowired
     CronogramaRepository cronogramaRepository;
 
+    @Autowired
+    ParadaService paradaService;
+
+    @Autowired
+    GastoService gastoService;
+
+
     public List<Cronograma> findCronogramaByProgramaId(int id_programa_de_viagem){
         return cronogramaRepository.findCronogramaByProgramaId(id_programa_de_viagem);
     }
 
+    //Deleta todos os cronogramas relacionados ao roteiro que está sendo deletado;
     @Transactional
     public void deleteByRoteiro(int id_roteiro) {
-        //Deletar parada
+        paradaService.deleteByIdRoteiro(id_roteiro);
+        gastoService.deleteByIdRoteiro(id_roteiro);
         Roteiro roteiro = new Roteiro();
         roteiro.setIdRoteiro(id_roteiro);
         cronogramaRepository.deleteByRoteiro(roteiro);
@@ -31,7 +40,10 @@ public class CronogramaService {
 
     @Transactional
     public void deleteById(int id_cronograma) {
-        //Deletar parada
+        Cronograma cronograma = new Cronograma();
+        cronograma.setIdCronograma(id_cronograma);
+        gastoService.deleteByCronograma(cronograma);
+        paradaService.deleteByCronograma(cronograma);
         cronogramaRepository.deleteById(id_cronograma);
     }
 

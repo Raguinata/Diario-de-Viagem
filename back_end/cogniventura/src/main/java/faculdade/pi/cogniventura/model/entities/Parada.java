@@ -1,6 +1,9 @@
 package faculdade.pi.cogniventura.model.entities;
 
 import java.sql.Time;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +26,7 @@ public class Parada {
     @Column(name = "id_parada")
     private int idParada;
 
-    //Essa data não esta formatada
+    @JsonFormat(pattern = "HH:mm:ss")
     @Temporal(TemporalType.TIME)
     @Column(name = "hora", nullable = false)
     private Time hora;

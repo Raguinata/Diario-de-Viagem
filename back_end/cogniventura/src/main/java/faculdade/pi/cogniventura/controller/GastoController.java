@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,5 +45,11 @@ public class GastoController {
     public ResponseEntity<BigDecimal> findByIdPrograma(@PathVariable int id_programa) {
         BigDecimal gasto_total_atual = gastoService.findByIdPrograma(id_programa);
         return ResponseEntity.ok().body(gasto_total_atual);
+    }
+
+    @DeleteMapping("/{id_gasto}")
+    public ResponseEntity<Void> deleteById(@PathVariable int id_gasto){
+        gastoService.deleteById(id_gasto);
+        return ResponseEntity.ok().build();
     }
 }

@@ -27,4 +27,9 @@ public class ParadaService {
     public void deleteByCronograma(Cronograma cronograma) {
         paradaRepository.deleteByCronograma(cronograma);
     }
+
+    //Utilizado para deletar as paradas relacionadas aos cronogramas deletados quando um roteiro é deletado
+    public void deleteByIdRoteiro(int id_roteiro) {
+        paradaRepository.deleteByIdRoteiro(id_roteiro);
+    }
 }

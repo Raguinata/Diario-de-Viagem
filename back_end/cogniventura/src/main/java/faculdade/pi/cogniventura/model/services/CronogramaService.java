@@ -28,7 +28,7 @@ public class CronogramaService {
     //Deleta todos os cronogramas relacionados ao roteiro que está sendo deletado;
     @Transactional
     public void deleteByRoteiro(int id_roteiro) {
-        //Deletar parada
+        paradaService.deleteByIdRoteiro(id_roteiro);
         Roteiro roteiro = new Roteiro();
         roteiro.setIdRoteiro(id_roteiro);
         cronogramaRepository.deleteByRoteiro(roteiro);

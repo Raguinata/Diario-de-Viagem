@@ -26,6 +26,9 @@ public class UsuarioController {
             @RequestParam("senha") String senha) {
 
         Usuario usuario = usuarioService.findByEmailAndSenha(email, senha);
+        if(usuario == null){
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok().body(usuario);
     }
 

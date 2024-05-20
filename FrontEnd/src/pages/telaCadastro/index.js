@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
 // Componentes personalizados
 import Logo from '../../components/logo';
@@ -9,7 +10,54 @@ import Ou from '../../components/ou';
 import Icons from '../../components/icons';
 
 // Tela de Cadastro
-const TelaCadastro = ( { navigation } ) => {
+const TelaCadastro = ({ navigation }) => {
+
+    const [email, setEmail] = useState();
+    const [senha, setSenha] = useState();
+    const [nascimento, setNascimento] = useState();
+    const [nome, setNome] = useState();
+    const { setItem } = useAsyncStorage("usuario");
+
+    const cadastro = async () => {
+
+        let body = {
+            nome: nome,
+            email: email,
+            nascimento: nascimento,
+            senha: senha
+        }
+
+        try {
+            return await fetch(`http://localhost:8080/usuario/cadastro`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleCadastro = async () => {
+        const res = await cadastro();
+        if (res.status == 200) {
+            try {
+                const dados = await res.text();
+                await setItem(dados);
+                navigation.navigate('telaAddDestino');
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            alert(
+                "Tentativa de cadastro inválida, verifique se o email não está sendo" +
+                " utilizado e se preencheu todos os campos"
+            );
+        }
+    }
+
     return (
         <View style={styles.container}>
             {/* Imagem de fundo */}
@@ -26,11 +74,11 @@ const TelaCadastro = ( { navigation } ) => {
                 </View>
                 {/* Conteúdo principal */}
                 <View style={styles.main}>
-                    <Input texto={'Nome:'} value={undefined} onChangeText={undefined} />
-                    <Input texto={'Data de Nascimento:'} value={undefined} onChangeText={undefined} />
-                    <Input texto={'Email:'} value={undefined} onChangeText={undefined} />
-                    <Input texto={'Senha:'} value={undefined} onChangeText={undefined} />
-                    <BotaoBranco texto={'Cadastrar'} onPress={() => navigation.navigate('telaAddDestino')} estilo={styles.botaoCinza} />
+                    <Input texto={'Nome:'} value={nome} onChangeText={setNome} />
+                    <Input texto={'Data de Nascimento:'} value={nascimento} onChangeText={setNascimento} />
+                    <Input texto={'Email:'} value={email} onChangeText={setEmail} />
+                    <Input texto={'Senha:'} value={senha} onChangeText={setSenha} />
+                    <BotaoBranco texto={'Cadastrar'} onPress={handleCadastro} estilo={styles.botaoCinza} />
                 </View>
                 {/* Rodapé */}
                 <View style={styles.footer}>

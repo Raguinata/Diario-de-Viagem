@@ -1,30 +1,16 @@
 import React from 'react';
-import Header from '../../components/header';
-import Footer from '../../components/footer';
-import BotaoBranco from '../../components/botaoBranco';
-import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const cardViagem = ({ navigation }) => {
     return (
-        <View style={styles.container}>
-            <Header titulo={'Minhas Viagens'}/>
-            <TouchableOpacity style={styles.conteudo} onPress={() => navigation.navigate('telaAddViagem')}>
-                <Image source={require('../../../assets/images/telaAddDestino/icon-add.png')} style={{width: 70, height: 70}} />
-                <Text style={styles.titulo}>Adicionar novo destino!</Text>
-            </TouchableOpacity>
-            <Footer />
-        </View>
+        <TouchableOpacity style={styles.conteudo} onPress={() => navigation.navigate('telaAddViagem')}>
+            <Image source={require('../../../assets/images/telaAddDestino/icon-add.png')} style={{ width: 70, height: 70 }} />
+            <Text style={styles.titulo}>Adicionar novo destino!</Text>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
-
     conteudo: {
         flex: 1,
         marginVertical: 40,

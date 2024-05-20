@@ -9,7 +9,9 @@ import telaLogin from './src/pages/telaLogin';
 import telaCadastro from './src/pages/telaCadastro';
 import telaAddDestino from './src/pages/telaAddDestino';
 import telaPerfil from './src/pages/telaPerfil';
-import Footer from './src/components/footer';
+import telaErro from './src/pages/telaErro';
+import telaAddViagem from './src/pages/telaAddViagem';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -43,8 +45,13 @@ const App = () => {
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen 
-                    name="Footer" 
-                    component={Footer}
+                    name="telaErro" 
+                    component={telaErro}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaAddViagem" 
+                    component={telaAddViagem}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+
 
 // Componentes personalizados
 import Logo from '../../components/logo';
@@ -9,7 +11,38 @@ import Ou from '../../components/ou';
 import Icons from '../../components/icons';
 
 // Tela de Login
-const TelaLogin = ( { navigation } ) => {
+const TelaLogin = ({ navigation }) => {
+
+    const [email, setEmail] = useState();
+    const [senha, setSenha] = useState();
+    const { setItem } = useAsyncStorage("usuario");
+
+    const login = async () => {
+        try {
+            return await fetch(`http://localhost:8080/usuario/login?email=${email}&senha=${senha}`, {
+                method: "POST"
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleLogin = async () => {
+        const res = await login();
+        if (res.status == 200) {
+            try {
+                const dados = await res.text();
+                await setItem(dados);
+                navigation.navigate('telaAddDestino');
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        else if (res.status == 204) {
+            alert("Login inválido");
+        }
+    }
+
     return (
         <View style={styles.container}>
             {/* Imagem de fundo */}
@@ -27,10 +60,10 @@ const TelaLogin = ( { navigation } ) => {
                 </View>
                 {/* Conteúdo principal */}
                 <View style={styles.main}>
-                    <Input texto={'Email:'} value={undefined} onChangeText={undefined} />
-                    <Input texto={'Senha:'} value={undefined} onChangeText={undefined} />
+                    <Input texto={'Email:'} value={email} onChangeText={setEmail} />
+                    <Input texto={'Senha:'} value={senha} onChangeText={setSenha} />
                     <Text style={styles.textoEsqueceuSenha}>Esqueceu sua senha?</Text>
-                    <BotaoBranco texto={'Login'} onPress={() => navigation.navigate('telaAddDestino')} estilo={styles.botaoCinza} />
+                    <BotaoBranco texto={'Login'} onPress={handleLogin} estilo={styles.botaoCinza} />
                 </View>
                 {/* Rodapé */}
                 <View style={styles.footer}>

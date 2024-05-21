@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
-const telaPerfil = () => {
+const telaPerfil = ({ route }) => {
+
+    const [infos, setInfos] =useState({});
+
+    const handleSetInfos = async () => {
+        const infos = await route.params;
+        setInfos(infos)
+    }
+
+    useEffect(() => {
+        handleSetInfos();
+    }, [])
+
     return (
         <View style={styles.container}>
-            <Header titulo={'Minhas Viagens'}/>
+            <Header titulo={'Minhas Viagens'} />
             <View style={styles.conteudo}>
                 <View style={styles.containerPerfil}>
                     <View>
-                        <Image source={require('../../../assets/images/global/header-icon.png')} style={{width: 102, height: 102, borderRadius: 50}} />
+                        <Image source={require('../../../assets/images/global/header-icon.png')} style={{ width: 102, height: 102, borderRadius: 50 }} />
                     </View>
 
                     <View style={styles.informacaoPerfil}>
-                        <Text style={styles.textoInformacao}>Nome: Fulano de tal</Text>
-                        <Text style={styles.textoInformacao}>E-mail: fulano.de.tal@gmail.com</Text>
-                        <Text style={styles.textoInformacao}>Ingressou: 13/02/2024</Text>
+                        <Text style={styles.textoInformacao}>Nome: {infos.nome}</Text>
+                        <Text style={styles.textoInformacao}>E-mail: {infos.email}</Text>
+                        <Text style={styles.textoInformacao}>Aniversário: {infos.nascimento}</Text>
                     </View>
                 </View>
 
@@ -68,7 +80,7 @@ const styles = StyleSheet.create({
     informacaoPerfil: {
         justifyContent: 'center',
         height: 102,
-        
+
     },
 
     textoInformacao: {

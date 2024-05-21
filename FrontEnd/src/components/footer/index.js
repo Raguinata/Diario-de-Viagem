@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
 const Footer = () => {
+
+    //Talvez essa não seja a melhor maneira de passar a info
     const navigation = useNavigation();
+    const { getItem } = useAsyncStorage("usuario");
+
+    const parseInfos = async () => {
+        let usuario = await getItem();
+        return JSON.parse(usuario);
+    }
 
     return (
         <View style={styles.container}>
@@ -26,7 +35,7 @@ const Footer = () => {
                 <TouchableOpacity onPress={() => navigation.navigate('telaErro')}>
                     <Image source={require('../../../assets/images/footer/avisos-icon.png')} style={{width: 19, height: 30, marginHorizontal: 30}}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('telaPerfil')}>
+                <TouchableOpacity onPress={() => navigation.navigate('telaPerfil', parseInfos())}>
                     <Image source={require('../../../assets/images/footer/perfil-icon.png')} style={{ width: 16, height: 30, marginHorizontal: 30 }} />
                 </TouchableOpacity>
             </View>

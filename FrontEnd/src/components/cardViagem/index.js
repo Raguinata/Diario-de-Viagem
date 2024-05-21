@@ -1,11 +1,27 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const cardViagem = ({ navigation }) => {
+const CardViagem = ({ navigation }) => {
     return (
         <TouchableOpacity style={styles.conteudo} onPress={() => navigation.navigate('telaAddViagem')}>
-            <Image source={require('../../../assets/images/telaAddDestino/icon-add.png')} style={{ width: 70, height: 70 }} />
-            <Text style={styles.titulo}>Adicionar novo destino!</Text>
+            <View style={styles.imagemView}>
+                <Image style={styles.imagem} source={require('../../../assets/images/estados/SP.png')} />
+                <View style={styles.overlay}></View>
+            </View>
+            <View style={styles.legenda}>
+                <View style={styles.texto}>
+                    <Text style={styles.titulo}>Viagem Da Bacia</Text>
+                    <Text style={styles.subTitulo}>São Paulo</Text>
+                    <View style={styles.chegada}>
+                        <Image style={styles.icon} source={require('../../../assets/images/global/icon-data.png')} />
+                        <Text style={styles.chegadaTexto}>Chegada: 03/12/2020</Text>
+                    </View>
+                    <View style={styles.chegada}>
+                        <Image style={styles.icon} source={require('../../../assets/images/global/icon-data.png')} />
+                        <Text style={styles.chegadaTexto}>Chegada: 03/12/2020</Text>
+                    </View>
+                </View>
+            </View>
         </TouchableOpacity>
     );
 };
@@ -20,15 +36,56 @@ const styles = StyleSheet.create({
         backgroundColor: '#A9A9A9',
         borderRadius: 20,
     },
-
+    imagemView: {
+        height: '70%',
+        width: '100%',
+        overflow: 'hidden', // Para garantir que a borda arredondada seja exibida corretamente
+    },
+    imagem: {
+        flex: 1,
+        width: '100%',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+    },
+    legenda: {
+        height: '30%',
+        width: '100%',
+    },
+    texto: {
+        marginVertical: 10,
+        marginHorizontal: 20,
+    },
     titulo: {
-        fontSize: 18,
-        color: 'black',
-        fontFamily: 'Outfit-VariableFont_wght',
+        fontSize: 20,
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: 20,
+        color: 'black',
+    },
+    subTitulo: {
+        fontSize: 15,
+        fontFamily: 'Outfit-VariableFont_wght',
+        color: 'black',
+        fontWeight: 'bold',
+    },
+    chegada: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    icon: {
+        width: 20,
+        height: 20,
+        marginRight: 5,
+    },
+    chegadaTexto: {
+        fontSize: 15,
+        color: 'black',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.40)',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
 });
 
-export default cardViagem;
+export default CardViagem;

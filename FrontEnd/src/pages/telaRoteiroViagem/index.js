@@ -4,6 +4,7 @@ import Footer from '../../components/footer';
 import Thumb from '../../components/components-roteiro/thumb';
 import BotaoBranco from '../../components/botaoBranco';
 import GrupoViagem from '../../components/components-roteiro/grupoViagem';
+import ContatosEmergencia from '../../components/components-roteiro/contatosEmergencia';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 const telaRoteiroViagem = ({ navigation }) => {
@@ -19,8 +20,9 @@ const telaRoteiroViagem = ({ navigation }) => {
                 <View style={styles.conteudo}>
                     <Thumb />
 
+                    {/** ////////////////////////////////////////////////////// */}
                     <View style={styles.contador}>
-                        <View style={styles.contadorTitulo}>
+                        <View style={styles.containerTitulo}>
                             <Image style={styles.icon} source={require('../../../assets/images/global/icon-custo.png')} />
                             <Text style={styles.titulos}>Orçamento</Text>
                         </View>
@@ -39,7 +41,6 @@ const telaRoteiroViagem = ({ navigation }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-
                         <View style={styles.contadorGastoTotal}>
                             <Text style={styles.subTitulos}>Gasto Total</Text>
                             <Text style={styles.subTitulos}>R$0,00</Text>
@@ -51,22 +52,47 @@ const telaRoteiroViagem = ({ navigation }) => {
                         </View>
                     </View>
 
+                    {/** ////////////////////////////////////////////////////// */}
+
                     <View style={styles.gpViagem}>
-                        <View style={styles.gpViagemTitulo}>
+                        <View style={styles.containerTitulo}>
                             <Image style={styles.icon} source={require('../../../assets/images/global/icon-grupo.png')} />
                             <Text style={styles.titulos}>Grupo da viagem</Text>
                         </View>
 
-                        <GrupoViagem navigation={navigation}/>
-                        <GrupoViagem navigation={navigation}/>
-                        <GrupoViagem navigation={navigation}/>
+                        <GrupoViagem navigation={navigation} />
+                        <GrupoViagem navigation={navigation} />
+                        <GrupoViagem navigation={navigation} />
 
                         <BotaoBranco
                             texto={'Convidar pessoa ao grupo'}
-                            onPress={undefined} 
-                            estilo={styles.gpViagemBotao} 
+                            onPress={undefined}
+                            estilo={styles.gpViagemBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                         />
+                    </View>
+
+                    {/** ////////////////////////////////////////////////////// */}
+
+                    <View style={styles.contatosEmergencia}>
+                        <View style={styles.containerTitulo}>
+                            <Image style={styles.icon} source={require('../../../assets/images/global/icon-sirene.png')} />
+                            <Text style={styles.titulos}>Contatos de emergência:</Text>
+                        </View>
+
+                        <ContatosEmergencia
+                        numero={'190'}
+                        servico={'Polícia'}
+                        />
+                        <ContatosEmergencia
+                        numero={'192'}
+                        servico={'Ambulância'}
+                        />
+                        <ContatosEmergencia
+                        numero={'193'}
+                        servico={'Bombeiros'}
+                        />
+                        
                     </View>
 
                 </View>
@@ -113,6 +139,12 @@ const styles = StyleSheet.create({
         margin: 10,
     },
 
+    containerTitulo: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '90%',
+    },
+
     contador: {
         flex: 1,
         width: '90%',
@@ -121,12 +153,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 20,
 
-    },
-
-    contadorTitulo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '90%',
     },
 
     icon: {
@@ -190,12 +216,6 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
 
-    gpViagemTitulo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '90%',
-    },
-
     gpViagemBotao: {
         width: '90%',
         height: 45,
@@ -204,6 +224,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 10,
+    },
+
+    contatosEmergencia: {
+        width: '90%',
+        backgroundColor: 'white',
+        borderRadius: 20,
+        alignItems: 'center',
+        marginVertical: 20,
     },
 });
 

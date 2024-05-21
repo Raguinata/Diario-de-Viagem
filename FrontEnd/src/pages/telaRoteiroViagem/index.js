@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import Thumb from '../../components/components-roteiro/thumb';
+import BotaoBranco from '../../components/botaoBranco';
+import GrupoViagem from '../../components/components-roteiro/grupoViagem';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 
-const telaRoteiroViagem = () => {
+const telaRoteiroViagem = ({ navigation }) => {
     const [orcamento, setOrcamento] = useState(0);
 
     const incrementar = () => setOrcamento(orcamento + 50);
@@ -49,6 +51,24 @@ const telaRoteiroViagem = () => {
                         </View>
                     </View>
 
+                    <View style={styles.gpViagem}>
+                        <View style={styles.gpViagemTitulo}>
+                            <Image style={styles.icon} source={require('../../../assets/images/global/icon-grupo.png')} />
+                            <Text style={styles.titulos}>Grupo da viagem</Text>
+                        </View>
+
+                        <GrupoViagem navigation={navigation}/>
+                        <GrupoViagem navigation={navigation}/>
+                        <GrupoViagem navigation={navigation}/>
+
+                        <BotaoBranco
+                            texto={'Convidar pessoa ao grupo'}
+                            onPress={undefined} 
+                            estilo={styles.gpViagemBotao} 
+                            icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
+                        />
+                    </View>
+
                 </View>
             </ScrollView>
             <Footer />
@@ -60,7 +80,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#4c4c4c',
+        backgroundColor: 'white',
     },
 
     conteudoScroll: {
@@ -159,6 +179,30 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#D9D9D9',
         borderRadius: 10,
+        marginVertical: 10,
+    },
+
+    gpViagem: {
+        width: '90%',
+        backgroundColor: 'white',
+        borderRadius: 20,
+        alignItems: 'center',
+        marginVertical: 20,
+    },
+
+    gpViagemTitulo: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '90%',
+    },
+
+    gpViagemBotao: {
+        width: '90%',
+        height: 45,
+        backgroundColor: '#D9D9D9',
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
         marginVertical: 10,
     },
 });

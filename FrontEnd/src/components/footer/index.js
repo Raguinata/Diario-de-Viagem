@@ -1,26 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
 const Footer = () => {
+
+    //Talvez essa não seja a melhor maneira de passar a info
     const navigation = useNavigation();
+    const { getItem } = useAsyncStorage("usuario");
+
+    const parseInfos = async () => {
+        let usuario = await getItem();
+        return JSON.parse(usuario);
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.conjuntoIcons}>
                 <TouchableOpacity onPress={() => navigation.navigate('telaAddDestino')}>
-                <Image source={require('../../../assets/images/footer/home-icon.png')} style={{width: 18, height: 30, marginHorizontal: 30}}/>
+                    <Image source={require('../../../assets/images/footer/home-icon.png')} style={{ width: 18, height: 30, marginHorizontal: 30 }} />
                 </TouchableOpacity>
-                <Image source={require('../../../assets/images/footer/explorar-icon.png')} style={{width: 24, height: 30, marginHorizontal: 30}}/>
+                <Image source={require('../../../assets/images/footer/explorar-icon.png')} style={{ width: 24, height: 30, marginHorizontal: 30 }} />
             </View>
 
             <View style={styles.brasil}>
-                <Image source={require('../../../assets/images/footer/brasil-icon.png')} style={{width: 27, height: 26}}/>
+                <Image source={require('../../../assets/images/footer/brasil-icon.png')} style={{ width: 27, height: 26 }} />
             </View>
 
             <View style={styles.conjuntoIcons}>
-                <Image source={require('../../../assets/images/footer/avisos-icon.png')} style={{width: 19, height: 30, marginHorizontal: 30}}/>
-                <TouchableOpacity onPress={() => navigation.navigate('telaPerfil')}>
+                <Image source={require('../../../assets/images/footer/avisos-icon.png')} style={{ width: 19, height: 30, marginHorizontal: 30 }} />
+                <TouchableOpacity onPress={() => navigation.navigate('telaPerfil', parseInfos())}>
                     <Image source={require('../../../assets/images/footer/perfil-icon.png')} style={{ width: 16, height: 30, marginHorizontal: 30 }} />
                 </TouchableOpacity>
             </View>

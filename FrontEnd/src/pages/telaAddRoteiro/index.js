@@ -4,7 +4,7 @@ import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
-import InputDescricao from './src/components/inputDescricao';
+import InputDescricao from '../../components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
 const App = () => {
@@ -22,7 +22,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Nome do roteiro:'}
-                        icon={require('./assets/images/global/icon-lapis.png')} 
+                        icon={require('../../../assets/images/global/icon-lapis.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}

@@ -4,6 +4,8 @@ import Footer from '../../components/footer';
 import Thumb from '../../components/components-roteiro/thumb';
 import BotaoBranco from '../../components/botaoBranco';
 import GrupoViagem from '../../components/components-roteiro/grupoViagem';
+import AluguelVeiculo from '../../components/components-roteiro/aluguelVeiculo';
+import Roteiro from '../../components/components-roteiro/roteiro';
 import ContatosEmergencia from '../../components/components-roteiro/contatosEmergencia';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 
@@ -93,6 +95,46 @@ const telaRoteiroViagem = ({ navigation }) => {
                         servico={'Bombeiros'}
                         />
                         
+                    </View>
+
+                    {/** ////////////////////////////////////////////////////// */}
+
+                    <View style={styles.aluguelVeiculo}>
+                        <View style={styles.containerTitulo}>
+                            <Image style={styles.iconAluguel} source={require('../../../assets/images/global/icon-modelo.png')} />
+                            <Text style={styles.titulos}>Aluguel de veículo:</Text>
+                        </View>
+
+                        <AluguelVeiculo 
+                        navigation={navigation}
+                        />
+
+                        <BotaoBranco
+                            texto={'Adicionar veículo'}
+                            onPress={() => navigation.navigate('telaAddVeiculo')}
+                            estilo={styles.gpViagemBotao}
+                            icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
+                            navigation={navigation}
+                        />
+                    </View>
+
+                    {/** ////////////////////////////////////////////////////// */}
+
+                    <View style={styles.roteiros}>
+                        <View style={styles.containerTitulo}>
+                            <Image style={styles.icon} source={require('../../../assets/images/global/icon-roteiro.png')} />
+                            <Text style={styles.titulos}>Roteiros:</Text>
+                        </View>
+
+                        <Roteiro navigation={navigation} />
+
+                        <BotaoBranco
+                            texto={'Adicionar roteiro'}
+                            onPress={() => navigation.navigate('telaAddRoteiro')}
+                            estilo={styles.gpViagemBotao}
+                            icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
+                            navigation={navigation}
+                        />
                     </View>
 
                 </View>
@@ -227,6 +269,22 @@ const styles = StyleSheet.create({
     },
 
     contatosEmergencia: {
+        width: '90%',
+        backgroundColor: 'white',
+        borderRadius: 20,
+        alignItems: 'center',
+        marginVertical: 20,
+    },
+
+    aluguelVeiculo: {
+        width: '90%',
+        backgroundColor: 'white',
+        borderRadius: 20,
+        alignItems: 'center',
+        marginVertical: 20,
+    },
+
+    roteiros: {
         width: '90%',
         backgroundColor: 'white',
         borderRadius: 20,

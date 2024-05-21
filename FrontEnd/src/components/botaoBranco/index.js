@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View, Image } from 'react-native';
 
-const BotaoBranco = ({ texto, onPress, estilo, icon }) => {
+const BotaoBranco = ({ texto, onPress, estilo, icon, navigate }) => {
   return (
     <TouchableOpacity style={[styles.botao, estilo]} onPress={onPress}>
       <View style={styles.container}>

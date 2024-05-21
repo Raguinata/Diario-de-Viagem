@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from './src/components/header';
-import Footer from './src/components/footer';
-import IconVoltar from './src/components/icon-voltar';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
+import IconVoltar from '../../components/icon-voltar';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
-import BotaoBranco from './src/components/botaoBranco';
-import Input from './src/components/input';
-import DataHora from './src/components/dataHora';
+import BotaoBranco from '../../components/botaoBranco';
+import Input from '../../components/input';
+import DataHora from '../../components/dataHora';
 
 const App = () => {
 
@@ -21,7 +21,7 @@ const App = () => {
                     <BotaoBranco texto={'Adicionar veículo'} onPress={undefined} estilo={undefined} icon={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-modelo.png')}
+                        icon={require('../../../assets/images/global/icon-modelo.png')}
                         texto={'Modelo:'}
                         placeholder={'Digite o modelo do veículo'}
                         onChangeText={undefined}
@@ -32,7 +32,7 @@ const App = () => {
                         height={undefined} marginBottom={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-placa.png')}
+                        icon={require('../../../assets/images/global/icon-placa.png')}
                         texto={'Placa:'}
                         placeholder={'Digite a placa do veículo'}
                         onChangeText={undefined}
@@ -43,7 +43,7 @@ const App = () => {
                         height={undefined} marginBottom={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-locadora.png')}
+                        icon={require('../../../assets/images/global/icon-locadora.png')}
                         texto={'Locadora:'}
                         placeholder={'Digite a locadora do aluguel do veículo'}
                         onChangeText={undefined}
@@ -54,7 +54,7 @@ const App = () => {
                         height={undefined} marginBottom={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-custo.png')}
+                        icon={require('../../../assets/images/global/icon-custo.png')}
                         texto={'Valor Total:'}
                         placeholder={'R$00,00'}
                         onChangeText={undefined}
@@ -64,11 +64,11 @@ const App = () => {
                         width={320}
                         height={undefined} marginBottom={undefined} />
 
-                    <Text style={styles.texto}><Image source={require('./assets/images/global/icon-localRetirada.png')}/> Local de retirada</Text>
+                    <Text style={styles.texto}><Image source={require('../../../assets/images/global/icon-localRetirada.png')}/> Local de retirada</Text>
 
                     <View style={styles.viewDoisInputs}>
                         <Input
-                            icon={require('./assets/images/global/icon-cep.png')}
+                            icon={require('../../../assets/images/global/icon-cep.png')}
                             texto={'CEP:'}
                             placeholder={'CEP do local de retirada'}
                             onChangeText={undefined}
@@ -79,7 +79,7 @@ const App = () => {
                             height={undefined} marginBottom={undefined} />
 
                         <Input
-                            icon={require('./assets/images/global/icon-numero.png')}
+                            icon={require('../../../assets/images/global/icon-numero.png')}
                             texto={'Número:'}
                             placeholder={'Número'}
                             onChangeText={undefined}
@@ -91,7 +91,7 @@ const App = () => {
                     </View>
 
                     <Input
-                        icon={require('./assets/images/global/icon-logradouro.png')}
+                        icon={require('../../../assets/images/global/icon-logradouro.png')}
                         texto={'Logradouro:'}
                         placeholder={'Digite o Logradouro'}
                         onChangeText={undefined}
@@ -102,7 +102,7 @@ const App = () => {
                         height={undefined} marginBottom={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-bairro.png')}
+                        icon={require('../../../assets/images/global/icon-bairro.png')}
                         texto={'Bairro:'}
                         placeholder={'Digite o Bairro'}
                         onChangeText={undefined}
@@ -114,7 +114,7 @@ const App = () => {
 
                     <View style={styles.viewDoisInputs}>
                         <Input
-                            icon={require('./assets/images/global/icon-cidade.png')}
+                            icon={require('../../../assets/images/global/icon-cidade.png')}
                             texto={'Cidade:'}
                             placeholder={'Digite a cidade'}
                             onChangeText={undefined}
@@ -125,7 +125,7 @@ const App = () => {
                             height={undefined} marginBottom={undefined} />
 
                         <Input
-                            icon={require('./assets/images/global/icon-uf.png')}
+                            icon={require('../../../assets/images/global/icon-uf.png')}
                             texto={'UF:'}
                             placeholder={'Digite a UF'}
                             onChangeText={undefined}
@@ -137,7 +137,7 @@ const App = () => {
                     </View>
 
                     <Input
-                        icon={require('./assets/images/global/icon-complemento.png')}
+                        icon={require('../../../assets/images/global/icon-complemento.png')}
                         texto={'Complemento:'}
                         placeholder={'Digite o Complemento (Opcional)'}
                         onChangeText={undefined}
@@ -147,11 +147,11 @@ const App = () => {
                         width={320}
                         height={undefined} marginBottom={undefined} />
 
-                    <Text style={styles.texto}><Image source={require('./assets/images/global/icon-localRetirada.png')}/> Local de entrega</Text>
+                    <Text style={styles.texto}><Image source={require('../../../assets/images/global/icon-localRetirada.png')}/> Local de entrega</Text>
 
                     <View style={styles.viewDoisInputs}>
                         <Input
-                            icon={require('./assets/images/global/icon-cep.png')}
+                            icon={require('../../../assets/images/global/icon-cep.png')}
                             texto={'CEP:'}
                             placeholder={'CEP do local de retirada'}
                             onChangeText={undefined}
@@ -162,7 +162,7 @@ const App = () => {
                             height={undefined} marginBottom={undefined} />
 
                         <Input
-                            icon={require('./assets/images/global/icon-numero.png')}
+                            icon={require('../../../assets/images/global/icon-numero.png')}
                             texto={'Número:'}
                             placeholder={'Número'}
                             onChangeText={undefined}
@@ -174,7 +174,7 @@ const App = () => {
                     </View>
 
                     <Input
-                        icon={require('./assets/images/global/icon-logradouro.png')}
+                        icon={require('../../../assets/images/global/icon-logradouro.png')}
                         texto={'Logradouro:'}
                         placeholder={'Digite o Logradouro'}
                         onChangeText={undefined}
@@ -185,7 +185,7 @@ const App = () => {
                         height={undefined} marginBottom={undefined} />
 
                     <Input
-                        icon={require('./assets/images/global/icon-bairro.png')}
+                        icon={require('../../../assets/images/global/icon-bairro.png')}
                         texto={'Bairro:'}
                         placeholder={'Digite o Bairro'}
                         onChangeText={undefined}
@@ -197,7 +197,7 @@ const App = () => {
 
                     <View style={styles.viewDoisInputs}>
                         <Input
-                            icon={require('./assets/images/global/icon-cidade.png')}
+                            icon={require('../../../assets/images/global/icon-cidade.png')}
                             texto={'Cidade:'}
                             placeholder={'Digite a cidade'}
                             onChangeText={undefined}
@@ -208,7 +208,7 @@ const App = () => {
                             height={undefined} marginBottom={undefined} />
 
                         <Input
-                            icon={require('./assets/images/global/icon-uf.png')}
+                            icon={require('../../../assets/images/global/icon-uf.png')}
                             texto={'UF:'}
                             placeholder={'Digite a UF'}
                             onChangeText={undefined}
@@ -220,7 +220,7 @@ const App = () => {
                     </View>
 
                     <Input
-                        icon={require('./assets/images/global/icon-complemento.png')}
+                        icon={require('../../../assets/images/global/icon-complemento.png')}
                         texto={'Complemento:'}
                         placeholder={'Digite o Complemento (Opcional)'}
                         onChangeText={undefined}
@@ -233,11 +233,11 @@ const App = () => {
                     <View style={styles.viewDoisInputs}>
                         <DataHora
                             texto={'Retirada:'}
-                            icon={require('./assets/images/global/icon-retirada.png')} />
+                            icon={require('../../../assets/images/global/icon-retirada.png')} />
 
                         <DataHora
                             texto={'Entrega'}
-                            icon={require('./assets/images/global/icon-entrega.png')} />
+                            icon={require('../../../assets/images/global/icon-entrega.png')} />
                     </View>
 
                     <BotaoBranco texto={'Adicionar'} onPress={undefined} estilo={undefined} icon={undefined} />

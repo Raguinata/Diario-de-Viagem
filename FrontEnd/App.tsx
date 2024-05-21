@@ -11,6 +11,7 @@ import telaAddDestino from './src/pages/telaAddDestino';
 import telaPerfil from './src/pages/telaPerfil';
 import telaErro from './src/pages/telaErro';
 import telaAddViagem from './src/pages/telaAddViagem';
+import telaRoteiroViagem from './src/pages/telaRoteiroViagem';
 
 
 const Stack = createNativeStackNavigator();
@@ -52,6 +53,11 @@ const App = () => {
                 <Stack.Screen 
                     name="telaAddViagem" 
                     component={telaAddViagem}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaRoteiroViagem" 
+                    component={telaRoteiroViagem}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

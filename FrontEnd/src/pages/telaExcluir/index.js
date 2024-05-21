@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './src/components/header';
-import Footer from './src/components/footer';
-import IconVoltar from './src/components/icon-voltar';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
+import IconVoltar from '../../components/icon-voltar';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 const App = () => {

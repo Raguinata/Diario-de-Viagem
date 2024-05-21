@@ -22,7 +22,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Nome do Cronograma:'}
-                        icon={require('./assets/images/global/icon-lapis.png')} 
+                        icon={require('../../../assets/images/global/icon-lapis.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}
@@ -34,7 +34,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Cidade:'}
-                        icon={require('./assets/images/global/icon-maps.png')} 
+                        icon={require('../../../assets/images/global/icon-maps.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}
@@ -46,7 +46,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Data:'}
-                        icon={require('./assets/images/global/icon-data.png')} 
+                        icon={require('../../../assets/images/global/icon-data.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}

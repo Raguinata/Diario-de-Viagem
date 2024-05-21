@@ -33,7 +33,7 @@ const TelaAddDestino = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Header titulo={'Minhas Viagens'} />
+            <Header titulo={'Minhas Viageens'} />
             <ScrollView
                 ref={scrollViewRef}
                 horizontal

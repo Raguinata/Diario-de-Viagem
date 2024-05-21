@@ -11,6 +11,11 @@ import telaAddDestino from './src/pages/telaAddDestino';
 import telaPerfil from './src/pages/telaPerfil';
 import telaErro from './src/pages/telaErro';
 import telaAddViagem from './src/pages/telaAddViagem';
+import telaRoteiroViagem from './src/pages/telaRoteiroViagem';
+import telaExcluir from './src/pages/telaExcluir';
+import telaAddVeiculo from './src/pages/telaAddVeiculo';
+import telaAddRoteiro from './src/pages/telaAddRoteiro';
+import telaAddCronograma from './src/pages/telaAddCronograma';
 
 
 const Stack = createNativeStackNavigator();
@@ -52,6 +57,31 @@ const App = () => {
                 <Stack.Screen 
                     name="telaAddViagem" 
                     component={telaAddViagem}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaRoteiroViagem" 
+                    component={telaRoteiroViagem}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaExcluir" 
+                    component={telaExcluir}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaAddVeiculo" 
+                    component={telaAddVeiculo}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaAddRoteiro" 
+                    component={telaAddRoteiro}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaAddCronograma" 
+                    component={telaAddCronograma}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 
-const CardViagem = ({ navigation }) => {
+const thumb = () => {
     return (
-        <TouchableOpacity style={styles.conteudo} onPress={() => navigation.navigate('telaRoteiroViagem')}>
+        <View style={styles.conteudo}>
             <View style={styles.imagemView}>
-                <Image style={styles.imagem} source={require('../../../assets/images/estados/SP.png')} />
+                <ImageBackground
+                    source={require('../../../../assets/images/estados/SP.png')}
+                    style={styles.imagemFundo}
+                    imageStyle={styles.imagem}>
+                </ImageBackground>
                 <View style={styles.overlay}></View>
             </View>
             <View style={styles.legenda}>
@@ -13,79 +17,107 @@ const CardViagem = ({ navigation }) => {
                     <Text style={styles.titulo}>Viagem Da Bacia</Text>
                     <Text style={styles.subTitulo}>São Paulo</Text>
                     <View style={styles.chegada}>
-                        <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
+                        <Image style={styles.icon} source={require('../../../../assets/images/global/icon-data-branco.png')} />
                         <Text style={styles.chegadaTexto}>Chegada: 03/12/2020</Text>
                     </View>
                     <View style={styles.chegada}>
-                        <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
+                        <Image style={styles.icon} source={require('../../../../assets/images/global/icon-data-branco.png')} />
                         <Text style={styles.chegadaTexto}>Chegada: 03/12/2020</Text>
                     </View>
                 </View>
             </View>
-        </TouchableOpacity>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     conteudo: {
         flex: 1,
-        marginVertical: 40,
+        marginVertical: 20,
+        height: 230,
         width: '90%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#A9A9A9',
         borderRadius: 20,
+        overflow: 'hidden', // Ensure the borderRadius is applied
     },
+
     imagemView: {
-        height: '70%',
+        position: 'absolute',
         width: '100%',
-        overflow: 'hidden', // Para garantir que a borda arredondada seja exibida corretamente
+        height: '100%',
+        borderRadius: 20,
+        overflow: 'hidden',
     },
-    imagem: {
+
+    imagemFundo: {
         flex: 1,
-        width: '100%',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        justifyContent: 'center',
     },
+
+    imagem: {
+        borderRadius: 20,
+    },
+    
     legenda: {
         height: '30%',
         width: '100%',
+        borderRadius: 20,
+        justifyContent: 'center',
     },
+    
     texto: {
         marginVertical: 10,
         marginHorizontal: 20,
-        
     },
+
     titulo: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'black',
+        color: 'white',
+        backgroundColor: 'rgba(0, 0, 0, 0.60)',
+        marginVertical: 2,
+        borderRadius: 20,
+        textAlign: 'center',
     },
+
     subTitulo: {
         fontSize: 15,
         fontFamily: 'Outfit-VariableFont_wght',
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
+        backgroundColor: 'rgba(0, 0, 0, 0.60)',
+        borderRadius: 20,
+        textAlign: 'center',
+        marginBottom: 70,
     },
+
     chegada: {
         flexDirection: 'row',
         marginTop: 5,
+        backgroundColor: 'rgba(0, 0, 0, 0.60)',
+        borderRadius: 20,
+        
     },
+
     icon: {
-        width: 20,
-        height: 20,
+        width: 17,
+        height: 17,
         marginRight: 5,
+        color: 'white',
     },
+
     chegadaTexto: {
         fontSize: 15,
-        color: 'black',
+        color: 'white',
     },
+
     overlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: 'rgba(0, 0, 0, 0.40)',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        borderRadius: 20,
     },
 });
 
-export default CardViagem;
+export default thumb;

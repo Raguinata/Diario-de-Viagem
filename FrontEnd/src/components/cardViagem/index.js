@@ -13,11 +13,11 @@ const CardViagem = ({ navigation }) => {
                     <Text style={styles.titulo}>Viagem Da Bacia</Text>
                     <Text style={styles.subTitulo}>São Paulo</Text>
                     <View style={styles.chegada}>
-                        <Image style={styles.icon} source={require('../../../assets/images/global/icon-data.png')} />
+                        <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
                         <Text style={styles.chegadaTexto}>Chegada: 03/12/2020</Text>
                     </View>
                     <View style={styles.chegada}>
-                        <Image style={styles.icon} source={require('../../../assets/images/global/icon-data.png')} />
+                        <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
                         <Text style={styles.chegadaTexto}>Chegada: 03/12/2020</Text>
                     </View>
                 </View>
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     texto: {
         marginVertical: 10,
         marginHorizontal: 20,
+        
     },
     titulo: {
         fontSize: 20,
@@ -68,7 +69,6 @@ const styles = StyleSheet.create({
     },
     chegada: {
         flexDirection: 'row',
-        alignItems: 'center',
         marginTop: 5,
     },
     icon: {

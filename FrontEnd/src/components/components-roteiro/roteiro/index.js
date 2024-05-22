@@ -22,31 +22,33 @@ const roteiro = ({ navigation }) => {
 
             </View>
 
-            <View style={styles.card}>
-                <Text style={styles.titulos}>Nome</Text>
+            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('telaVisualizarEvento')}>
+                <View >
+                    <Text style={styles.titulos}>Nome</Text>
 
-                <View style={styles.containerTitulo}>
-                    <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-data.png')} />
-                    <Text style={styles.subTitulos}>Data: <Text>27/10/2029</Text></Text>
+                    <View style={styles.containerTitulo}>
+                        <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-data.png')} />
+                        <Text style={styles.subTitulos}>Data: <Text>27/10/2029</Text></Text>
+                    </View>
+                    <View style={styles.containerTitulo}>
+                        <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-maps.png')} />
+                        <Text style={styles.subTitulos}>Localização: <Text>São Paulo</Text></Text>
+                    </View>
+                    <View style={styles.containerTitulo}>
+
+                        <Text style={styles.subTitulos}><Image style={styles.iconCardDes} source={require('../../../../assets/images/global/icon-ponto.png')} />   Descrição: <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum pretium sapien, a ultrices velit interdum non. </Text></Text>
+                    </View>
+
                 </View>
-                <View style={styles.containerTitulo}>
-                    <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-maps.png')} />
-                    <Text style={styles.subTitulos}>Localização: <Text>São Paulo</Text></Text>
-                </View>
-                <View style={styles.containerTitulo}>
-                
-                    <Text style={styles.subTitulos}><Image style={styles.iconCardDes} source={require('../../../../assets/images/global/icon-ponto.png')} />   Descrição: <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum pretium sapien, a ultrices velit interdum non. </Text></Text>
-                </View>
-                
-            </View>
+            </TouchableOpacity>
 
             <BotaoBranco
-                            texto={'Adicionar Cronograma'}
-                            onPress={() => navigation.navigate('telaAddCronograma')}
-                            estilo={styles.roteiroBotao}
-                            icon={require('../../../../assets/images/telaAddDestino/icon-add.png')}
-                            navigation={navigation}
-                        />
+                texto={'Adicionar Cronograma'}
+                onPress={() => navigation.navigate('telaAddCronograma')}
+                estilo={styles.roteiroBotao}
+                icon={require('../../../../assets/images/telaAddDestino/icon-add.png')}
+                navigation={navigation}
+            />
         </View>
     );
 };

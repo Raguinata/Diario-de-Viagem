@@ -14,7 +14,7 @@ const grupoViagem = ({ navigation }) => {
             </View>
 
             <View style={styles.conteudoDireito}>
-                <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('telaExcluir')}>
+                <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('telaVisualizarEvento')}>
                     <Image source={require('../../../../assets/images/global/icon-lixo.png')} />
                 </TouchableOpacity>
             </View>

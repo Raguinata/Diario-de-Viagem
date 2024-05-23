@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'reac
 
 const telaPerfil = ({ route }) => {
 
-    const [infos, setInfos] =useState({});
+    const [infos, setInfos] = useState({});
 
     const handleSetInfos = async () => {
         const infos = await route.params;

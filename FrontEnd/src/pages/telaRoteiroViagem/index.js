@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import Thumb from '../../components/components-roteiro/thumb';
@@ -9,8 +9,21 @@ import Roteiro from '../../components/components-roteiro/roteiro';
 import ContatosEmergencia from '../../components/components-roteiro/contatosEmergencia';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 
-const telaRoteiroViagem = ({ navigation }) => {
+const telaRoteiroViagem = ({ navigation, route }) => {
+
     const [orcamento, setOrcamento] = useState(0);
+    const [programa, setPrograma] = useState({});
+    const [usuario, setUsuario] = useState({});
+
+    const handleSetInfos = async () => {
+        const infos = await route.params;
+        setPrograma(infos?.programa);
+        setUsuario(infos?.usuario);
+    }
+
+    useEffect(() => {
+        handleSetInfos();
+    }, []);
 
     const incrementar = () => setOrcamento(orcamento + 50);
     const decrementar = () => setOrcamento(orcamento - 50);
@@ -20,7 +33,7 @@ const telaRoteiroViagem = ({ navigation }) => {
             <Header titulo={'Minhas Viagens'} />
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
-                    <Thumb />
+                    <Thumb programa={programa}/>
 
                     {/** ////////////////////////////////////////////////////// */}
                     <View style={styles.contador}>

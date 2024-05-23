@@ -12,6 +12,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'rea
 const telaRoteiroViagem = ({ navigation, route }) => {
 
     const [orcamento, setOrcamento] = useState(0);
+    const [gasto_total, setGastoTotal] = useState(0);
     const [programa, setPrograma] = useState({});
     const [usuario, setUsuario] = useState({});
 
@@ -19,21 +20,47 @@ const telaRoteiroViagem = ({ navigation, route }) => {
         const infos = await route.params;
         setPrograma(infos?.programa);
         setUsuario(infos?.usuario);
+        return infos?.programa;
+    }
+
+    const listaTotalDeGastos = async (id) => {
+        let res = await fetch(`http://localhost:8080/gasto/${id}`)
+        res = await res.json();
+        setGastoTotal(res);
+    }
+
+    const atualizarOrcamento = async (valorAtual) => {
+        let res = await fetch(`http://localhost:8080/programa/atualizar-orcamento?` +
+            `idProgramaDeViagem=${programa.idProgramaDeViagem}&orcamento=${valorAtual}`,
+            {
+                method: "PUT"
+            }
+        )
+        res = await res.json();
+        if (res != 1) {
+            alert("Erro, orçamento não atualizado")
+        }
     }
 
     useEffect(() => {
-        handleSetInfos();
+        handleSetInfos().then((programa) => {
+            setOrcamento(programa.orcamento);
+            listaTotalDeGastos(programa.idProgramaDeViagem);
+        });
     }, []);
 
-    const incrementar = () => setOrcamento(orcamento + 50);
-    const decrementar = () => setOrcamento(orcamento - 50);
+    const handleOrcamento = (operacao) => {
+        let atual = operacao
+        setOrcamento(atual);
+        atualizarOrcamento(atual);
+    };
 
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'} />
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
-                    <Thumb programa={programa}/>
+                    <Thumb programa={programa} />
 
                     {/** ////////////////////////////////////////////////////// */}
                     <View style={styles.contador}>
@@ -45,25 +72,27 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                         <View style={styles.contadorPlanejado}>
                             <Text style={styles.subTitulos}>Planejado</Text>
                             <View style={styles.contadorValorTotal}>
-                                <TouchableOpacity style={styles.contadorBotaoMais} onPress={incrementar}>
+                                <TouchableOpacity style={styles.contadorBotaoMais}
+                                    onPress={() => handleOrcamento(orcamento + 50)}>
                                     <Image source={require('../../../assets/images/global/icon-mais.png')} />
                                 </TouchableOpacity>
 
                                 <Text style={styles.subTitulos}>R${orcamento.toFixed(2)}</Text>
 
-                                <TouchableOpacity style={styles.contadorBotaoMenos} onPress={decrementar}>
+                                <TouchableOpacity style={styles.contadorBotaoMenos}
+                                    onPress={() => handleOrcamento(orcamento - 50)}>
                                     <Image source={require('../../../assets/images/global/icon-menos.png')} />
                                 </TouchableOpacity>
                             </View>
                         </View>
                         <View style={styles.contadorGastoTotal}>
                             <Text style={styles.subTitulos}>Gasto Total</Text>
-                            <Text style={styles.subTitulos}>R$0,00</Text>
+                            <Text style={styles.subTitulos}>{gasto_total}</Text>
                         </View>
 
                         <View style={styles.contadorGastoTotal}>
                             <Text style={styles.subTitulos}>Restante</Text>
-                            <Text style={styles.subTitulos}>R$0,00</Text>
+                            <Text style={styles.subTitulos}>{orcamento - gasto_total}</Text>
                         </View>
                     </View>
 
@@ -96,18 +125,18 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                         </View>
 
                         <ContatosEmergencia
-                        numero={'190'}
-                        servico={'Polícia'}
+                            numero={'190'}
+                            servico={'Polícia'}
                         />
                         <ContatosEmergencia
-                        numero={'192'}
-                        servico={'Ambulância'}
+                            numero={'192'}
+                            servico={'Ambulância'}
                         />
                         <ContatosEmergencia
-                        numero={'193'}
-                        servico={'Bombeiros'}
+                            numero={'193'}
+                            servico={'Bombeiros'}
                         />
-                        
+
                     </View>
 
                     {/** ////////////////////////////////////////////////////// */}
@@ -118,8 +147,8 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                             <Text style={styles.titulos}>Aluguel de veículo:</Text>
                         </View>
 
-                        <AluguelVeiculo 
-                        navigation={navigation}
+                        <AluguelVeiculo
+                            navigation={navigation}
                         />
 
                         <BotaoBranco

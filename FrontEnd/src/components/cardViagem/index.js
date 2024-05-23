@@ -15,7 +15,7 @@ const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
             <View style={styles.legenda}>
                 <View style={styles.texto}>
                     <Text style={styles.titulo}>{programa_infos?.nome}</Text>
-                    <Text style={styles.subTitulo}>aaaSão Paulo</Text>
+                    <Text style={styles.subTitulo}>{programa_infos?.estado?.nome}</Text>
                     <View style={styles.chegada}>
                         <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
                         <Text style={styles.chegadaTexto}>Chegada: {programa_infos?.dataChegada}</Text>

@@ -22,7 +22,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Nome da parada:'}
-                        icon={require('./assets/images/global/icon-lapis.png')} 
+                        icon={require('../../../assets/images/global/icon-lapis.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}
@@ -34,7 +34,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Pesquisar por evento:'}
-                        icon={require('./assets/images/global/icon-maps.png')} 
+                        icon={require('../../../assets/images/global/icon-maps.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}
@@ -51,7 +51,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Hora:'}
-                        icon={require('./assets/images/global/icon-relogio.png')} 
+                        icon={require('../../../assets/images/global/icon-relogio.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}

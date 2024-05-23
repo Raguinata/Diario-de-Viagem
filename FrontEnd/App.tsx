@@ -17,6 +17,8 @@ import telaAddVeiculo from './src/pages/telaAddVeiculo';
 import telaAddRoteiro from './src/pages/telaAddRoteiro';
 import telaAddCronograma from './src/pages/telaAddCronograma';
 import telaVisualizarEvento from './src/pages/telaVisualizarEvento';
+import telaAddParada from './src/pages/telaAddParada';
+import telaAddGasto from './src/pages/telaAddGasto';
 
 const Stack = createNativeStackNavigator();
 
@@ -87,6 +89,16 @@ const App = () => {
                 <Stack.Screen 
                     name="telaVisualizarEvento" 
                     component={telaVisualizarEvento}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaAddParada" 
+                    component={telaAddParada}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaAddGasto" 
+                    component={telaAddGasto}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

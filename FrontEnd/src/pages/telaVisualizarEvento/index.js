@@ -1,25 +1,60 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
+import Thumb from '../../components/components-evento/thumb';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 const telaVisualizarEvento = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Hello, world!</Text>
-        </View>
+        <Header titulo={'Minhas Viagens'} />
+        <ScrollView style={styles.conteudoScroll}>
+            <View style={styles.conteudo}>
+                
+                <Thumb/>
+
+            </View>
+        </ScrollView>
+        <Footer />
+    </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: 'white',
     },
-    text: {
-        fontSize: 24,
+
+    conteudoScroll: {
+        flex: 1,
+        marginVertical: 40,
+        width: '90%',
+        backgroundColor: '#D9D9D9',
+        borderRadius: 20,
+    },
+
+    conteudo: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+    },
+
+    titulos: {
+        fontSize: 18,
         fontWeight: 'bold',
-        color: '#333',
+        fontFamily: 'Outfit-VariableFont_wght',
+        color: 'black',
+        margin: 10,
+    },
+
+    subTitulos: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        fontFamily: 'Outfit-VariableFont_wght',
+        color: 'black',
+        margin: 10,
     },
 });
 

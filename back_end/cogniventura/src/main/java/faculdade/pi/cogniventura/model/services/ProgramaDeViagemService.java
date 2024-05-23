@@ -2,6 +2,7 @@ package faculdade.pi.cogniventura.model.services;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,8 @@ public class ProgramaDeViagemService {
         return programaDeViagemRepository.findByUsuarios(usuario);
     }
 
-    //Enpoint feito em Programa pois é necessário adicionar na tabela de programa_veiculo também
+    // Enpoint feito em Programa pois é necessário adicionar na tabela de
+    // programa_veiculo também
     @Transactional
     public ProgramaDeViagem saveOrMergeVeiculo(ProgramaVeiculoDTO dto) {
         Veiculo veiculo = veiculoService.saveOrMergeVeiculo(dto.getVeiculo());
@@ -47,16 +49,16 @@ public class ProgramaDeViagemService {
 
     // Não é possível que não exista outra forma, isso está horrivel
     @Transactional
-    public void deletaVeiculoDoPrograma(ProgramaVeiculoDTO dto){
+    public void deletaVeiculoDoPrograma(ProgramaVeiculoDTO dto) {
         ProgramaDeViagem programa = dto.getProgramaDeViagem();
         List<Veiculo> veiculos = programa.getVeiculos();
         Veiculo veiculo = dto.getVeiculo();
-        for(int i = 0; i < veiculos.size(); i++){
-            if(veiculo.getIdVeiculo() == veiculos.get(i).getIdVeiculo()){
+        for (int i = 0; i < veiculos.size(); i++) {
+            if (veiculo.getIdVeiculo() == veiculos.get(i).getIdVeiculo()) {
                 veiculos.remove(i);
             }
         }
-        //Verificar esse endpoint, talvez faltando setVeiculos
+        // Verificar esse endpoint, talvez faltando setVeiculos
         programaDeViagemRepository.save(programa);
         veiculoService.deletar(veiculo.getIdVeiculo());
     }
@@ -68,7 +70,11 @@ public class ProgramaDeViagemService {
     @Transactional
     public ProgramaDeViagem adicionarPorEmail(String email, ProgramaDeViagem programa) {
         Usuario usuario = usuarioService.findByEmail(email);
-        if(usuario != null){
+        if (usuario != null) {
+            for (Usuario usu_lista : programa.getUsuarios()) {
+                if(usu_lista.getIdUsuario() == usuario.getIdUsuario())
+                    return null;
+            }
             programa.getUsuarios().add(usuario);
             return programaDeViagemRepository.save(programa);
         }
@@ -77,12 +83,17 @@ public class ProgramaDeViagemService {
 
     public ProgramaDeViagem deletarDoGrupo(int id_usuario, ProgramaDeViagem programa) {
         List<Usuario> usuarios = programa.getUsuarios();
-        for(int i = 0; i < usuarios.size(); i++){
-            if(id_usuario == usuarios.get(i).getIdUsuario()){
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (id_usuario == usuarios.get(i).getIdUsuario()) {
                 usuarios.remove(i);
             }
         }
         programa.setUsuarios(usuarios);
         return programaDeViagemRepository.save(programa);
+    }
+
+    public ProgramaDeViagem findByIdPrograma(int id_programa) {
+        Optional<ProgramaDeViagem> programa = programaDeViagemRepository.findById(id_programa);
+        return programa.orElse(null);
     }
 }

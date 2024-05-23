@@ -34,6 +34,15 @@ public class ProgramaDeViagemController {
         return ResponseEntity.ok().body(programas);
     }
 
+    @GetMapping("/listar")
+    public ResponseEntity<ProgramaDeViagem> findByIdPrograma(@RequestParam int id_programa) {
+        ProgramaDeViagem programa = programaDeViagemService.findByIdPrograma(id_programa);
+        if(programa == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(programa);
+    }
+
     @PostMapping("/cadastro")
     public ResponseEntity<ProgramaDeViagem> cadastro(@RequestBody ProgramaDeViagem programaDeViagem) {
         programaDeViagem = programaDeViagemService.cadastro(programaDeViagem);
@@ -67,6 +76,9 @@ public class ProgramaDeViagemController {
         @RequestBody ProgramaDeViagem programa,
         @RequestParam String email) {
             programa = programaDeViagemService.adicionarPorEmail(email, programa);
+            if(programa == null){
+                return ResponseEntity.noContent().build();
+            }
             return ResponseEntity.ok().body(programa);
     }
 

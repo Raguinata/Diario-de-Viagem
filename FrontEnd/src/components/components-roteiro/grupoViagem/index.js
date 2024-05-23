@@ -1,22 +1,32 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const grupoViagem = ({ navigation }) => {
+const grupoViagem = ({ navigation, usuario, programa }) => {
     return (
         <View style={styles.container}>
 
             <View style={styles.conteudoEsquerdo}>
                 <Image style={styles.imagem} source={require('../../../../assets/images/global/header-icon.png')} />
                 <View style={styles.informacoes}>
-                    <Text style={styles.titulo}>Carlos</Text>
-                    <Text style={styles.subTitulo}>Idade: 53 anos</Text>
+                    <Text style={styles.titulo}>{usuario?.nome}</Text>
+                    <Text style={styles.subTitulo}>Aniversário: {usuario?.nascimento}</Text>
                 </View>
             </View>
 
             <View style={styles.conteudoDireito}>
-                <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('telaExcluir')}>
-                    <Image source={require('../../../../assets/images/global/icon-lixo.png')} />
-                </TouchableOpacity>
+                {
+                    usuario.idUsuario == programa.lider.idUsuario ?
+                        <Text>Lider</Text>
+                        :
+                        <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('telaExcluir', {
+                            programa: programa,
+                            id_usuario: usuario?.idUsuario,
+                            navigation: navigation
+                        })}>
+                            <Image source={require('../../../../assets/images/global/icon-lixo.png')} />
+                        </TouchableOpacity>
+                }
+
             </View>
         </View>
     );
@@ -70,7 +80,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 10,
     },
-    
+
     icon: {
         width: 30, // Reduza a largura do ícone para ajustar o tamanho do conteúdo
         height: 30, // Reduza a altura do ícone se necessário

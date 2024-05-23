@@ -1,35 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
-import InputDescricao from './src/components/inputDescricao';
+// import InputDescricao from './src/components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
-const App = () => {
+const telaConvidarPessoa = ({ route }) => {
+
+    const [email, setEmail] = useState('');
+
+    const handleSetInfos = async () => {
+        const infos = await route.params;
+        return infos;
+    }
+
+    const adicionarAoGrupo = async () => {
+        handleSetInfos().then(async ({ programa, navigation, usuario }) => {
+            try {
+                let res = await fetch(`http://localhost:8080/programa/grupo/adicionar-por-email?email=${email}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(programa)
+                })
+                if (res.status == 204) {
+                    alert("Erro, esse email não existe ou já foi adicionado")
+                }
+                else {
+                    alert("Adicionado com sucesso");
+                    navigation.navigate('telaRoteiroViagem');
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        })
+    }
+
     return (
         <View style={styles.container}>
-            <Header titulo={'Minhas Viagens'}/>
+            <Header titulo={'Minhas Viagens'} />
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
                     <View style={styles.iconVoltar}>
-                        <IconVoltar/>
+                        <IconVoltar />
                     </View>
-                    <BotaoBranco texto={'Convidar pessoa ao grupo'} onPress={undefined} estilo={undefined} icon={undefined}  />
+                    <BotaoBranco texto={'Convidar pessoa ao grupo'} onPress={undefined} estilo={undefined} icon={undefined} />
                     <Input
                         placeholder={'Digite o email do usuário'}
-                        onChangeText={undefined}
-                        value={undefined} 
+                        onChangeText={setEmail}
+                        value={email}
                         texto={'Email do Usuário:'}
-                        icon={require('./assets/images/global/icon-email.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
+                        icon={require('../../../assets/images/global/icon-email.png')}
+                        fontColor={undefined}
+                        inputColor={'white'}
                         width={320}
-                        height={undefined}                                            
-                        />
+                        height={undefined}
+                    />
 
-                    <BotaoBranco texto={'Convidar'} onPress={undefined} estilo={undefined} icon={undefined}  />
+                    <BotaoBranco texto={'Convidar'} onPress={adicionarAoGrupo} estilo={undefined} icon={undefined} />
 
                 </View>
             </ScrollView>
@@ -74,4 +105,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default telaConvidarPessoa;

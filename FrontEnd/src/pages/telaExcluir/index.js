@@ -4,31 +4,53 @@ import Footer from '../../components/footer';
 import IconVoltar from '../../components/icon-voltar';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
 
-const App = () => {
-    const handleSimPress = () => {
-        console.log('Sim');
-    };
+const telaExcluir = ({ route }) => {
 
     const handleNaoPress = () => {
         console.log('Não');
     };
 
+    const handleSetInfos = async () => {
+        const infos = await route.params;
+        return infos;
+    }
+
+    const deletarDoGrupo = (quero_deletar) => {
+        try {
+            handleSetInfos().then(async ({ programa, id_usuario, navigation }) => {
+                if (quero_deletar) {
+                    let res = await fetch(`http://localhost:8080/programa/grupo/deletar?id_usuario=${id_usuario}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(programa)
+                    })
+                }
+                navigation.navigate('telaRoteiroViagem')
+            })
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <Header titulo={'Minhas Viagens'}/>
+            <Header titulo={'Minhas Viagens'} />
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
                     <View style={styles.iconVoltar}>
-                        <IconVoltar/>
+                        <IconVoltar />
                     </View>
-                    
+
                     <Text style={styles.titulo}>Tem certeza que deseja excluir esse item?</Text>
 
                     <View style={styles.botoesContainer}>
-                        <TouchableOpacity style={[styles.botao, styles.botaoSim]} onPress={handleSimPress}>
+                        <TouchableOpacity style={[styles.botao, styles.botaoSim]} onPress={() => deletarDoGrupo(true)}>
                             <Text style={styles.textoBotao}>Sim</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.botao, styles.botaoNao]} onPress={handleNaoPress}>
+                        <TouchableOpacity style={[styles.botao, styles.botaoNao]} onPress={() => deletarDoGrupo(false)}>
                             <Text style={styles.textoBotao}>Não</Text>
                         </TouchableOpacity>
                     </View>
@@ -105,4 +127,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default telaExcluir;

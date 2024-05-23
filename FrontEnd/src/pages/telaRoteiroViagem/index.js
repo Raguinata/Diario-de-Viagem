@@ -15,18 +15,31 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     const [gasto_total, setGastoTotal] = useState(0);
     const [programa, setPrograma] = useState({});
     const [usuario, setUsuario] = useState({});
+    const [grupo, setGrupo] = useState([]);
 
     const handleSetInfos = async () => {
         const infos = await route.params;
-        setPrograma(infos?.programa);
         setUsuario(infos?.usuario);
         return infos?.programa;
     }
 
+    const atualizaInfosPrograma = async (id) => {
+        try {
+            let res = await fetch(`http://localhost:8080/programa/listar?id_programa=${id}`)
+            return await res.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const listaTotalDeGastos = async (id) => {
-        let res = await fetch(`http://localhost:8080/gasto/${id}`)
-        res = await res.json();
-        setGastoTotal(res);
+        try {
+            let res = await fetch(`http://localhost:8080/gasto/${id}`)
+            res = await res.json();
+            setGastoTotal(res);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const atualizarOrcamento = async (valorAtual) => {
@@ -44,10 +57,14 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     useEffect(() => {
         handleSetInfos().then((programa) => {
-            setOrcamento(programa.orcamento);
-            listaTotalDeGastos(programa.idProgramaDeViagem);
+            atualizaInfosPrograma(programa.idProgramaDeViagem).then(programa => {
+                setPrograma(programa);
+                setOrcamento(programa?.orcamento);
+                setGrupo(programa?.usuarios);
+                listaTotalDeGastos(programa?.idProgramaDeViagem);
+            })
         });
-    }, []);
+    }, [navigation]);
 
     const handleOrcamento = (operacao) => {
         let atual = operacao
@@ -104,13 +121,22 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                             <Text style={styles.titulos}>Grupo da viagem</Text>
                         </View>
 
-                        <GrupoViagem navigation={navigation} />
-                        <GrupoViagem navigation={navigation} />
-                        <GrupoViagem navigation={navigation} />
+
+                        {
+                            grupo.map((pessoa) => {
+                                return (
+                                    <GrupoViagem programa={programa} usuario={pessoa} navigation={navigation} />
+                                );
+                            })
+                        }
 
                         <BotaoBranco
                             texto={'Convidar pessoa ao grupo'}
-                            onPress={undefined}
+                            onPress={() => navigation.navigate('telaConvidarPessoa', {
+                                programa: programa,
+                                usuario: usuario,
+                                navigation: navigation
+                            })}
                             estilo={styles.gpViagemBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                         />
@@ -178,7 +204,6 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                             navigation={navigation}
                         />
                     </View>
-
                 </View>
             </ScrollView>
             <Footer />

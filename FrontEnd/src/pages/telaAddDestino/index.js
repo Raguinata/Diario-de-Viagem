@@ -72,7 +72,7 @@ const TelaAddDestino = ({ navigation, route }) => {
                     <AddDestino navigation={navigation} />
                 </View>
                 <View style={[styles.slide, { width: screenWidth }]}>
-                    <CardViagem programa_infos={programas[3]} navigation={navigation} usuario_infos={usuario}/>
+                    <CardViagem programa_infos={programas[6]} navigation={navigation} usuario_infos={usuario}/>
                 </View>
                 <View style={[styles.slide, { width: screenWidth }]}>
                     <AddDestino navigation={navigation} />

@@ -28,7 +28,7 @@ const TelaCadastro = ({ navigation }) => {
         }
 
         try {
-            return await fetch(`http://localhost:8080/usuario/cadastro`, {
+            return await fetch(`http://10.135.146.42:8080/usuario/cadastro`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

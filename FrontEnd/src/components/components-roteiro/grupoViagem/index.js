@@ -15,12 +15,12 @@ const grupoViagem = ({ navigation, usuario, programa }) => {
 
             <View style={styles.conteudoDireito}>
                 {
-                    usuario.idUsuario == programa.lider.idUsuario ?
+                    usuario?.idUsuario == programa?.lider?.idUsuario ?
                         <Text>Lider</Text>
                         :
                         <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('telaExcluir', {
                             programa: programa,
-                            id_usuario: usuario?.idUsuario,
+                            usuario: usuario,
                             navigation: navigation
                         })}>
                             <Image source={require('../../../../assets/images/global/icon-lixo.png')} />

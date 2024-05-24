@@ -17,17 +17,22 @@ const telaExcluir = ({ route }) => {
 
     const deletarDoGrupo = (quero_deletar) => {
         try {
-            handleSetInfos().then(async ({ programa, id_usuario, navigation }) => {
+            handleSetInfos().then(async ({ programa, usuario, navigation }) => {
                 if (quero_deletar) {
-                    let res = await fetch(`http://localhost:8080/programa/grupo/deletar?id_usuario=${id_usuario}`, {
-                        method: "DELETE",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(programa)
-                    })
+                    let res = await fetch(`http://10.135.146.42:8080/programa/grupo/deletar?id_usuario=${usuario.idUsuario}`,
+                        {
+                            method: "DELETE",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(programa)
+                        })
+                    programa = await res.json();
                 }
-                navigation.navigate('telaRoteiroViagem')
+                navigation.navigate('telaRoteiroViagem', {
+                    programa: programa,
+                    usuario: usuario
+                })
             })
 
         } catch (error) {

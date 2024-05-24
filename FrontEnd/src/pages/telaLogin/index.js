@@ -19,7 +19,7 @@ const TelaLogin = ({ navigation }) => {
 
     const login = async () => {
         try {
-            return await fetch(`http://localhost:8080/usuario/login?email=${email}&senha=${senha}`, {
+            return await fetch(`http://10.135.146.42:8080/usuario/login?email=${email}&senha=${senha}`, {
                 method: "POST"
             });
         } catch (error) {

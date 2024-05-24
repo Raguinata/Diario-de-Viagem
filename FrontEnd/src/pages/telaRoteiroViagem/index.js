@@ -8,6 +8,7 @@ import AluguelVeiculo from '../../components/components-roteiro/aluguelVeiculo';
 import Roteiro from '../../components/components-roteiro/roteiro';
 import ContatosEmergencia from '../../components/components-roteiro/contatosEmergencia';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 const telaRoteiroViagem = ({ navigation, route }) => {
 
@@ -18,23 +19,15 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     const [grupo, setGrupo] = useState([]);
 
     const handleSetInfos = async () => {
-        const infos = await route.params;
+        const infos = await route?.params;
         setUsuario(infos?.usuario);
+        setPrograma(infos?.programa);
         return infos?.programa;
-    }
-
-    const atualizaInfosPrograma = async (id) => {
-        try {
-            let res = await fetch(`http://localhost:8080/programa/listar?id_programa=${id}`)
-            return await res.json();
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     const listaTotalDeGastos = async (id) => {
         try {
-            let res = await fetch(`http://localhost:8080/gasto/${id}`)
+            let res = await fetch(`http://10.135.146.42:8080/gasto/${id}`)
             res = await res.json();
             setGastoTotal(res);
         } catch (error) {
@@ -43,8 +36,8 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     }
 
     const atualizarOrcamento = async (valorAtual) => {
-        let res = await fetch(`http://localhost:8080/programa/atualizar-orcamento?` +
-            `idProgramaDeViagem=${programa.idProgramaDeViagem}&orcamento=${valorAtual}`,
+        let res = await fetch(`http://10.135.146.42:8080/programa/atualizar-orcamento?` +
+            `idProgramaDeViagem=${programa?.idProgramaDeViagem}&orcamento=${valorAtual}`,
             {
                 method: "PUT"
             }
@@ -55,16 +48,13 @@ const telaRoteiroViagem = ({ navigation, route }) => {
         }
     }
 
-    useEffect(() => {
+    useFocusEffect(() => {
         handleSetInfos().then((programa) => {
-            atualizaInfosPrograma(programa.idProgramaDeViagem).then(programa => {
-                setPrograma(programa);
-                setOrcamento(programa?.orcamento);
-                setGrupo(programa?.usuarios);
-                listaTotalDeGastos(programa?.idProgramaDeViagem);
-            })
+            programa?.orcamento === null ? setOrcamento(0):setOrcamento(programa?.orcamento);
+            setGrupo(programa?.usuarios);
+            listaTotalDeGastos(programa?.idProgramaDeViagem);
         });
-    }, [navigation]);
+    });
 
     const handleOrcamento = (operacao) => {
         let atual = operacao

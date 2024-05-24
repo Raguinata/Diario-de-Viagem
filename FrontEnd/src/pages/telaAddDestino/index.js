@@ -27,7 +27,7 @@ const TelaAddDestino = ({ navigation, route }) => {
     };
 
     const handleNext = () => {
-        if (currentIndex < 2) {
+        if (currentIndex < programas?.length) {
             setCurrentIndex(currentIndex + 1);
             scrollViewRef.current.scrollTo({ x: currentIndex * screenWidth + screenWidth, animated: true });
         }
@@ -35,7 +35,7 @@ const TelaAddDestino = ({ navigation, route }) => {
 
     const fetchProgramas = async (id) => {
         try {
-            let res = await fetch(`http://localhost:8080/programa/listar/${id}`)
+            let res = await fetch(`http://10.135.146.42:8080/programa/listar/${id}`)
             res = await res.json();
             setProgramas(res);
         } catch (error) {
@@ -66,24 +66,28 @@ const TelaAddDestino = ({ navigation, route }) => {
                 showsHorizontalScrollIndicator={false}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
-            >   
+            >
                 {/*ATENÇÃO, A LISTAGEM NÃO ESTÁ DINÂMICA */}
                 <View style={[styles.slide, { width: screenWidth }]}>
                     <AddDestino navigation={navigation} />
                 </View>
-                <View style={[styles.slide, { width: screenWidth }]}>
-                    <CardViagem programa_infos={programas[6]} navigation={navigation} usuario_infos={usuario}/>
-                </View>
-                <View style={[styles.slide, { width: screenWidth }]}>
-                    <AddDestino navigation={navigation} />
-                </View>
+                {
+                    programas.map(programa => {
+                        return (
+                            <View style={[styles.slide, { width: screenWidth }]}>
+                                <CardViagem programa_infos={programa} navigation={navigation} usuario_infos={usuario} />
+                            </View>
+                        );
+                    })
+                }
+
 
             </ScrollView>
             <View style={styles.pagination}>
                 <TouchableOpacity onPress={handlePrevious}>
                     <Text style={styles.paginationText}>Anterior</Text>
                 </TouchableOpacity>
-                <Text style={styles.paginationText}>{currentIndex + 1} / 3</Text>
+                <Text style={styles.paginationText}>{currentIndex + 1} / {programas?.length + 1}</Text>
                 <TouchableOpacity onPress={handleNext}>
                     <Text style={styles.paginationText}>Próximo</Text>
                 </TouchableOpacity>

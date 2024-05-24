@@ -26,7 +26,7 @@ const telaAddViagem = () => {
     //Busca os estados no banco de dados
     const fetchEstados = async () => {
         try {
-            let res = await fetch(`http://localhost:8080/estado/`);
+            let res = await fetch(`http://10.135.146.42:8080/estado/`);
             res = await res.json();
             setEstados(res);
         } catch (error) {
@@ -47,7 +47,7 @@ const telaAddViagem = () => {
                 estado: estados[1]
             }
 
-            let res = await fetch(`http://localhost:8080/programa/cadastro`, {
+            let res = await fetch(`http://10.135.146.42:8080/programa/cadastro`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

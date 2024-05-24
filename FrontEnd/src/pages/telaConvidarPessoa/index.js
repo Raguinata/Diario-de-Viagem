@@ -19,7 +19,7 @@ const telaConvidarPessoa = ({ route }) => {
     const adicionarAoGrupo = async () => {
         handleSetInfos().then(async ({ programa, navigation, usuario }) => {
             try {
-                let res = await fetch(`http://localhost:8080/programa/grupo/adicionar-por-email?email=${email}`, {
+                let res = await fetch(`http://10.135.146.42:8080/programa/grupo/adicionar-por-email?email=${email}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -30,8 +30,12 @@ const telaConvidarPessoa = ({ route }) => {
                     alert("Erro, esse email não existe ou já foi adicionado")
                 }
                 else {
+                    res = await res.json();
                     alert("Adicionado com sucesso");
-                    navigation.navigate('telaRoteiroViagem');
+                    navigation.navigate('telaRoteiroViagem', {
+                        programa: res,
+                        usuario: usuario
+                    });
                 }
             } catch (error) {
                 console.log(error);

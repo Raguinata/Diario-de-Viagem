@@ -22,7 +22,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Nome do gasto:'}
-                        icon={require('./assets/images/global/icon-lapis.png')} 
+                        icon={require('../../../assets/images/global/icon-lapis.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}
@@ -34,7 +34,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Emoji:'}
-                        icon={require('./assets/images/global/icon-emoji.png')} 
+                        icon={require('../../../assets/images/global/icon-emoji.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}
@@ -46,7 +46,7 @@ const App = () => {
                         onChangeText={undefined}
                         value={undefined} 
                         texto={'Custo:'}
-                        icon={require('./assets/images/global/icon-custo.png')} 
+                        icon={require('../../../assets/images/global/icon-custo.png')} 
                         fontColor={undefined} 
                         inputColor={'white'} 
                         width={320}

@@ -26,7 +26,6 @@ const grupoViagem = ({ navigation, usuario, programa }) => {
                             <Image source={require('../../../../assets/images/global/icon-lixo.png')} />
                         </TouchableOpacity>
                 }
-
             </View>
         </View>
     );

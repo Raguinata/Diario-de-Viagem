@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import Thumb from '../../components/components-roteiro/thumb';
@@ -9,18 +9,75 @@ import Roteiro from '../../components/components-roteiro/roteiro';
 import ContatosEmergencia from '../../components/components-roteiro/contatosEmergencia';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 
-const telaRoteiroViagem = ({ navigation }) => {
-    const [orcamento, setOrcamento] = useState(0);
+const telaRoteiroViagem = ({ navigation, route }) => {
 
-    const incrementar = () => setOrcamento(orcamento + 50);
-    const decrementar = () => setOrcamento(orcamento - 50);
+    const [orcamento, setOrcamento] = useState(0);
+    const [gasto_total, setGastoTotal] = useState(0);
+    const [programa, setPrograma] = useState({});
+    const [usuario, setUsuario] = useState({});
+    const [grupo, setGrupo] = useState([]);
+
+    const handleSetInfos = async () => {
+        const infos = await route.params;
+        setUsuario(infos?.usuario);
+        return infos?.programa;
+    }
+
+    const atualizaInfosPrograma = async (id) => {
+        try {
+            let res = await fetch(`http://localhost:8080/programa/listar?id_programa=${id}`)
+            return await res.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const listaTotalDeGastos = async (id) => {
+        try {
+            let res = await fetch(`http://localhost:8080/gasto/${id}`)
+            res = await res.json();
+            setGastoTotal(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const atualizarOrcamento = async (valorAtual) => {
+        let res = await fetch(`http://localhost:8080/programa/atualizar-orcamento?` +
+            `idProgramaDeViagem=${programa.idProgramaDeViagem}&orcamento=${valorAtual}`,
+            {
+                method: "PUT"
+            }
+        )
+        res = await res.json();
+        if (res != 1) {
+            alert("Erro, orçamento não atualizado")
+        }
+    }
+
+    useEffect(() => {
+        handleSetInfos().then((programa) => {
+            atualizaInfosPrograma(programa.idProgramaDeViagem).then(programa => {
+                setPrograma(programa);
+                setOrcamento(programa?.orcamento);
+                setGrupo(programa?.usuarios);
+                listaTotalDeGastos(programa?.idProgramaDeViagem);
+            })
+        });
+    }, [navigation]);
+
+    const handleOrcamento = (operacao) => {
+        let atual = operacao
+        setOrcamento(atual);
+        atualizarOrcamento(atual);
+    };
 
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'} />
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
-                    <Thumb />
+                    <Thumb programa={programa} />
 
                     {/** ////////////////////////////////////////////////////// */}
                     <View style={styles.contador}>
@@ -32,25 +89,27 @@ const telaRoteiroViagem = ({ navigation }) => {
                         <View style={styles.contadorPlanejado}>
                             <Text style={styles.subTitulos}>Planejado</Text>
                             <View style={styles.contadorValorTotal}>
-                                <TouchableOpacity style={styles.contadorBotaoMais} onPress={incrementar}>
+                                <TouchableOpacity style={styles.contadorBotaoMais}
+                                    onPress={() => handleOrcamento(orcamento + 50)}>
                                     <Image source={require('../../../assets/images/global/icon-mais.png')} />
                                 </TouchableOpacity>
 
                                 <Text style={styles.subTitulos}>R${orcamento.toFixed(2)}</Text>
 
-                                <TouchableOpacity style={styles.contadorBotaoMenos} onPress={decrementar}>
+                                <TouchableOpacity style={styles.contadorBotaoMenos}
+                                    onPress={() => handleOrcamento(orcamento - 50)}>
                                     <Image source={require('../../../assets/images/global/icon-menos.png')} />
                                 </TouchableOpacity>
                             </View>
                         </View>
                         <View style={styles.contadorGastoTotal}>
                             <Text style={styles.subTitulos}>Gasto Total</Text>
-                            <Text style={styles.subTitulos}>R$0,00</Text>
+                            <Text style={styles.subTitulos}>{gasto_total}</Text>
                         </View>
 
                         <View style={styles.contadorGastoTotal}>
                             <Text style={styles.subTitulos}>Restante</Text>
-                            <Text style={styles.subTitulos}>R$0,00</Text>
+                            <Text style={styles.subTitulos}>{orcamento - gasto_total}</Text>
                         </View>
                     </View>
 
@@ -62,13 +121,22 @@ const telaRoteiroViagem = ({ navigation }) => {
                             <Text style={styles.titulos}>Grupo da viagem</Text>
                         </View>
 
-                        <GrupoViagem navigation={navigation} />
-                        <GrupoViagem navigation={navigation} />
-                        <GrupoViagem navigation={navigation} />
+
+                        {
+                            grupo.map((pessoa) => {
+                                return (
+                                    <GrupoViagem programa={programa} usuario={pessoa} navigation={navigation} />
+                                );
+                            })
+                        }
 
                         <BotaoBranco
                             texto={'Convidar pessoa ao grupo'}
-                            onPress={undefined}
+                            onPress={() => navigation.navigate('telaConvidarPessoa', {
+                                programa: programa,
+                                usuario: usuario,
+                                navigation: navigation
+                            })}
                             estilo={styles.gpViagemBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                         />
@@ -83,18 +151,18 @@ const telaRoteiroViagem = ({ navigation }) => {
                         </View>
 
                         <ContatosEmergencia
-                        numero={'190'}
-                        servico={'Polícia'}
+                            numero={'190'}
+                            servico={'Polícia'}
                         />
                         <ContatosEmergencia
-                        numero={'192'}
-                        servico={'Ambulância'}
+                            numero={'192'}
+                            servico={'Ambulância'}
                         />
                         <ContatosEmergencia
-                        numero={'193'}
-                        servico={'Bombeiros'}
+                            numero={'193'}
+                            servico={'Bombeiros'}
                         />
-                        
+
                     </View>
 
                     {/** ////////////////////////////////////////////////////// */}
@@ -105,8 +173,8 @@ const telaRoteiroViagem = ({ navigation }) => {
                             <Text style={styles.titulos}>Aluguel de veículo:</Text>
                         </View>
 
-                        <AluguelVeiculo 
-                        navigation={navigation}
+                        <AluguelVeiculo
+                            navigation={navigation}
                         />
 
                         <BotaoBranco
@@ -136,7 +204,6 @@ const telaRoteiroViagem = ({ navigation }) => {
                             navigation={navigation}
                         />
                     </View>
-
                 </View>
             </ScrollView>
             <Footer />

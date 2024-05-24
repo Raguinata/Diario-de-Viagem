@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
@@ -7,9 +7,11 @@ import CardViagem from '../../components/cardViagem';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const TelaAddDestino = ({ navigation }) => {
+const TelaAddDestino = ({ navigation, route }) => {
     const scrollViewRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [programas, setProgramas] = useState([]);
+    const [usuario, setUsuario] = useState({});
 
     const handleScroll = (event) => {
         const contentOffsetX = event.nativeEvent.contentOffset.x;
@@ -31,6 +33,29 @@ const TelaAddDestino = ({ navigation }) => {
         }
     };
 
+    const fetchProgramas = async (id) => {
+        try {
+            let res = await fetch(`http://localhost:8080/programa/listar/${id}`)
+            res = await res.json();
+            setProgramas(res);
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    const handleSetInfos = async () => {
+        const { usuario } = await route.params;
+        setUsuario(usuario);
+        return usuario?.idUsuario;
+    }
+
+    useEffect(() => {
+        handleSetInfos().then((id) => {
+            fetchProgramas(id);
+        });
+    }, [])
+
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viageens'} />
@@ -41,16 +66,18 @@ const TelaAddDestino = ({ navigation }) => {
                 showsHorizontalScrollIndicator={false}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
-            >
+            >   
+                {/*ATENÇÃO, A LISTAGEM NÃO ESTÁ DINÂMICA */}
                 <View style={[styles.slide, { width: screenWidth }]}>
                     <AddDestino navigation={navigation} />
                 </View>
                 <View style={[styles.slide, { width: screenWidth }]}>
-                    <CardViagem navigation={navigation} />
+                    <CardViagem programa_infos={programas[6]} navigation={navigation} usuario_infos={usuario}/>
                 </View>
                 <View style={[styles.slide, { width: screenWidth }]}>
                     <AddDestino navigation={navigation} />
                 </View>
+
             </ScrollView>
             <View style={styles.pagination}>
                 <TouchableOpacity onPress={handlePrevious}>

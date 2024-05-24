@@ -1,24 +1,28 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const CardViagem = ({ navigation }) => {
+const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
     return (
-        <TouchableOpacity style={styles.conteudo} onPress={() => navigation.navigate('telaRoteiroViagem')}>
+        <TouchableOpacity style={styles.conteudo}
+            onPress={() => navigation.navigate('telaRoteiroViagem', {
+                programa: programa_infos,
+                usuario: usuario_infos
+            })}>
             <View style={styles.imagemView}>
                 <Image style={styles.imagem} source={require('../../../assets/images/estados/SP.png')} />
                 <View style={styles.overlay}></View>
             </View>
             <View style={styles.legenda}>
                 <View style={styles.texto}>
-                    <Text style={styles.titulo}>Viagem Da Bacia</Text>
-                    <Text style={styles.subTitulo}>São Paulo</Text>
+                    <Text style={styles.titulo}>{programa_infos?.nome}</Text>
+                    <Text style={styles.subTitulo}>{programa_infos?.estado?.nome}</Text>
                     <View style={styles.chegada}>
                         <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
-                        <Text style={styles.chegadaTexto}>Chegada: 03/12/2020</Text>
+                        <Text style={styles.chegadaTexto}>Chegada: {programa_infos?.dataChegada}</Text>
                     </View>
                     <View style={styles.chegada}>
                         <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
-                        <Text style={styles.chegadaTexto}>Chegada: 03/12/2020</Text>
+                        <Text style={styles.chegadaTexto}>Partida: {programa_infos?.dataPartida}</Text>
                     </View>
                 </View>
             </View>
@@ -54,7 +58,7 @@ const styles = StyleSheet.create({
     texto: {
         marginVertical: 10,
         marginHorizontal: 20,
-        
+
     },
     titulo: {
         fontSize: 20,

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, ImageBackground, ScrollView, Alert } from 'react-native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-
+import PropTypes from 'prop-types'; // Importa PropTypes para validação de propriedades
 
 // Componentes personalizados
 import Logo from '../../components/logo';
@@ -12,66 +12,80 @@ import Icons from '../../components/icons';
 
 // Tela de Login
 const TelaLogin = ({ navigation }) => {
-
-    const [email, setEmail] = useState();
-    const [senha, setSenha] = useState();
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
     const { setItem } = useAsyncStorage("usuario");
 
-    const login = async () => {
+    const validarEmail = useCallback((email) => {
+        const regex = /\S+@\S+\.\S+/;
+        return regex.test(email);
+    }, []);
+
+    const handleCadastro = useCallback(() => {
+        if (!validarEmail(email)) {
+            Alert.alert("Email inválido", "Por favor, insira um email válido contendo '@' e um domínio.");
+            return;
+        }
+        // Lógica de cadastro pode ser adicionada aqui
+    }, [email, validarEmail]);
+
+    const login = useCallback(async () => {
         try {
-            return await fetch(`http://10.135.146.42:8080/usuario/login?email=${email}&senha=${senha}`, {
+            return await fetch(`http://192.168.15.123:8080/usuario/login?email=${email}&senha=${senha}`, {
                 method: "POST"
             });
         } catch (error) {
             console.log(error);
+            Alert.alert("Erro", "Não foi possível realizar o login. Tente novamente mais tarde.");
         }
-    }
+    }, [email, senha]);
 
-    const handleLogin = async () => {
+    const handleLogin = useCallback(async () => {
+        if (!email || !senha) {
+            Alert.alert("Campos obrigatórios", "Por favor, preencha todos os campos.");
+            return;
+        }
+
         const res = await login();
-        if (res.status == 200) {
-            try {
-                const dados = await res.json();
-                await setItem(JSON.stringify(dados));
-                navigation.navigate('telaAddDestino', {usuario: dados});
-            } catch (error) {
-                console.log(error);
+        if (res) {
+            if (res.status === 200) {
+                try {
+                    const dados = await res.json();
+                    await setItem(JSON.stringify(dados));
+                    navigation.navigate('telaAddDestino', { usuario: dados });
+                } catch (error) {
+                    console.log(error);
+                }
+            } else if (res.status === 204) {
+                Alert.alert("Login inválido", "Email ou senha incorretos.");
             }
         }
-        else if (res.status == 204) {
-            alert("Login inválido");
-        }
-    }
+    }, [email, senha, login, navigation, setItem]);
 
     return (
         <View style={styles.container}>
-            {/* Imagem de fundo */}
             <ImageBackground
                 source={require('../../../assets/images/telaInicial/background-image.png')}
-                style={styles.imagemFundo}>
-            </ImageBackground>
-            {/* Overlay para escurecer a imagem de fundo */}
-            <View style={styles.overlayPreto}></View>
+                style={styles.imagemFundo}
+            />
+            <View style={styles.overlayPreto} />
             <ScrollView style={styles.conteudo}>
-                {/* Cabeçalho */}
                 <View style={styles.header}>
-                    <Logo cor={'black'} />
+                    <Logo cor="black" />
                     <Text style={styles.title}>Bem-Vindo(a) de volta!</Text>
                 </View>
-                {/* Conteúdo principal */}
                 <View style={styles.main}>
-                    <Input texto={'Email:'} value={email} onChangeText={setEmail} />
-                    <Input texto={'Senha:'} value={senha} onChangeText={setSenha} />
+                    <Input texto="Email:" value={email} onChangeText={setEmail} keyboardType="email-address" />
+                    <Input texto="Senha:" value={senha} onChangeText={setSenha} secureTextEntry />
                     <Text style={styles.textoEsqueceuSenha}>Esqueceu sua senha?</Text>
-                    <BotaoBranco texto={'Login'} onPress={handleLogin} estilo={styles.botaoCinza} />
+                    <BotaoBranco texto="Login" onPress={handleLogin} estilo={styles.botaoCinza} />
                 </View>
-                {/* Rodapé */}
                 <View style={styles.footer}>
                     <Ou />
                     <Icons />
                     <Text>
                         Não tem uma conta?{' '}
-                        <Text style={{ color: 'blue', fontWeight: 'bold' }}>Cadastre-se</Text>
+                        <Text style={{ color: 'blue', fontWeight: 'bold' }} onPress={handleCadastro}>Cadastre-se</Text>
                     </Text>
                 </View>
             </ScrollView>
@@ -79,7 +93,11 @@ const TelaLogin = ({ navigation }) => {
     );
 };
 
-// Estilos
+// Define PropTypes para validar as propriedades recebidas pelo componente
+TelaLogin.propTypes = {
+    navigation: PropTypes.object.isRequired, // navigation deve ser um objeto e é obrigatório
+};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -132,8 +150,8 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     overlayPreto: {
-        ...StyleSheet.absoluteFillObject, // ocupa toda a tela
-        backgroundColor: 'rgba(0, 0, 0, 0.77)', // cor escura
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.77)',
     },
     botaoCinza: {
         backgroundColor: '#D9D9D9',

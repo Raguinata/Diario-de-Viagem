@@ -4,7 +4,7 @@ import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
-const telaPerfil = ({ route }) => {
+const telaPerfil = ({ route, navigation }) => {
 
     const [infos, setInfos] = useState({});
 
@@ -34,7 +34,7 @@ const telaPerfil = ({ route }) => {
                 </View>
 
                 <View>
-                    <BotaoBranco icon={require('../../../assets/images/telaPerfil/icon-sair.png')} texto={'Sair do Aplicativo'} onPress={undefined} estilo={undefined} />
+                    <BotaoBranco icon={require('../../../assets/images/telaPerfil/icon-sair.png')} texto={'Sair do Aplicativo'} onPress={() => navigation.navigate('telaInicial')} estilo={undefined} />
                 </View>
             </View>
             <Footer />

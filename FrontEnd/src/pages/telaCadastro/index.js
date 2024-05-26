@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, ImageBackground, ScrollView, Alert } from 'react-native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import PropTypes from 'prop-types'; // Importa PropTypes para validação de propriedades
 
 // Componentes personalizados
 import Logo from '../../components/logo';
 import BotaoBranco from '../../components/botaoBranco';
 import Input from '../../components/input';
+import DateInput from '../../components/dataInput';
 import Ou from '../../components/ou';
 import Icons from '../../components/icons';
 
 // Tela de Cadastro
 const TelaCadastro = ({ navigation }) => {
-
-    const [email, setEmail] = useState();
-    const [senha, setSenha] = useState();
-    const [nascimento, setNascimento] = useState();
-    const [nome, setNome] = useState();
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [nascimento, setNascimento] = useState('');
+    const [nome, setNome] = useState('');
     const { setItem } = useAsyncStorage("usuario");
 
-    const cadastro = async () => {
+    const validarEmail = useCallback((email) => {
+        const regex = /\S+@\S+\.\S+/;
+        return regex.test(email);
+    }, []);
 
-        let body = {
-            nome: nome,
-            email: email,
-            nascimento: nascimento,
-            senha: senha
-        }
+    const cadastro = useCallback(async () => {
+        const body = {
+            nome,
+            email,
+            nascimento,
+            senha
+        };
 
         try {
-            return await fetch(`http://10.135.146.42:8080/usuario/cadastro`, {
+            return await fetch('http://192.168.15.123:8080/usuario/cadastro', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -37,12 +42,22 @@ const TelaCadastro = ({ navigation }) => {
             });
         } catch (error) {
             console.log(error);
+            Alert.alert("Erro", "Não foi possível realizar o cadastro. Tente novamente mais tarde.");
         }
-    }
+    }, [email, senha, nascimento, nome]);
 
-    const handleCadastro = async () => {
+    const handleCadastro = useCallback(async () => {
+        if (!validarEmail(email)) {
+            Alert.alert("Email inválido", "Por favor, insira um email válido contendo '@' e um domínio.");
+            return;
+        }
+        if (!nome || !senha || !nascimento) {
+            Alert.alert("Campos obrigatórios", "Por favor, preencha todos os campos.");
+            return;
+        }
+
         const res = await cadastro();
-        if (res.status == 200) {
+        if (res && res.status === 200) {
             try {
                 const dados = await res.text();
                 await setItem(dados);
@@ -51,42 +66,37 @@ const TelaCadastro = ({ navigation }) => {
                 console.log(error);
             }
         } else {
-            alert(
-                "Tentativa de cadastro inválida, verifique se o email não está sendo" +
-                " utilizado e se preencheu todos os campos"
+            Alert.alert(
+                "Tentativa de cadastro inválida",
+                "Verifique se o email não está sendo utilizado e se preencheu todos os campos"
             );
         }
-    }
+    }, [email, senha, nome, nascimento, cadastro, setItem, navigation]);
 
     return (
         <View style={styles.container}>
-            {/* Imagem de fundo */}
             <ImageBackground
                 source={require('../../../assets/images/telaInicial/background-image.png')}
-                style={styles.imagemFundo}>
-            </ImageBackground>
-            {/* Overlay para escurecer a imagem de fundo */}
+                style={styles.imagemFundo}
+            />
             <View style={styles.overlayPreto}></View>
             <ScrollView style={styles.conteudo}>
-                {/* Cabeçalho */}
                 <View style={styles.header}>
-                    <Logo cor={'black'} />
+                    <Logo cor="black" />
                 </View>
-                {/* Conteúdo principal */}
                 <View style={styles.main}>
-                    <Input texto={'Nome:'} value={nome} onChangeText={setNome} />
-                    <Input texto={'Data de Nascimento:'} value={nascimento} onChangeText={setNascimento} />
-                    <Input texto={'Email:'} value={email} onChangeText={setEmail} />
-                    <Input texto={'Senha:'} value={senha} onChangeText={setSenha} />
-                    <BotaoBranco texto={'Cadastrar'} onPress={handleCadastro} estilo={styles.botaoCinza} />
+                    <Input texto="Nome:" value={nome} onChangeText={setNome} />
+                    <DateInput texto="Data de Nascimento:" value={nascimento} onChange={setNascimento} placeholder="Selecione a data" />
+                    <Input texto="Email:" value={email} onChangeText={setEmail} keyboardType="email-address" />
+                    <Input texto="Senha:" value={senha} onChangeText={setSenha} secureTextEntry />
+                    <BotaoBranco texto="Cadastrar" onPress={handleCadastro} estilo={styles.botaoCinza} />
                 </View>
-                {/* Rodapé */}
                 <View style={styles.footer}>
                     <Ou />
                     <Icons />
                     <Text>
                         Já possui uma conta?{' '}
-                        <Text style={{ color: 'blue', fontWeight: 'bold' }}>Faça o login</Text>
+                        <Text style={{ color: 'blue', fontWeight: 'bold' }} onPress={() => navigation.navigate('TelaLogin')}>Faça o login</Text>
                     </Text>
                 </View>
             </ScrollView>
@@ -94,7 +104,11 @@ const TelaCadastro = ({ navigation }) => {
     );
 };
 
-// Estilos
+// Define PropTypes para validar as propriedades recebidas pelo componente
+TelaCadastro.propTypes = {
+    navigation: PropTypes.object.isRequired, // navigation deve ser um objeto e é obrigatório
+};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -131,8 +145,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     overlayPreto: {
-        ...StyleSheet.absoluteFillObject, // ocupa toda a tela
-        backgroundColor: 'rgba(0, 0, 0, 0.77)', // cor escura
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.77)',
     },
     botaoCinza: {
         backgroundColor: '#D9D9D9',

@@ -1,10 +1,9 @@
 import React from 'react';
 import { TextInput, StyleSheet, Text, View, Image } from 'react-native';
 
-const Input = ({ texto, value, onChangeText, icon, fontColor, inputColor, width, height, placeholder, marginBottom }) => {
+const Input = ({ texto, value, onChangeText, icon, fontColor, inputColor, width, height, placeholder, marginBottom, secureTextEntry, keyboardType }) => {
     return (
-        <View style={[styles.container, {marginBottom: marginBottom !== undefined ? marginBottom : 10}]}>
-            {/* Verifica se o texto e o ícone estão definidos antes de renderizar */}
+        <View style={[styles.container, { marginBottom: marginBottom !== undefined ? marginBottom : 10 }]}>
             {texto || icon ? (
                 <Text style={[styles.textoInput]}>
                     {icon && <Image source={icon} style={styles.icon} />}   {texto}
@@ -19,6 +18,8 @@ const Input = ({ texto, value, onChangeText, icon, fontColor, inputColor, width,
                     styles.input,
                     { backgroundColor: inputColor || '#D9D9D9', width: width || 280, height: height || 40 }
                 ]}
+                secureTextEntry={secureTextEntry}
+                keyboardType={keyboardType}
             />
         </View>
     );

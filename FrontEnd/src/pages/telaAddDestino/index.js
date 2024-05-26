@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import AddDestino from '../../components/addDestino';
 import CardViagem from '../../components/cardViagem';
+import { useFocusEffect } from '@react-navigation/native';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -35,7 +36,7 @@ const TelaAddDestino = ({ navigation, route }) => {
 
     const fetchProgramas = async (id) => {
         try {
-            let res = await fetch(`http://10.135.146.42:8080/programa/listar/${id}`)
+            let res = await fetch(`http://192.168.15.123:8080/programa/listar/${id}`)
             res = await res.json();
             setProgramas(res);
         } catch (error) {
@@ -50,11 +51,11 @@ const TelaAddDestino = ({ navigation, route }) => {
         return usuario?.idUsuario;
     }
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         handleSetInfos().then((id) => {
             fetchProgramas(id);
         });
-    }, [])
+    }, [navigation]))
 
     return (
         <View style={styles.container}>
@@ -80,7 +81,6 @@ const TelaAddDestino = ({ navigation, route }) => {
                         );
                     })
                 }
-
 
             </ScrollView>
             <View style={styles.pagination}>

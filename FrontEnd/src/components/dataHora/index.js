@@ -1,21 +1,30 @@
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
-import Input from "../input";
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import DateInput from "../dataInput";
+import TimeInput from "../timeInput";
 
-function dataHora({ texto, icon }) {
+function DataHora({ texto, icon }) {
     return (
         <View style={styles.container}>
             <Text style={[styles.textoInput]}>{icon && <Image source={icon} style={styles.icon} />}   {texto}</Text>
             <View style={styles.conteudo}>
                 <View style={styles.input}>
-                    <Text style={styles.texto}>
-                        <Image source={require('../../../assets/images/global/icon-data.png')} style={styles.icon} /> __/__/__
-                    </Text>
+                    <DateInput
+                        texto={'Data'}
+                        value={undefined}
+                        onChange={undefined}
+                        placeholder="Data"
+                        inputStyle={styles.dataInputComponente}
+                    />
                 </View>
-
                 <View style={styles.input}>
-                    <Text style={styles.texto}>
-                        <Image source={require('../../../assets/images/global/icon-relogio.png')} style={styles.icon} /> 00:00
-                    </Text>
+                    <TimeInput
+                        texto={'Hora'}
+                        value={undefined}
+                        onChange={undefined}
+                        placeholder="Hora"
+                        inputStyle={styles.dataInputComponente}
+                    />
                 </View>
             </View>
         </View>
@@ -25,6 +34,11 @@ function dataHora({ texto, icon }) {
 const styles = StyleSheet.create({
     container: {
         marginBottom: 10,
+    },
+    dataInputComponente: {
+        width: 105,
+        height: 40,
+        marginTop: 10,
     },
     textoInput: {
         fontSize: 14,
@@ -42,33 +56,20 @@ const styles = StyleSheet.create({
         height: 15,
     },
     conteudo: {
-        width: 150,
-        height: 130,
+        width: 155, // Alterei para o tamanho adequado
+        height: 200,
         backgroundColor: 'white',
         borderRadius: 35,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
-        flexDirection: 'column',
     },
     input: {
         width: 105,
         height: 40,
-        margin: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#D9D9D9',
-        borderRadius: 100,
-        color: 'black', // Adicione isso para garantir que o texto do campo seja exibido corretamente
-    },
-
-    texto: {
-        fontSize: 14,
-        fontFamily: 'Outfit-VariableFont_wght',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: 'black',
     },
 });
 
-export default dataHora;
+export default DataHora;

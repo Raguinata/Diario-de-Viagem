@@ -27,4 +27,8 @@ public class Roteiro {
     @JoinColumn(name = "id_programa_de_viagem", referencedColumnName = "id_programa_de_viagem", nullable = false)
     private ProgramaDeViagem programaDeViagem;
 
+    @ManyToOne
+    @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
+    private Estado estado;
+
 }

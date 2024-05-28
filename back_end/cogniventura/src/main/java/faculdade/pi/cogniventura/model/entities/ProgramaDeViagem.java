@@ -57,10 +57,6 @@ public class ProgramaDeViagem {
     joinColumns = @JoinColumn(name = "id_programa_de_viagem"),
     inverseJoinColumns = @JoinColumn(name = "id_veiculo"))
     private List<Veiculo> veiculos;
-    
-    @ManyToOne
-    @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
-    private Estado estado;
 
     @ManyToOne
     @JoinColumn(name = "lider", referencedColumnName = "id_usuario")

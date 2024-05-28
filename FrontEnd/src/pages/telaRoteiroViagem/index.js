@@ -8,7 +8,7 @@ import AluguelVeiculo from '../../components/components-roteiro/aluguelVeiculo';
 import Roteiro from '../../components/components-roteiro/roteiro';
 import ContatosEmergencia from '../../components/components-roteiro/contatosEmergencia';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native'; 
 
 const telaRoteiroViagem = ({ navigation, route }) => {
 
@@ -18,7 +18,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     const [usuario, setUsuario] = useState({});
     const [grupo, setGrupo] = useState([]);
 
-    const handleSetInfos = async () => {
+    const handleSetInfos = async () => { 
         const infos = await route?.params;
         setUsuario(infos?.usuario);
         setPrograma(infos?.programa);
@@ -165,11 +165,17 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
                         <AluguelVeiculo
                             navigation={navigation}
+                            usuario={usuario}
+                            programa={programa}
                         />
 
                         <BotaoBranco
                             texto={'Adicionar veículo'}
-                            onPress={() => navigation.navigate('telaAddVeiculo')}
+                            onPress={() => navigation.navigate('telaAddVeiculo', {
+                                programa: programa,
+                                usuario: usuario,
+                                navigation: navigation
+                            })}
                             estilo={styles.gpViagemBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                             navigation={navigation}

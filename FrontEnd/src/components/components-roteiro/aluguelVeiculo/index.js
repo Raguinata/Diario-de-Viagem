@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const aluguelVeiculo = ({ navigation }) => {
+const aluguelVeiculo = ({ navigation, usuario, programa }) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>

@@ -1,11 +1,27 @@
-import { Image } from "react-native";
+import React from "react";
+import { Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-function iconVoltar (props) {
+function IconVoltar(props) {
+  const navigation = useNavigation();
+
+  const handleVoltarPress = () => {
+    navigation.goBack();
+  };
+
   return (
-
-    <Image source={require('../../../assets/images/global/icon-voltar.png')} style={{width: 80, height: 25, tintColor: props.cor, marginLeft: 20}} />
-
-  )
+    <TouchableOpacity onPress={handleVoltarPress}>
+      <Image
+        source={require("../../../assets/images/global/icon-voltar.png")}
+        style={{
+          width: 80,
+          height: 25,
+          tintColor: props.cor,
+          marginLeft: 20,
+        }}
+      />
+    </TouchableOpacity>
+  );
 }
 
-export default iconVoltar;
+export default IconVoltar;

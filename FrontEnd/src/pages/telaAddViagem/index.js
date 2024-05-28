@@ -8,6 +8,7 @@ import InputDescricao from '../../components/inputDescricao';
 import { useNavigation } from '@react-navigation/native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, SectionList } from 'react-native';
+import DateInput from '../../components/dataInput';
 
 const telaAddViagem = () => {
 
@@ -26,7 +27,7 @@ const telaAddViagem = () => {
     //Busca os estados no banco de dados
     const fetchEstados = async () => {
         try {
-            let res = await fetch(`http://10.135.146.42:8080/estado/`);
+            let res = await fetch(`http://192.168.15.123:8080/estado/`);
             res = await res.json();
             setEstados(res);
         } catch (error) {
@@ -47,7 +48,7 @@ const telaAddViagem = () => {
                 estado: estados[1]
             }
 
-            let res = await fetch(`http://10.135.146.42:8080/programa/cadastro`, {
+            let res = await fetch(`http://192.168.15.123:8080/programa/cadastro`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -102,29 +103,20 @@ const telaAddViagem = () => {
                     />
 
                     <View style={styles.inputData}>
-                        <Input
-                            placeholder={'Chegada - DD/MM/AAAA'}
-                            onChangeText={setData_chegada}
-                            value={data_chegada}
-                            texto={'Datas (Opicional):'}
-                            icon={require('../../../assets/images/global/icon-data.png')}
-                            fontColor={undefined}
-                            inputColor={'white'}
-                            width={150}
-                            height={undefined}
-                        />
-
-                        <Input
-                            placeholder={'Partida - DD/MM/AAAA'}
-                            onChangeText={setData_partida}
-                            value={data_partida}
-                            texto={'ㅤ'}
-                            icon={undefined}
-                            fontColor={undefined}
-                            inputColor={'white'}
-                            width={150}
-                            height={undefined}
-                        />
+                    <DateInput
+                        texto={'Data de Chegada:'}
+                        value={data_chegada}
+                        onChange={setData_chegada}
+                        placeholder="Selecione a data"
+                        inputStyle={styles.dataInputComponente}
+                    />
+                    <DateInput
+                        texto={'Data de Partida:'}
+                        value={data_partida}
+                        onChange={setData_partida}
+                        placeholder="Selecione a data"
+                        inputStyle={styles.dataInputComponente}
+                    />
                     </View>
 
                     <BotaoBranco
@@ -139,6 +131,12 @@ const telaAddViagem = () => {
 };
 
 const styles = StyleSheet.create({
+
+    dataInputComponente: {
+        backgroundColor: 'white',
+        width: 150,
+    },
+
     container: {
         flex: 1,
         justifyContent: 'space-between',

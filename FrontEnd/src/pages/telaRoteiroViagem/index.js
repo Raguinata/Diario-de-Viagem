@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import Thumb from '../../components/components-roteiro/thumb';
@@ -8,7 +8,7 @@ import AluguelVeiculo from '../../components/components-roteiro/aluguelVeiculo';
 import Roteiro from '../../components/components-roteiro/roteiro';
 import ContatosEmergencia from '../../components/components-roteiro/contatosEmergencia';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native'; 
+import { useFocusEffect } from '@react-navigation/native';
 
 const telaRoteiroViagem = ({ navigation, route }) => {
 
@@ -18,7 +18,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     const [usuario, setUsuario] = useState({});
     const [grupo, setGrupo] = useState([]);
 
-    const handleSetInfos = async () => { 
+    const handleSetInfos = async () => {
         const infos = await route?.params;
         setUsuario(infos?.usuario);
         setPrograma(infos?.programa);
@@ -27,7 +27,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     const listaTotalDeGastos = async (id) => {
         try {
-            let res = await fetch(`http://10.135.146.42:8080/gasto/${id}`)
+            let res = await fetch(`http://192.168.15.123:8080/gasto/${id}`)
             res = await res.json();
             setGastoTotal(res);
         } catch (error) {
@@ -36,7 +36,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     }
 
     const atualizarOrcamento = async (valorAtual) => {
-        let res = await fetch(`http://10.135.146.42:8080/programa/atualizar-orcamento?` +
+        let res = await fetch(`http://192.168.15.123:8080/programa/atualizar-orcamento?` +
             `idProgramaDeViagem=${programa?.idProgramaDeViagem}&orcamento=${valorAtual}`,
             {
                 method: "PUT"
@@ -48,13 +48,14 @@ const telaRoteiroViagem = ({ navigation, route }) => {
         }
     }
 
-    useFocusEffect(() => {
+    useFocusEffect(useCallback(() => {
         handleSetInfos().then((programa) => {
-            programa?.orcamento === null ? setOrcamento(0):setOrcamento(programa?.orcamento);
+            programa?.orcamento === null ? setOrcamento(0) : setOrcamento(programa?.orcamento);
             setGrupo(programa?.usuarios);
             listaTotalDeGastos(programa?.idProgramaDeViagem);
         });
-    });
+
+    }, [navigation]));
 
     const handleOrcamento = (operacao) => {
         let atual = operacao
@@ -165,17 +166,11 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
                         <AluguelVeiculo
                             navigation={navigation}
-                            usuario={usuario}
-                            programa={programa}
                         />
 
                         <BotaoBranco
                             texto={'Adicionar veículo'}
-                            onPress={() => navigation.navigate('telaAddVeiculo', {
-                                programa: programa,
-                                usuario: usuario,
-                                navigation: navigation
-                            })}
+                            onPress={() => navigation.navigate('telaAddVeiculo')}
                             estilo={styles.gpViagemBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                             navigation={navigation}

@@ -19,7 +19,7 @@ const telaExcluir = ({ route }) => {
         try {
             handleSetInfos().then(async ({ programa, usuario, navigation }) => {
                 if (quero_deletar) {
-                    let res = await fetch(`http://10.135.146.42:8080/programa/grupo/deletar?id_usuario=${usuario.idUsuario}`,
+                    let res = await fetch(`http://192.168.15.123:8080/programa/grupo/deletar?id_usuario=${usuario.idUsuario}`,
                         {
                             method: "DELETE",
                             headers: {

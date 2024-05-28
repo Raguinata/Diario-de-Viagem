@@ -19,7 +19,7 @@ const telaConvidarPessoa = ({ route }) => {
     const adicionarAoGrupo = async () => {
         handleSetInfos().then(async ({ programa, navigation, usuario }) => {
             try {
-                let res = await fetch(`http://10.135.146.42:8080/programa/grupo/adicionar-por-email?email=${email}`, {
+                let res = await fetch(`http://192.168.15.123:8080/programa/grupo/adicionar-por-email?email=${email}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",

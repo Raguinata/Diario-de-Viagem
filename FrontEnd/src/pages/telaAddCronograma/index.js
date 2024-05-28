@@ -6,6 +6,7 @@ import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
 import InputDescricao from '../../components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
+import DateInput from '../../components/dataInput';
 
 const App = () => {
     return (
@@ -41,17 +42,14 @@ const App = () => {
                         height={undefined}                                           
                         />
 
-                    <Input
-                        placeholder={'_/_/____'}
-                        onChangeText={undefined}
-                        value={undefined} 
-                        texto={'Data:'}
-                        icon={require('../../../assets/images/global/icon-data.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
-                        width={320}
-                        height={undefined}                                           
-                        />
+                            <DateInput
+                                texto={'Data:'}
+                                value={undefined}
+                                onChange={undefined}
+                                placeholder="Selecione a data"
+                                inputStyle={styles.dataInputComponente}
+                            />
+
 
                     <InputDescricao 
                         value={undefined} 
@@ -68,6 +66,12 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
+
+    dataInputComponente: {
+        backgroundColor: 'white',
+        width: 320,
+    },
+
     container: {
         flex: 1,
         justifyContent: 'space-between',

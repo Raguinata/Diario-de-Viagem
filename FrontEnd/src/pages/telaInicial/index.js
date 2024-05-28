@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import PropTypes from 'prop-types'; // Importa PropTypes para validação de propriedades
 
 // Componentes personalizados
 import Logo from '../../components/logo';
@@ -9,37 +10,45 @@ import BotaoBranco from '../../components/botaoBranco';
 
 // Tela inicial
 export default function TelaInicial({ navigation }) {
+    // useCallback memoriza estas funções para que não sejam recriadas em cada renderização
+    const navigateToLogin = React.useCallback(() => {
+        navigation.navigate('telaLogin');
+    }, [navigation]);
+
+    const navigateToCadastro = React.useCallback(() => {
+        navigation.navigate('telaCadastro');
+    }, [navigation]);
+
     return (
         <View style={styles.container}>
-            {/* Imagem de fundo */}
             <ImageBackground
                 source={require('../../../assets/images/telaInicial/background-image.png')}
-                style={styles.imagemFundo}>
-            </ImageBackground>
-            {/* Overlay para escurecer a imagem de fundo */}
-            <View style={styles.overlay}></View>
+                style={styles.imagemFundo}
+            />
+            <View style={styles.overlay} />
             <View style={styles.conteudo}>
-                {/* Cabeçalho */}
                 <View style={styles.header}>
-                    <MenuHamburguer largura={17.5} altura={15} cor={'white'} margem={10} />
-                    <PontoInterrogacao largura={20} altura={20} cor={'white'} margem={10} />
+                    <MenuHamburguer largura={17.5} altura={15} cor="white" margem={10} />
+                    <PontoInterrogacao largura={20} altura={20} cor="white" margem={10} />
                 </View>
-                {/* Conteúdo principal */}
                 <View style={styles.main}>
                     <Logo cor={undefined} />
                     <Text style={styles.title}>Um aplicativo para desfrutar das belezas do Brasil</Text>
                 </View>
-                {/* Rodapé */}
                 <View style={styles.footer}>
-                    <BotaoBranco texto={'Entrar'} onPress={() => navigation.navigate('telaLogin')} estilo={undefined} />
-                    <BotaoBranco texto={'Cadastrar'} onPress={() => navigation.navigate('telaCadastro')} estilo={undefined} />
+                    <BotaoBranco texto="Entrar" onPress={navigateToLogin} estilo={undefined} />
+                    <BotaoBranco texto="Cadastrar" onPress={navigateToCadastro} estilo={undefined} />
                 </View>
             </View>
         </View>
     );
+}
+
+// Define PropTypes para validar as propriedades recebidas pelo componente
+TelaInicial.propTypes = {
+    navigation: PropTypes.object.isRequired, // navigation deve ser um objeto e é obrigatório
 };
 
-// Estilos
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -53,7 +62,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     conteudo: {
-        ...StyleSheet.absoluteFillObject, // ocupa toda a tela
+        ...StyleSheet.absoluteFillObject,
         position: 'absolute',
         zIndex: 1,
     },
@@ -85,7 +94,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     overlay: {
-        ...StyleSheet.absoluteFillObject, // ocupa toda a tela
-        backgroundColor: 'rgba(0, 0, 0, 0.77)', // cor escura
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.77)',
     },
 });

@@ -36,7 +36,7 @@ const TelaAddDestino = ({ navigation, route }) => {
 
     const fetchProgramas = async (id) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/programa/listar/${id}`)
+            let res = await fetch(`http://10.135.146.42:8080/programa/listar/${id}`)
             res = await res.json();
             setProgramas(res);
         } catch (error) {

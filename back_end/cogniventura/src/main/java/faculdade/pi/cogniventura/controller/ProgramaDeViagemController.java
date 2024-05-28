@@ -73,9 +73,9 @@ public class ProgramaDeViagemController {
 
     @PutMapping("/grupo/adicionar-por-email")
     public ResponseEntity<ProgramaDeViagem> adicionarPorEmail(
-        @RequestBody ProgramaDeViagem programa,
+        @RequestParam int id_programa,
         @RequestParam String email) {
-            programa = programaDeViagemService.adicionarPorEmail(email, programa);
+            ProgramaDeViagem programa = programaDeViagemService.adicionarPorEmail(email, id_programa);
             if(programa == null){
                 return ResponseEntity.noContent().build();
             }
@@ -84,9 +84,9 @@ public class ProgramaDeViagemController {
 
     @DeleteMapping("/grupo/deletar")
     public ResponseEntity<ProgramaDeViagem> deletarDoGrupo(
-        @RequestBody ProgramaDeViagem programa,
+        @RequestParam int id_programa,
         @RequestParam int id_usuario) {
-            programa = programaDeViagemService.deletarDoGrupo(id_usuario, programa);
+            ProgramaDeViagem programa = programaDeViagemService.deletarDoGrupo(id_usuario, id_programa);
             return ResponseEntity.ok().body(programa);
     }
 

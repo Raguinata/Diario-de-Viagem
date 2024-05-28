@@ -17,25 +17,25 @@ const telaConvidarPessoa = ({ route }) => {
     }
 
     const adicionarAoGrupo = async () => {
-        handleSetInfos().then(async ({ programa, navigation, usuario }) => {
+        handleSetInfos().then(async ({ programa, navigation }) => {
             try {
-                let res = await fetch(`http://192.168.15.123:8080/programa/grupo/adicionar-por-email?email=${email}`, {
+                let res = await fetch(`http://10.135.146.42:8080/programa/grupo/adicionar-por-email?email=${email}&id_programa=${programa.idProgramaDeViagem}`, {
                     method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(programa)
                 })
                 if (res.status == 204) {
                     alert("Erro, esse email não existe ou já foi adicionado")
                 }
                 else {
-                    res = await res.json();
-                    alert("Adicionado com sucesso");
-                    navigation.navigate('telaRoteiroViagem', {
-                        programa: res,
-                        usuario: usuario
-                    });
+                    if (res.status != 200) {
+                        alert("Erro interno")
+                    }
+                    else {
+                        res = await res.json();
+                        alert("Adicionado com sucesso");
+                        navigation.navigate('telaRoteiroViagem', {
+                            programa: res,
+                        });
+                    }
                 }
             } catch (error) {
                 console.log(error);

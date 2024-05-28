@@ -68,8 +68,9 @@ public class ProgramaDeViagemService {
     }
 
     @Transactional
-    public ProgramaDeViagem adicionarPorEmail(String email, ProgramaDeViagem programa) {
+    public ProgramaDeViagem adicionarPorEmail(String email, int id_programa) {
         Usuario usuario = usuarioService.findByEmail(email);
+        ProgramaDeViagem programa = findByIdPrograma(id_programa); 
         if (usuario != null) {
             for (Usuario usu_lista : programa.getUsuarios()) {
                 if(usu_lista.getIdUsuario() == usuario.getIdUsuario())
@@ -81,7 +82,9 @@ public class ProgramaDeViagemService {
         return null;
     }
 
-    public ProgramaDeViagem deletarDoGrupo(int id_usuario, ProgramaDeViagem programa) {
+    @Transactional
+    public ProgramaDeViagem deletarDoGrupo(int id_usuario, int id_programa) {
+        ProgramaDeViagem programa = findByIdPrograma(id_programa);
         List<Usuario> usuarios = programa.getUsuarios();
         for (int i = 0; i < usuarios.size(); i++) {
             if (id_usuario == usuarios.get(i).getIdUsuario()) {

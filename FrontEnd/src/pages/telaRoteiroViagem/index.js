@@ -12,22 +12,15 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const telaRoteiroViagem = ({ navigation, route }) => {
 
+    const { programa, usuario } = route.params
+
     const [orcamento, setOrcamento] = useState(0);
     const [gasto_total, setGastoTotal] = useState(0);
-    const [programa, setPrograma] = useState({});
-    const [usuario, setUsuario] = useState({});
     const [grupo, setGrupo] = useState([]);
-
-    const handleSetInfos = async () => {
-        const infos = await route?.params;
-        setUsuario(infos?.usuario);
-        setPrograma(infos?.programa);
-        return infos?.programa;
-    }
 
     const listaTotalDeGastos = async (id) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/gasto/${id}`)
+            let res = await fetch(`http://10.135.146.42:8080/gasto/${id}`)
             res = await res.json();
             setGastoTotal(res);
         } catch (error) {
@@ -36,7 +29,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     }
 
     const atualizarOrcamento = async (valorAtual) => {
-        let res = await fetch(`http://192.168.15.123:8080/programa/atualizar-orcamento?` +
+        let res = await fetch(`http://10.135.146.42:8080/programa/atualizar-orcamento?` +
             `idProgramaDeViagem=${programa?.idProgramaDeViagem}&orcamento=${valorAtual}`,
             {
                 method: "PUT"
@@ -46,22 +39,25 @@ const telaRoteiroViagem = ({ navigation, route }) => {
         if (res != 1) {
             alert("Erro, orçamento não atualizado")
         }
+        else {
+            setOrcamento(valorAtual);
+            //Isso garante que o programa estaja atualizado após alterar o orçamento
+            let pro_ternario = programa;
+            pro_ternario.orcamento = valorAtual;
+            navigation.setParams({
+                usuario: usuario,
+                programa: pro_ternario
+            })
+        }
     }
 
-    useFocusEffect(useCallback(() => {
-        handleSetInfos().then((programa) => {
-            programa?.orcamento === null ? setOrcamento(0) : setOrcamento(programa?.orcamento);
+    useFocusEffect(
+        useCallback(() => {
             setGrupo(programa?.usuarios);
+            setOrcamento(programa?.orcamento);
             listaTotalDeGastos(programa?.idProgramaDeViagem);
-        });
-
-    }, [navigation]));
-
-    const handleOrcamento = (operacao) => {
-        let atual = operacao
-        setOrcamento(atual);
-        atualizarOrcamento(atual);
-    };
+        }, [route.params])
+    );
 
     return (
         <View style={styles.container}>
@@ -81,14 +77,14 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                             <Text style={styles.subTitulos}>Planejado</Text>
                             <View style={styles.contadorValorTotal}>
                                 <TouchableOpacity style={styles.contadorBotaoMais}
-                                    onPress={() => handleOrcamento(orcamento + 50)}>
+                                    onPress={() => atualizarOrcamento(orcamento + 50)}>
                                     <Image source={require('../../../assets/images/global/icon-mais.png')} />
                                 </TouchableOpacity>
 
-                                <Text style={styles.subTitulos}>R${orcamento.toFixed(2)}</Text>
+                                <Text style={styles.subTitulos}>R${orcamento?.toFixed(2)}</Text>
 
                                 <TouchableOpacity style={styles.contadorBotaoMenos}
-                                    onPress={() => handleOrcamento(orcamento - 50)}>
+                                    onPress={() => atualizarOrcamento(orcamento - 50)}>
                                     <Image source={require('../../../assets/images/global/icon-menos.png')} />
                                 </TouchableOpacity>
                             </View>
@@ -125,7 +121,6 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                             texto={'Convidar pessoa ao grupo'}
                             onPress={() => navigation.navigate('telaConvidarPessoa', {
                                 programa: programa,
-                                usuario: usuario,
                                 navigation: navigation
                             })}
                             estilo={styles.gpViagemBotao}

@@ -15,7 +15,6 @@ const thumb = ({ programa }) => {
             <View style={styles.legenda}>
                 <View style={styles.texto}>
                     <Text style={styles.titulo}>{programa?.nome}</Text>
-                    <Text style={styles.subTitulo}>{programa?.estado?.nome}</Text>
                     <View style={styles.chegada}>
                         <Image style={styles.icon} source={require('../../../../assets/images/global/icon-data-branco.png')} />
                         <Text style={styles.chegadaTexto}>Chegada:  {programa?.dataChegada}</Text>
@@ -79,18 +78,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.60)',
         marginVertical: 2,
         borderRadius: 20,
-        textAlign: 'center',
-    },
-
-    subTitulo: {
-        fontSize: 15,
-        fontFamily: 'Outfit-VariableFont_wght',
-        color: 'white',
-        fontWeight: 'bold',
-        backgroundColor: 'rgba(0, 0, 0, 0.60)',
-        borderRadius: 20,
-        textAlign: 'center',
         marginBottom: 70,
+        textAlign: 'center',
     },
 
     chegada: {

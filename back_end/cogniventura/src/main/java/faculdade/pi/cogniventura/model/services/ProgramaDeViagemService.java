@@ -50,7 +50,7 @@ public class ProgramaDeViagemService {
 
     // Não é possível que não exista outra forma, isso está horrivel
     @Transactional
-    public void deletaVeiculoDoPrograma(ProgramaVeiculoDTO dto) {
+    public ProgramaDeViagem deletaVeiculoDoPrograma(ProgramaVeiculoDTO dto) {
         ProgramaDeViagem programa = findByIdPrograma(dto.getId_programa());
         List<Veiculo> veiculos = programa.getVeiculos();
         Veiculo veiculo = dto.getVeiculo();
@@ -59,9 +59,10 @@ public class ProgramaDeViagemService {
                 veiculos.remove(i);
             }
         }
-        // Verificar esse endpoint, talvez faltando setVeiculos
-        programaDeViagemRepository.save(programa);
+        programa.setVeiculos(veiculos);
+        programa = programaDeViagemRepository.save(programa);
         veiculoService.deletar(veiculo.getIdVeiculo());
+        return programa;
     }
 
     public int atualizarOrcamento(int id_programa_de_viagem, BigDecimal orcamento) {

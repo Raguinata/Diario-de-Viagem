@@ -56,11 +56,11 @@ public class ProgramaDeViagemController {
     }
 
     @DeleteMapping("/veiculo/delete")
-    public ResponseEntity<Void> deletarVeiculo(
+    public ResponseEntity<ProgramaDeViagem> deletarVeiculo(
             @RequestBody ProgramaVeiculoDTO programaVeiculoDTO) {
 
-        programaDeViagemService.deletaVeiculoDoPrograma(programaVeiculoDTO);
-        return ResponseEntity.ok().build();
+        ProgramaDeViagem programa = programaDeViagemService.deletaVeiculoDoPrograma(programaVeiculoDTO);
+        return ResponseEntity.ok().body(programa);
     }
 
     @PutMapping("/atualizar-orcamento")

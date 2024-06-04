@@ -21,7 +21,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     const listaTotalDeGastos = async (id) => {
         try {
-            let res = await fetch(`http://10.135.146.42:8080/gasto/${id}`)
+            let res = await fetch(`http://192.168.15.123:8080/gasto/${id}`)
             res = await res.json();
             setGastoTotal(res);
         } catch (error) {
@@ -30,7 +30,12 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     }
 
     const atualizarOrcamento = async (valorAtual) => {
-        let res = await fetch(`http://10.135.146.42:8080/programa/atualizar-orcamento?` +
+        if (valorAtual < 0) {
+            alert("Orçamento não pode ser negativo");
+            return;
+        }
+
+        let res = await fetch(`http://192.168.15.123:8080/programa/atualizar-orcamento?` +
             `idProgramaDeViagem=${programa?.idProgramaDeViagem}&orcamento=${valorAtual}`,
             {
                 method: "PUT"
@@ -87,7 +92,13 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                                 <Text style={styles.subTitulos}>R${orcamento?.toFixed(2)}</Text>
 
                                 <TouchableOpacity style={styles.contadorBotaoMenos}
-                                    onPress={() => atualizarOrcamento(orcamento - 50)}>
+                                    onPress={() => {
+                                        if (orcamento - 50 >= 0) {
+                                            atualizarOrcamento(orcamento - 50);
+                                        } else {
+                                            alert("Orçamento não pode ser negativo");
+                                        }
+                                    }}>
                                     <Image source={require('../../../assets/images/global/icon-menos.png')} />
                                 </TouchableOpacity>
                             </View>

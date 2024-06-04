@@ -41,16 +41,17 @@ public class ProgramaDeViagemService {
     @Transactional
     public ProgramaDeViagem saveOrMergeVeiculo(ProgramaVeiculoDTO dto) {
         Veiculo veiculo = veiculoService.saveOrMergeVeiculo(dto.getVeiculo());
-        List<Veiculo> veiculos = dto.getProgramaDeViagem().getVeiculos();
+        ProgramaDeViagem programa = findByIdPrograma(dto.getId_programa());
+        List<Veiculo> veiculos = programa.getVeiculos();
         veiculos.add(veiculo);
-        dto.getProgramaDeViagem().setVeiculos(veiculos);
-        return programaDeViagemRepository.save(dto.getProgramaDeViagem());
+        programa.setVeiculos(veiculos);
+        return programaDeViagemRepository.save(programa);
     }
 
     // Não é possível que não exista outra forma, isso está horrivel
     @Transactional
     public void deletaVeiculoDoPrograma(ProgramaVeiculoDTO dto) {
-        ProgramaDeViagem programa = dto.getProgramaDeViagem();
+        ProgramaDeViagem programa = findByIdPrograma(dto.getId_programa());
         List<Veiculo> veiculos = programa.getVeiculos();
         Veiculo veiculo = dto.getVeiculo();
         for (int i = 0; i < veiculos.size(); i++) {

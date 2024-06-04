@@ -18,4 +18,8 @@ public class CidadeService {
     public List<Cidade> findByEstado(Estado estado) {
         return cidadeRepository.findByEstado(estado);
     }
+
+    public List<Cidade> findAll() {
+        return cidadeRepository.findAll();
+    }
 }

@@ -49,13 +49,13 @@ public class ProgramaDeViagemController {
         return ResponseEntity.ok().body(programaDeViagem);
     }
 
-    @PutMapping("veiculo/adcionaOuAtualiza")
+    @PutMapping("/veiculo/adcionaOuAtualiza")
     public ResponseEntity<ProgramaDeViagem> saveOrMergeVeiculo(@RequestBody ProgramaVeiculoDTO dto) {
         ProgramaDeViagem programa = programaDeViagemService.saveOrMergeVeiculo(dto);
         return ResponseEntity.ok().body(programa);
     }
 
-    @DeleteMapping("veiculo/delete")
+    @DeleteMapping("/veiculo/delete")
     public ResponseEntity<Void> deletarVeiculo(
             @RequestBody ProgramaVeiculoDTO programaVeiculoDTO) {
 

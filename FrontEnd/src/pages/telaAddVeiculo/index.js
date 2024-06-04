@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import IconVoltar from '../../components/icon-voltar';
@@ -6,44 +6,112 @@ import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOp
 import BotaoBranco from '../../components/botaoBranco';
 import Input from '../../components/input';
 import DataHora from '../../components/dataHora';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 const telaAddVeiculo = ({ route }) => {
 
-    const [modelo, setModelo] = useState();
-    const [placa, setPlaca] = useState();
-    const [locadora, setLocadora] = useState();
+    const { navigation, id_programa } = route.params;
+    const [cidades, setCidades] = useState([]);
+
+    const [modelo, setModelo] = useState("awdawd");
+    const [placa, setPlaca] = useState("sfsfef");
+    const [locadora, setLocadora] = useState("adawdaw");
     const [valor, setValor] = useState(0);
 
     //Inicio locação
-    const [retirada_cep, setRetiradaCep] = useState();
-    const [retirada_numero, setRetiradaNumero] = useState();
-    const [retirada_logradouro, setRetiradaLogradouro] = useState();
+    const [retirada_cep, setRetiradaCep] = useState("4363469");
+    const [retirada_numero, setRetiradaNumero] = useState("12");
+    const [retirada_logradouro, setRetiradaLogradouro] = useState("adawd");
     //Buscar a Cidade na API
     const [retirada_cidade, setRetiradaCidade] = useState();
-    const [retirada_bairro, setRetiradaBairro] = useState();
+    const [retirada_bairro, setRetiradaBairro] = useState("dawdawd");
     const [retirada_complemento, setRetiradaComplemento] = useState();
     const [retirada_data, setRetiradaData] = useState();
 
     //Termino locação
-    const [entrega_cep, setEntregaCep] = useState();
-    const [entrega_numero, setEntregaNumero] = useState();
-    const [entrega_logradouro, setEntregaLogradouro] = useState();
+    const [entrega_cep, setEntregaCep] = useState("3515157");
+    const [entrega_numero, setEntregaNumero] = useState("14");
+    const [entrega_logradouro, setEntregaLogradouro] = useState("adawda");
     //Buscar a Cidade na API
     const [entrega_cidade, setEntregaCidade] = useState();
-    const [entrega_bairro, setEntregaBairro] = useState();
+    const [entrega_bairro, setEntregaBairro] = useState("adawdwa");
     const [entrega_complemento, setEntregaComplemento] = useState();
     const [entrega_data, setEntregaData] = useState();
 
-    const handleSetInfos = async () => {
-        const infos = await route.params;
-        return infos;
+    useFocusEffect(
+        useCallback(() => {
+            buscarTotasCidades();
+        }, [route.params])
+    );
+
+    const buscarTotasCidades = async () => {
+        try {
+            let res = await fetch(`http://10.135.146.42:8080/cidade/`);
+            res = await res.json();
+            console.log(`cidades:`)
+            console.log(res)
+            setCidades(res);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    const saveOrMergeVeiculo = () => {
-        handleSetInfos().then(({navigatte, usuario, programa}) => {
-            
-        })
+    const formatVeiculo = () => {
+        return {
+            placa: placa,
+            modelo: modelo,
+            locador: locadora,
+            valorAluguel: valor,
+            inicioLocacao: {
+                data: "2024-06-03T14:30:45",
+                endereco: {
+                    numero: retirada_numero,
+                    bairro: retirada_bairro,
+                    complemento: retirada_complemento,
+                    cep: {
+                        cep: retirada_cep
+                    },
+                    cidade: cidades[1]
+                }
+            },
+            terminoLocacao: {
+                data: "2024-06-03T14:30:45",
+                endereco: {
+                    numero: entrega_numero,
+                    bairro: entrega_bairro,
+                    complemento: entrega_complemento,
+                    cep: {
+                        cep: entrega_cep
+                    },
+                    cidade: cidades[0]
+                }
+            }
+        }
     }
+
+    const save = async () => {
+        let body = {
+            id_programa: id_programa,
+            veiculo: formatVeiculo()
+        }
+        try {
+            let res = await fetch(`http://10.135.146.42:8080/programa/veiculo/adcionaOuAtualiza`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+            res = await res.json();
+            navigation.navigate('telaRoteiroViagem', {
+                programa: res,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     return (
         <View style={styles.container}>
@@ -54,7 +122,7 @@ const telaAddVeiculo = ({ route }) => {
                         <IconVoltar />
                     </View>
 
-                    <BotaoBranco texto={'Adicionar veículo'} onPress={undefined} estilo={undefined} icon={undefined} />
+                    <BotaoBranco texto={'Adicionar veículo'} onPress={save} estilo={undefined} icon={undefined} />
 
                     <Input
                         icon={require('../../../assets/images/global/icon-modelo.png')}
@@ -255,7 +323,7 @@ const telaAddVeiculo = ({ route }) => {
                             icon={require('../../../assets/images/global/icon-entrega.png')} />
                     </View>
 
-                    <BotaoBranco texto={'Adicionar'} onPress={undefined} estilo={undefined} icon={undefined} />
+                    <BotaoBranco texto={'Adicionar'} onPress={save} estilo={undefined} icon={undefined} />
 
                 </View>
             </ScrollView>

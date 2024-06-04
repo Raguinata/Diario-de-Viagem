@@ -17,6 +17,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     const [orcamento, setOrcamento] = useState(0);
     const [gasto_total, setGastoTotal] = useState(0);
     const [grupo, setGrupo] = useState([]);
+    const [veiculos, setVeiculos] = useState([]);
 
     const listaTotalDeGastos = async (id) => {
         try {
@@ -54,6 +55,8 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     useFocusEffect(
         useCallback(() => {
             setGrupo(programa?.usuarios);
+            setVeiculos(programa?.veiculos);
+            console.log(programa);
             setOrcamento(programa?.orcamento);
             listaTotalDeGastos(programa?.idProgramaDeViagem);
         }, [route.params])
@@ -161,11 +164,15 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
                         <AluguelVeiculo
                             navigation={navigation}
+                            veiculos={veiculos}
                         />
 
                         <BotaoBranco
                             texto={'Adicionar veículo'}
-                            onPress={() => navigation.navigate('telaAddVeiculo')}
+                            onPress={() => navigation.navigate('telaAddVeiculo', {
+                                navigation: navigation,
+                                id_programa: programa?.idProgramaDeViagem
+                            })}
                             estilo={styles.gpViagemBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                             navigation={navigation}

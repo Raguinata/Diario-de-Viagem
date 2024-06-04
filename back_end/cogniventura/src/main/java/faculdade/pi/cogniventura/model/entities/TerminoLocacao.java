@@ -1,6 +1,9 @@
 package faculdade.pi.cogniventura.model.entities;
 
 import java.sql.Timestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +33,7 @@ public class TerminoLocacao {
 
     //Essa data não esta formatada
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     @Column(name = "data", nullable = false)
     private Timestamp data;
 

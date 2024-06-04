@@ -14,30 +14,32 @@ const telaAddVeiculo = ({ route }) => {
     const { navigation, id_programa } = route.params;
     const [cidades, setCidades] = useState([]);
 
-    const [modelo, setModelo] = useState("awdawd");
-    const [placa, setPlaca] = useState("sfsfef");
-    const [locadora, setLocadora] = useState("adawdaw");
+    const [modelo, setModelo] = useState();
+    const [placa, setPlaca] = useState();
+    const [locadora, setLocadora] = useState();
     const [valor, setValor] = useState(0);
 
     //Inicio locação
-    const [retirada_cep, setRetiradaCep] = useState("4363469");
-    const [retirada_numero, setRetiradaNumero] = useState("12");
-    const [retirada_logradouro, setRetiradaLogradouro] = useState("adawd");
+    const [retirada_cep, setRetiradaCep] = useState();
+    const [retirada_numero, setRetiradaNumero] = useState();
+    const [retirada_logradouro, setRetiradaLogradouro] = useState();
     //Buscar a Cidade na API
     const [retirada_cidade, setRetiradaCidade] = useState();
-    const [retirada_bairro, setRetiradaBairro] = useState("dawdawd");
+    const [retirada_bairro, setRetiradaBairro] = useState();
     const [retirada_complemento, setRetiradaComplemento] = useState();
     const [retirada_data, setRetiradaData] = useState();
+    const [retirada_hora, setRetiradaHora] = useState();
 
     //Termino locação
-    const [entrega_cep, setEntregaCep] = useState("3515157");
-    const [entrega_numero, setEntregaNumero] = useState("14");
-    const [entrega_logradouro, setEntregaLogradouro] = useState("adawda");
+    const [entrega_cep, setEntregaCep] = useState();
+    const [entrega_numero, setEntregaNumero] = useState();
+    const [entrega_logradouro, setEntregaLogradouro] = useState();
     //Buscar a Cidade na API
     const [entrega_cidade, setEntregaCidade] = useState();
-    const [entrega_bairro, setEntregaBairro] = useState("adawdwa");
+    const [entrega_bairro, setEntregaBairro] = useState();
     const [entrega_complemento, setEntregaComplemento] = useState();
     const [entrega_data, setEntregaData] = useState();
+    const [entrega_hora, setEntregaHora] = useState();
 
     useFocusEffect(
         useCallback(() => {
@@ -49,8 +51,6 @@ const telaAddVeiculo = ({ route }) => {
         try {
             let res = await fetch(`http://10.135.146.42:8080/cidade/`);
             res = await res.json();
-            console.log(`cidades:`)
-            console.log(res)
             setCidades(res);
         } catch (error) {
             console.log(error)
@@ -64,7 +64,7 @@ const telaAddVeiculo = ({ route }) => {
             locador: locadora,
             valorAluguel: valor,
             inicioLocacao: {
-                data: "2024-06-03T14:30:45",
+                data: `${retirada_data} ${retirada_hora}`,
                 endereco: {
                     numero: retirada_numero,
                     bairro: retirada_bairro,
@@ -76,7 +76,7 @@ const telaAddVeiculo = ({ route }) => {
                 }
             },
             terminoLocacao: {
-                data: "2024-06-03T14:30:45",
+                data: `${entrega_data} ${entrega_hora}`,
                 endereco: {
                     numero: entrega_numero,
                     bairro: entrega_bairro,
@@ -316,9 +316,17 @@ const telaAddVeiculo = ({ route }) => {
                     <View style={styles.viewDoisInputs}>
                         <DataHora
                             texto={'Retirada:'}
+                            data={retirada_data}
+                            hora={retirada_hora}
+                            setHora={setRetiradaHora}
+                            setDada={setRetiradaData}
                             icon={require('../../../assets/images/global/icon-retirada.png')} />
 
                         <DataHora
+                            data={entrega_data}
+                            hora={entrega_hora}
+                            setHora={setEntregaHora}
+                            setDada={setEntregaData}
                             texto={'Entrega:'}
                             icon={require('../../../assets/images/global/icon-entrega.png')} />
                     </View>

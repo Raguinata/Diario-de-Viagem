@@ -2,6 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const aluguelVeiculo = ({ navigation, veiculos }) => {
+
+    const cepAtribuido = (cep) =>  cep ? cep : "Não atribuido";
+
+    const formatEndereco = (endereco) => {
+        return `${endereco?.bairro};${endereco?.numero} ${endereco?.cidade?.nome} - ${endereco?.cidade?.estado?.uf} CEP - ${cepAtribuido(endereco?.cep?.cep)}`
+    }
+
     return (
         <>
             {veiculos.map((veiculo, index) => {
@@ -40,9 +47,9 @@ const aluguelVeiculo = ({ navigation, veiculos }) => {
                                 <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-retirada.png')} />
                                 <Text style={styles.titulos}>Retirada</Text>
                             </View>
-                            <Text style={styles.titulos}>Local: {veiculo.inicioLocacao.enderoco}</Text>
-                            <Text style={styles.titulos}>Data: {veiculo.inicioLocacao.data}</Text>
-                            <Text style={styles.titulos}>Horário: {veiculo.inicioLocacao.data}</Text>
+                            <Text style={styles.titulos}>Local: {formatEndereco(veiculo.inicioLocacao.endereco)}</Text>
+                            <Text style={styles.titulos}>Data: {veiculo.inicioLocacao.data.split(" ")[0]}</Text>
+                            <Text style={styles.titulos}>Horário: {veiculo.inicioLocacao.data.split(" ")[1]}</Text>
                         </View>
 
                         <View style={styles.card}>
@@ -50,9 +57,9 @@ const aluguelVeiculo = ({ navigation, veiculos }) => {
                                 <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-entrega.png')} />
                                 <Text style={styles.titulos}>Devolução</Text>
                             </View>
-                            <Text style={styles.titulos}>Local: {veiculo.terminoLocacao.enderoco}</Text>
-                            <Text style={styles.titulos}>Data: {veiculo.terminoLocacao.data}</Text>
-                            <Text style={styles.titulos}>Horário: {veiculo.terminoLocacao.data}</Text>
+                            <Text style={styles.titulos}>Local: {formatEndereco(veiculo.terminoLocacao.endereco)}</Text>
+                            <Text style={styles.titulos}>Data: {veiculo.terminoLocacao.data.split(" ")[0]}</Text>
+                            <Text style={styles.titulos}>Horário: {veiculo.terminoLocacao.data.split(" ")[1]}</Text>
                         </View>
 
                     </View>

@@ -1,14 +1,40 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const aluguelVeiculo = ({ navigation, veiculos }) => {
+const aluguelVeiculo = ({ navigation, veiculos, programa }) => {
 
-    const cepAtribuido = (cep) =>  cep ? cep : "Não atribuido";
+    const cepAtribuido = (cep) => cep ? cep : "Não atribuido";
 
     const formatEndereco = (endereco) => {
         return `${endereco?.bairro};${endereco?.numero} ${endereco?.cidade?.nome} - ${endereco?.cidade?.estado?.uf} CEP - ${cepAtribuido(endereco?.cep?.cep)}`
     }
 
+    const deletarDoGrupo = async (quero_deletar, veiculo) => {
+        let body = {
+            id_programa: programa.idProgramaDeViagem,
+            veiculo: veiculo
+        }
+        try {
+            if (quero_deletar) {
+                let res = await fetch(`http://10.135.146.42:8080/programa/veiculo/delete`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    })
+                programa = await res.json();
+                console.log(programa)
+            }
+            navigation.navigate("telaRoteiroViagem", {
+                programa: programa,
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
     return (
         <>
             {veiculos.map((veiculo, index) => {
@@ -24,7 +50,9 @@ const aluguelVeiculo = ({ navigation, veiculos }) => {
                                 <TouchableOpacity>
                                     <Image style={styles.icon} source={require('../../../../assets/images/global/icon-editar.png')} />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('telaExcluir')}>
+                                <TouchableOpacity onPress={() => navigation.navigate('telaExcluir', {
+                                    funcDeletar: (quero_deletar) => deletarDoGrupo(quero_deletar, veiculo)
+                                })}>
                                     <Image style={styles.icon} source={require('../../../../assets/images/global/icon-lixo.png')} />
                                 </TouchableOpacity>
                             </View>
@@ -34,7 +62,7 @@ const aluguelVeiculo = ({ navigation, veiculos }) => {
                         <View style={styles.card}>
                             <View style={styles.containerTitulo}>
                                 <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-info.png')} />
-                                <Text style={styles.titulos}>Orçamento</Text>
+                                <Text style={styles.titulos}>Dados do aluguel</Text>
                             </View>
                             <Text style={styles.titulos}>Modelo: {veiculo.modelo}</Text>
                             <Text style={styles.titulos}>Placa: {veiculo.placa}</Text>

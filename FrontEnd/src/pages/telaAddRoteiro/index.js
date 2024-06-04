@@ -4,7 +4,7 @@ import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
-import InputDescricao from '../../components/inputDescricao';
+import SelectionEstado from '../../components/selectionEstado';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
 const App = () => {
@@ -29,6 +29,8 @@ const App = () => {
                         height={undefined}                                            
                         />
 
+                        <SelectionEstado/>
+
                     <BotaoBranco texto={'Salvar Roteiro'} onPress={undefined} estilo={undefined} icon={undefined}  />
 
                 </View>
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
     conteudoScroll: {
         flex: 1,
         width: '90%',
-        maxHeight: '40%',
+        maxHeight: '50%',
         minHeight: 270,
         backgroundColor: '#D9D9D9',
         borderRadius: 20,

@@ -12,7 +12,14 @@ public class CepService {
     @Autowired
     CepRepository cepRepository;
 
+    public Cep findByCep(String cep) {
+        return cepRepository.findByCep(cep);
+    }
+
     public Cep adicionarCep(Cep cep){
+        Cep cep_ternario = findByCep(cep.getCep());
+        if(cep_ternario != null)
+            cep = cep_ternario;
         return cepRepository.save(cep);
     }
 

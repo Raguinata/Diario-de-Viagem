@@ -48,8 +48,9 @@ const styles = StyleSheet.create({
 
     conteudoScroll: {
         flex: 1,
-        marginVertical: 145,
         width: '90%',
+        maxHeight: '40%',
+        minHeight: 270,
         backgroundColor: '#D9D9D9',
         borderRadius: 20,
     },

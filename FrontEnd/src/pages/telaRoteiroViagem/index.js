@@ -21,7 +21,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     const listaTotalDeGastos = async (id) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/gasto/${id}`)
+            let res = await fetch(`http://10.135.146.42:8080/gasto/${id}`)
             res = await res.json();
             setGastoTotal(res);
         } catch (error) {
@@ -35,7 +35,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
             return;
         }
 
-        let res = await fetch(`http://192.168.15.123:8080/programa/atualizar-orcamento?` +
+        let res = await fetch(`http://10.135.146.42:8080/programa/atualizar-orcamento?` +
             `idProgramaDeViagem=${programa?.idProgramaDeViagem}&orcamento=${valorAtual}`,
             {
                 method: "PUT"
@@ -60,9 +60,8 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     useFocusEffect(
         useCallback(() => {
             setGrupo(programa?.usuarios);
-            setVeiculos(programa?.veiculos);
-            console.log(programa);
-            setOrcamento(programa?.orcamento);
+            setVeiculos(programa?.veiculos ? programa?.veiculos : []);
+            setOrcamento(programa?.orcamento ? programa?.orcamento : 0);
             listaTotalDeGastos(programa?.idProgramaDeViagem);
         }, [route.params])
     );
@@ -176,6 +175,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                         <AluguelVeiculo
                             navigation={navigation}
                             veiculos={veiculos}
+                            programa={programa}
                         />
 
                         <BotaoBranco

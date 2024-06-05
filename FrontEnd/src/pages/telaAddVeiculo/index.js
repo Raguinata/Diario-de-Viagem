@@ -6,6 +6,7 @@ import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOp
 import BotaoBranco from '../../components/botaoBranco';
 import Input from '../../components/input';
 import DataHora from '../../components/dataHora';
+import SelectionCidade from '../../components/selectionCidade';
 import { useFocusEffect } from '@react-navigation/native';
 
 
@@ -82,7 +83,7 @@ const telaAddVeiculo = ({ route }) => {
 
     const buscarTotasCidades = async () => {
         try {
-            let res = await fetch(`http://10.135.146.42:8080/cidade/`);
+            let res = await fetch(`http://192.168.15.123:8080/cidade/`);
             res = await res.json();
             setCidades(res);
         } catch (error) {
@@ -142,7 +143,7 @@ const telaAddVeiculo = ({ route }) => {
             veiculo: atualizar.current ? formatVeiculo(veiculo_atualizar) : formatVeiculo()
         }
         try {
-            let res = await fetch(`http://10.135.146.42:8080/programa/veiculo/adcionaOuAtualiza`, {
+            let res = await fetch(`http://192.168.15.123:8080/programa/veiculo/adcionaOuAtualiza`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
@@ -263,19 +264,7 @@ const telaAddVeiculo = ({ route }) => {
                         width={320}
                         height={undefined} marginBottom={undefined} />
 
-                    {/* MUDAR PARA UM SELECTION */}
-                    <View style={styles.viewDoisInputs}>
-                        <Input
-                            icon={require('../../../assets/images/global/icon-cidade.png')}
-                            texto={'Cidade:'}
-                            placeholder={'Digite a cidade'}
-                            onChangeText={setRetiradaCidade}
-                            value={retirada_cidade}
-                            fontColor={undefined}
-                            inputColor={'white'}
-                            width={202}
-                            height={undefined} marginBottom={undefined} />
-                    </View>
+                    <SelectionCidade value={retirada_cidade}/>
 
                     <Input
                         icon={require('../../../assets/images/global/icon-complemento.png')}
@@ -337,16 +326,8 @@ const telaAddVeiculo = ({ route }) => {
                         height={undefined} marginBottom={undefined} />
 
                     <View style={styles.viewDoisInputs}>
-                        <Input
-                            icon={require('../../../assets/images/global/icon-cidade.png')}
-                            texto={'Cidade:'}
-                            placeholder={'Digite a cidade'}
-                            onChangeText={setEntregaCidade}
-                            value={entrega_cidade}
-                            fontColor={undefined}
-                            inputColor={'white'}
-                            width={202}
-                            height={undefined} marginBottom={undefined} />
+                        
+                        <SelectionCidade value={entrega_cidade}/>
                     </View>
 
                     <Input

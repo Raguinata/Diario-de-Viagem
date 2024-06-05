@@ -16,7 +16,7 @@ const aluguelVeiculo = ({ navigation, veiculos, programa }) => {
         }
         try {
             if (quero_deletar) {
-                let res = await fetch(`http://10.135.146.42:8080/programa/veiculo/delete`,
+                let res = await fetch(`http://192.168.15.123:8080/programa/veiculo/delete`,
                     {
                         method: "DELETE",
                         headers: {

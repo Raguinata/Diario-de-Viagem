@@ -5,6 +5,7 @@ import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
 import InputDescricao from '../../components/inputDescricao';
+import SelectionCidade from '../../components/selectionCidade';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 import DateInput from '../../components/dataInput';
 
@@ -30,17 +31,7 @@ const App = () => {
                         height={undefined}                                            
                         />
 
-                    <Input
-                        placeholder={'Digite a cidadde que o evento está localizado'}
-                        onChangeText={undefined}
-                        value={undefined} 
-                        texto={'Cidade:'}
-                        icon={require('../../../assets/images/global/icon-maps.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
-                        width={320}
-                        height={undefined}                                           
-                        />
+<SelectionCidade/>
 
                             <DateInput
                                 texto={'Data:'}
@@ -55,6 +46,8 @@ const App = () => {
                         value={undefined} 
                         onChangeText={undefined} 
                         placeholder={'Digite uma descrição do evento'} />
+
+                    
 
                     <BotaoBranco texto={'Salvar Evento'} onPress={undefined} estilo={undefined} icon={undefined}  />
 

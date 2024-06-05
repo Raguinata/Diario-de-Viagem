@@ -21,7 +21,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     const listaTotalDeGastos = async (id) => {
         try {
-            let res = await fetch(`http://10.135.146.42:8080/gasto/${id}`)
+            let res = await fetch(`http://192.168.15.123:8080/gasto/${id}`)
             res = await res.json();
             setGastoTotal(res);
         } catch (error) {
@@ -57,6 +57,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
         }
     }
 
+
     useFocusEffect(
         useCallback(() => {
             setGrupo(programa?.usuarios ? programa?.usuarios: []);
@@ -65,7 +66,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
             listaTotalDeGastos(programa?.idProgramaDeViagem);
         }, [route.params])
     );
-
+  
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'} />

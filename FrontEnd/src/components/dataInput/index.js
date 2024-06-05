@@ -4,6 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const DateInput = ({ texto, value, onChange, placeholder, containerStyle, labelStyle, inputStyle }) => {
     const [show, setShow] = useState(false);
+
     const [dateValue, setDateValue] = useState(value);
 
     const onChangeDate = (event, selectedDate) => {
@@ -22,6 +23,7 @@ const DateInput = ({ texto, value, onChange, placeholder, containerStyle, labelS
         return `${day}/${month}/${year}`;
     };
 
+
     const handleTextChange = (text) => {
         setDateValue(text);
         onChange(text);
@@ -39,6 +41,7 @@ const DateInput = ({ texto, value, onChange, placeholder, containerStyle, labelS
             />
             {show && (
                 <DateTimePicker
+
                     value={dateValue ? new Date(dateValue.split('/').reverse().join('-')) : new Date()}
                     mode="date"
                     display="default"

@@ -20,6 +20,7 @@ const telaConvidarPessoa = ({ route }) => {
     const adicionarAoGrupo = async () => {
         handleSetInfos().then(async ({ programa, navigation }) => {
             try {
+
                 let res = await fetch(`http://192.168.15.123:8080/programa/grupo/adicionar-por-email?email=${email}&id_programa=${programa.idProgramaDeViagem}`, {
                     method: "PUT",
                 })

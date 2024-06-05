@@ -17,7 +17,6 @@ const telaAddViagem = () => {
     const [nome, setNome] = useState();
     const [data_chegada, setData_chegada] = useState();
     const [data_partida, setData_partida] = useState();
-
     const saveProgramaDeViagem = async () => {
         try {
             const usuario = JSON.parse(await getItem());

@@ -9,7 +9,7 @@ const aluguelVeiculo = ({ navigation, veiculos, programa }) => {
         return `${endereco?.bairro};${endereco?.numero} ${endereco?.cidade?.nome} - ${endereco?.cidade?.estado?.uf} CEP - ${cepAtribuido(endereco?.cep?.cep)}`
     }
 
-    const deletarDoGrupo = async (quero_deletar, veiculo) => {
+    const deletarVeiculo= async (quero_deletar, veiculo) => {
         let body = {
             id_programa: programa.idProgramaDeViagem,
             veiculo: veiculo
@@ -47,11 +47,15 @@ const aluguelVeiculo = ({ navigation, veiculos, programa }) => {
                             </View>
                             <View style={styles.icons}>
 
-                                <TouchableOpacity>
+                                <TouchableOpacity  onPress={() => navigation.navigate('telaAddVeiculo', {
+                                    veiculo_atualizar: veiculo,
+                                    id_programa: programa.idProgramaDeViagem,
+                                    navigation: navigation
+                                })}>
                                     <Image style={styles.icon} source={require('../../../../assets/images/global/icon-editar.png')} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => navigation.navigate('telaExcluir', {
-                                    funcDeletar: (quero_deletar) => deletarDoGrupo(quero_deletar, veiculo)
+                                    funcDeletar: (quero_deletar) => deletarVeiculo(quero_deletar, veiculo)
                                 })}>
                                     <Image style={styles.icon} source={require('../../../../assets/images/global/icon-lixo.png')} />
                                 </TouchableOpacity>

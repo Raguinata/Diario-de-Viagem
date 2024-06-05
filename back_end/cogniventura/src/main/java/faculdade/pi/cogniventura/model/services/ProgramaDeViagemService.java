@@ -40,10 +40,21 @@ public class ProgramaDeViagemService {
     // programa_veiculo também
     @Transactional
     public ProgramaDeViagem saveOrMergeVeiculo(ProgramaVeiculoDTO dto) {
+        boolean adicionar = false;
+        if(dto.getVeiculo().getIdVeiculo() == 0)
+            adicionar = true;
         Veiculo veiculo = veiculoService.saveOrMergeVeiculo(dto.getVeiculo());
         ProgramaDeViagem programa = findByIdPrograma(dto.getId_programa());
         List<Veiculo> veiculos = programa.getVeiculos();
-        veiculos.add(veiculo);
+        if(adicionar){
+            veiculos.add(veiculo);
+        }
+        else{
+            for(int i = 0; i < veiculos.size(); i++){
+                if(veiculos.get(i).getIdVeiculo() == veiculo.getIdVeiculo())
+                    veiculos.set(i, veiculo);
+            }
+        }
         programa.setVeiculos(veiculos);
         return programaDeViagemRepository.save(programa);
     }

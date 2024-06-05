@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import IconVoltar from '../../components/icon-voltar';
@@ -11,7 +11,10 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const telaAddVeiculo = ({ route }) => {
 
-    const { navigation, id_programa } = route.params;
+    //Flag para verificar o tipo da ação, se é atualizar ou criar, o endpoint é o mesmo
+    const atualizar = useRef(false);
+
+    const { navigation, id_programa, veiculo_atualizar } = route.params;
     const [cidades, setCidades] = useState([]);
 
     const [modelo, setModelo] = useState();
@@ -44,8 +47,38 @@ const telaAddVeiculo = ({ route }) => {
     useFocusEffect(
         useCallback(() => {
             buscarTotasCidades();
+            route.params.veiculo_atualizar ? autoConfigParaAtualizar() : atualizar.current = false
+            console.log(veiculo_atualizar)
         }, [route.params])
     );
+
+    //Seta todos os valores de veiculo, quando a ação é de atualizar
+    autoConfigParaAtualizar = () => {
+        atualizar.current = true
+        //veiculo
+        setModelo(veiculo_atualizar.modelo);
+        setPlaca(veiculo_atualizar.placa);
+        setLocadora(veiculo_atualizar.locador);
+        setValor(`${veiculo_atualizar.valorAluguel}`);
+        //inicioLocacao
+        setRetiradaCep(veiculo_atualizar.inicioLocacao.endereco?.cep?.cep);
+        setRetiradaNumero(`${veiculo_atualizar.inicioLocacao.endereco.numero}`);
+        setRetiradaLogradouro(veiculo_atualizar.inicioLocacao.endereco.logradouro);
+        setRetiradaCidade(veiculo_atualizar.inicioLocacao.endereco.cidade);
+        setRetiradaBairro(veiculo_atualizar.inicioLocacao.endereco.bairro);
+        setRetiradaComplemento(veiculo_atualizar.inicioLocacao.endereco?.complemento);
+        setRetiradaData(veiculo_atualizar.inicioLocacao.data.split(" ")[1]);
+        setRetiradaHora(veiculo_atualizar.inicioLocacao.data.split(" ")[1]);
+        //terminoLocacao
+        setEntregaCep(veiculo_atualizar.terminoLocacao.endereco?.cep?.cep);
+        setEntregaNumero(`${veiculo_atualizar.terminoLocacao.endereco.numero}`);
+        setEntregaLogradouro(veiculo_atualizar.terminoLocacao.endereco.logradouro);
+        setEntregaCidade(veiculo_atualizar.terminoLocacao.endereco.cidade);
+        setEntregaBairro(veiculo_atualizar.terminoLocacao.endereco.bairro);
+        setEntregaComplemento(veiculo_atualizar.terminoLocacao.endereco?.complemento);
+        setEntregaData(veiculo_atualizar.terminoLocacao.data.split(" ")[0]);
+        setEntregaHora(veiculo_atualizar.terminoLocacao.data.split(" ")[1]);
+    }
 
     const buscarTotasCidades = async () => {
         try {
@@ -57,8 +90,8 @@ const telaAddVeiculo = ({ route }) => {
         }
     }
 
-    const formatVeiculo = () => {
-        return {
+    const formatVeiculo = (veiculo_atualizar) => {
+        let body = {
             placa: placa,
             modelo: modelo,
             locador: locadora,
@@ -68,6 +101,7 @@ const telaAddVeiculo = ({ route }) => {
                 endereco: {
                     numero: retirada_numero,
                     bairro: retirada_bairro,
+                    logradouro: retirada_logradouro,
                     complemento: retirada_complemento,
                     cep: {
                         cep: retirada_cep
@@ -80,6 +114,7 @@ const telaAddVeiculo = ({ route }) => {
                 endereco: {
                     numero: entrega_numero,
                     bairro: entrega_bairro,
+                    logradouro: entrega_logradouro,
                     complemento: entrega_complemento,
                     cep: {
                         cep: entrega_cep
@@ -88,12 +123,23 @@ const telaAddVeiculo = ({ route }) => {
                 }
             }
         }
+
+        //TALVEZ CEP BUG AQUI, CASO UM CEP JÁ EXISTENTE SEJÁ REENVIADO SEM O ID
+        if(veiculo_atualizar){
+            body["idVeiculo"] = veiculo_atualizar.idVeiculo;
+            body.inicioLocacao["idInicioLocacao"] = veiculo_atualizar.inicioLocacao.idInicioLocacao;
+            body.inicioLocacao.endereco["idEndereco"] = veiculo_atualizar.inicioLocacao.endereco.idEndereco;
+            body.terminoLocacao["idTerminoLocacao"] = veiculo_atualizar.terminoLocacao.idTerminoLocacao;
+            body.terminoLocacao.endereco["idEndereco"] = veiculo_atualizar.terminoLocacao.endereco.idEndereco;
+        }
+
+        return body;
     }
 
-    const save = async () => {
+    const saveOrMerge = async () => {
         let body = {
             id_programa: id_programa,
-            veiculo: formatVeiculo()
+            veiculo: atualizar.current ? formatVeiculo(veiculo_atualizar) : formatVeiculo()
         }
         try {
             let res = await fetch(`http://10.135.146.42:8080/programa/veiculo/adcionaOuAtualiza`, {
@@ -122,7 +168,8 @@ const telaAddVeiculo = ({ route }) => {
                         <IconVoltar />
                     </View>
 
-                    <BotaoBranco texto={'Adicionar veículo'} onPress={save} estilo={undefined} icon={undefined} />
+                    <BotaoBranco texto={atualizar.current ? 'Atualizar veículo' : 'Adicionar veículo'}
+                        onPress={undefined} estilo={undefined} icon={undefined} />
 
                     <Input
                         icon={require('../../../assets/images/global/icon-modelo.png')}
@@ -331,7 +378,8 @@ const telaAddVeiculo = ({ route }) => {
                             icon={require('../../../assets/images/global/icon-entrega.png')} />
                     </View>
 
-                    <BotaoBranco texto={'Adicionar'} onPress={save} estilo={undefined} icon={undefined} />
+                    <BotaoBranco texto={atualizar.current ? 'Atualizar veículo' : 'Adicionar veículo'}
+                        onPress={saveOrMerge} estilo={undefined} icon={undefined} />
 
                 </View>
             </ScrollView>

@@ -59,7 +59,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     useFocusEffect(
         useCallback(() => {
-            setGrupo(programa?.usuarios);
+            setGrupo(programa?.usuarios ? programa?.usuarios: []);
             setVeiculos(programa?.veiculos ? programa?.veiculos : []);
             setOrcamento(programa?.orcamento ? programa?.orcamento : 0);
             listaTotalDeGastos(programa?.idProgramaDeViagem);

@@ -5,41 +5,7 @@ import IconVoltar from '../../components/icon-voltar';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 const telaExcluir = ({ route }) => {
-
-    const handleNaoPress = () => {
-        console.log('Não');
-    };
-
-    const handleSetInfos = async () => {
-        const infos = await route.params;
-        return infos;
-    }
-
-    const deletarDoGrupo = (quero_deletar) => {
-        try {
-            handleSetInfos().then(async ({ programa, usuario, navigation }) => {
-                if (quero_deletar) {
-                    let res = await fetch(`http://192.168.15.123:8080/programa/grupo/deletar?id_usuario=${usuario.idUsuario}`,
-                        {
-                            method: "DELETE",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(programa)
-                        })
-                    programa = await res.json();
-                }
-                navigation.navigate('telaRoteiroViagem', {
-                    programa: programa,
-                    usuario: usuario
-                })
-            })
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
+    const { funcDeletar } = route.params;
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'} />
@@ -52,10 +18,10 @@ const telaExcluir = ({ route }) => {
                     <Text style={styles.titulo}>Tem certeza que deseja excluir esse item?</Text>
 
                     <View style={styles.botoesContainer}>
-                        <TouchableOpacity style={[styles.botao, styles.botaoSim]} onPress={() => deletarDoGrupo(true)}>
+                        <TouchableOpacity style={[styles.botao, styles.botaoSim]} onPress={() => funcDeletar(true)}>
                             <Text style={styles.textoBotao}>Sim</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.botao, styles.botaoNao]} onPress={() => deletarDoGrupo(false)}>
+                        <TouchableOpacity style={[styles.botao, styles.botaoNao]} onPress={() => funcDeletar(false)}>
                             <Text style={styles.textoBotao}>Não</Text>
                         </TouchableOpacity>
                     </View>

@@ -18,13 +18,19 @@ import faculdade.pi.cogniventura.model.services.CidadeService;
 @RequestMapping(value = "/cidade")
 @CrossOrigin(origins = "*")
 public class CidadeController {
-    
+
     @Autowired
     CidadeService cidadeService;
 
-    @GetMapping("/")
-    public ResponseEntity<List<Cidade>> findByEstado(@RequestBody Estado estado){
+    @GetMapping("/por-estado")
+    public ResponseEntity<List<Cidade>> findByEstado(@RequestBody Estado estado) {
         List<Cidade> cidades = cidadeService.findByEstado(estado);
+        return ResponseEntity.ok().body(cidades);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<Cidade>> findAll() {
+        List<Cidade> cidades = cidadeService.findAll();
         return ResponseEntity.ok().body(cidades);
     }
 }

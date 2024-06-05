@@ -2,6 +2,25 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const grupoViagem = ({ navigation, usuario, programa }) => {
+
+    const deletarDoGrupo = async (quero_deletar) => {
+        try {
+            if (quero_deletar) {
+                let res = await fetch(`http://10.135.146.42:8080/programa/grupo/deletar?id_usuario=${usuario.idUsuario}&id_programa=${programa.idProgramaDeViagem}`,
+                    {
+                        method: "DELETE",
+                    })
+                programa = await res.json();
+            }
+            navigation.navigate("telaRoteiroViagem", {
+                programa: programa,
+                usuario: usuario
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <View style={styles.container}>
 
@@ -19,9 +38,7 @@ const grupoViagem = ({ navigation, usuario, programa }) => {
                         <Text>Lider</Text>
                         :
                         <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('telaExcluir', {
-                            programa: programa,
-                            usuario: usuario,
-                            navigation: navigation
+                            funcDeletar: deletarDoGrupo
                         })}>
                             <Image source={require('../../../../assets/images/global/icon-lixo.png')} />
                         </TouchableOpacity>

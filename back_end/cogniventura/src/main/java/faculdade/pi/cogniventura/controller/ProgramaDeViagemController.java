@@ -49,18 +49,18 @@ public class ProgramaDeViagemController {
         return ResponseEntity.ok().body(programaDeViagem);
     }
 
-    @PutMapping("veiculo/adcionaOuAtualiza")
+    @PutMapping("/veiculo/adcionaOuAtualiza")
     public ResponseEntity<ProgramaDeViagem> saveOrMergeVeiculo(@RequestBody ProgramaVeiculoDTO dto) {
         ProgramaDeViagem programa = programaDeViagemService.saveOrMergeVeiculo(dto);
         return ResponseEntity.ok().body(programa);
     }
 
-    @DeleteMapping("veiculo/delete")
-    public ResponseEntity<Void> deletarVeiculo(
+    @DeleteMapping("/veiculo/delete")
+    public ResponseEntity<ProgramaDeViagem> deletarVeiculo(
             @RequestBody ProgramaVeiculoDTO programaVeiculoDTO) {
 
-        programaDeViagemService.deletaVeiculoDoPrograma(programaVeiculoDTO);
-        return ResponseEntity.ok().build();
+        ProgramaDeViagem programa = programaDeViagemService.deletaVeiculoDoPrograma(programaVeiculoDTO);
+        return ResponseEntity.ok().body(programa);
     }
 
     @PutMapping("/atualizar-orcamento")
@@ -73,9 +73,9 @@ public class ProgramaDeViagemController {
 
     @PutMapping("/grupo/adicionar-por-email")
     public ResponseEntity<ProgramaDeViagem> adicionarPorEmail(
-        @RequestBody ProgramaDeViagem programa,
+        @RequestParam int id_programa,
         @RequestParam String email) {
-            programa = programaDeViagemService.adicionarPorEmail(email, programa);
+            ProgramaDeViagem programa = programaDeViagemService.adicionarPorEmail(email, id_programa);
             if(programa == null){
                 return ResponseEntity.noContent().build();
             }
@@ -84,9 +84,9 @@ public class ProgramaDeViagemController {
 
     @DeleteMapping("/grupo/deletar")
     public ResponseEntity<ProgramaDeViagem> deletarDoGrupo(
-        @RequestBody ProgramaDeViagem programa,
+        @RequestParam int id_programa,
         @RequestParam int id_usuario) {
-            programa = programaDeViagemService.deletarDoGrupo(id_usuario, programa);
+            ProgramaDeViagem programa = programaDeViagemService.deletarDoGrupo(id_usuario, id_programa);
             return ResponseEntity.ok().body(programa);
     }
 

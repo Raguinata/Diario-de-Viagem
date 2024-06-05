@@ -59,9 +59,9 @@ const TelaCadastro = ({ navigation }) => {
         const res = await cadastro();
         if (res && res.status === 200) {
             try {
-                const dados = await res.text();
-                await setItem(dados);
-                navigation.navigate('telaAddDestino');
+                const dados = await res.json();
+                await setItem(JSON.stringify(dados));
+                navigation.navigate('telaAddDestino', { usuario: dados });
             } catch (error) {
                 console.log(error);
             }

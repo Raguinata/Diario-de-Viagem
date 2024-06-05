@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import DateInput from "../dataInput";
 import TimeInput from "../timeInput";
 
-function DataHora({ texto, icon }) {
+function DataHora({ texto, icon, data, setDada, hora, setHora }) {
     return (
         <View style={styles.container}>
             <Text style={[styles.textoInput]}>{icon && <Image source={icon} style={styles.icon} />}   {texto}</Text>
@@ -11,8 +11,8 @@ function DataHora({ texto, icon }) {
                 <View style={styles.input}>
                     <DateInput
                         texto={'Data'}
-                        value={undefined}
-                        onChange={undefined}
+                        value={data}
+                        onChange={setDada}
                         placeholder="Data"
                         inputStyle={styles.dataInputComponente}
                     />
@@ -20,8 +20,8 @@ function DataHora({ texto, icon }) {
                 <View style={styles.input}>
                     <TimeInput
                         texto={'Hora'}
-                        value={undefined}
-                        onChange={undefined}
+                        value={hora}
+                        onChange={setHora}
                         placeholder="Hora"
                         inputStyle={styles.dataInputComponente}
                     />

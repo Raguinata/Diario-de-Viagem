@@ -4,6 +4,7 @@ import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
+import { KeyboardAvoidingView } from 'react-native';
 // import InputDescricao from './src/components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
@@ -17,25 +18,26 @@ const telaConvidarPessoa = ({ route }) => {
     }
 
     const adicionarAoGrupo = async () => {
-        handleSetInfos().then(async ({ programa, navigation, usuario }) => {
+        handleSetInfos().then(async ({ programa, navigation }) => {
             try {
-                let res = await fetch(`http://192.168.15.123:8080/programa/grupo/adicionar-por-email?email=${email}`, {
+
+                let res = await fetch(`http://192.168.15.123:8080/programa/grupo/adicionar-por-email?email=${email}&id_programa=${programa.idProgramaDeViagem}`, {
                     method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(programa)
                 })
                 if (res.status == 204) {
                     alert("Erro, esse email não existe ou já foi adicionado")
                 }
                 else {
-                    res = await res.json();
-                    alert("Adicionado com sucesso");
-                    navigation.navigate('telaRoteiroViagem', {
-                        programa: res,
-                        usuario: usuario
-                    });
+                    if (res.status != 200) {
+                        alert("Erro interno")
+                    }
+                    else {
+                        res = await res.json();
+                        alert("Adicionado com sucesso");
+                        navigation.navigate('telaRoteiroViagem', {
+                            programa: res,
+                        });
+                    }
                 }
             } catch (error) {
                 console.log(error);
@@ -44,9 +46,10 @@ const telaConvidarPessoa = ({ route }) => {
     }
 
     return (
+        
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'} />
-            <ScrollView style={styles.conteudoScroll}>
+            <ScrollView style={styles.conteudoScroll} >
                 <View style={styles.conteudo}>
                     <View style={styles.iconVoltar}>
                         <IconVoltar />
@@ -83,8 +86,9 @@ const styles = StyleSheet.create({
 
     conteudoScroll: {
         flex: 1,
-        marginVertical: 145,
         width: '90%',
+        maxHeight: '40%',
+        minHeight: 270,
         backgroundColor: '#D9D9D9',
         borderRadius: 20,
     },

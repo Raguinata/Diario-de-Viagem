@@ -19,9 +19,12 @@ public class EnderecoService {
 
     @Transactional
     public Endereco saveOrMergeEndereco(Endereco endereco) {
-        if (endereco.getCep() != null) {
+        if(endereco.getCep().getCep() != null) {
             Cep cep = cepService.adicionarCep(endereco.getCep());
             endereco.setCep(cep);
+        }
+        else{
+            endereco.setCep(null);
         }
         return enderecoRepository.save(endereco);
     }

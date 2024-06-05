@@ -40,17 +40,29 @@ public class ProgramaDeViagemService {
     // programa_veiculo também
     @Transactional
     public ProgramaDeViagem saveOrMergeVeiculo(ProgramaVeiculoDTO dto) {
+        boolean adicionar = false;
+        if(dto.getVeiculo().getIdVeiculo() == 0)
+            adicionar = true;
         Veiculo veiculo = veiculoService.saveOrMergeVeiculo(dto.getVeiculo());
-        List<Veiculo> veiculos = dto.getProgramaDeViagem().getVeiculos();
-        veiculos.add(veiculo);
-        dto.getProgramaDeViagem().setVeiculos(veiculos);
-        return programaDeViagemRepository.save(dto.getProgramaDeViagem());
+        ProgramaDeViagem programa = findByIdPrograma(dto.getId_programa());
+        List<Veiculo> veiculos = programa.getVeiculos();
+        if(adicionar){
+            veiculos.add(veiculo);
+        }
+        else{
+            for(int i = 0; i < veiculos.size(); i++){
+                if(veiculos.get(i).getIdVeiculo() == veiculo.getIdVeiculo())
+                    veiculos.set(i, veiculo);
+            }
+        }
+        programa.setVeiculos(veiculos);
+        return programaDeViagemRepository.save(programa);
     }
 
     // Não é possível que não exista outra forma, isso está horrivel
     @Transactional
-    public void deletaVeiculoDoPrograma(ProgramaVeiculoDTO dto) {
-        ProgramaDeViagem programa = dto.getProgramaDeViagem();
+    public ProgramaDeViagem deletaVeiculoDoPrograma(ProgramaVeiculoDTO dto) {
+        ProgramaDeViagem programa = findByIdPrograma(dto.getId_programa());
         List<Veiculo> veiculos = programa.getVeiculos();
         Veiculo veiculo = dto.getVeiculo();
         for (int i = 0; i < veiculos.size(); i++) {
@@ -58,9 +70,10 @@ public class ProgramaDeViagemService {
                 veiculos.remove(i);
             }
         }
-        // Verificar esse endpoint, talvez faltando setVeiculos
-        programaDeViagemRepository.save(programa);
+        programa.setVeiculos(veiculos);
+        programa = programaDeViagemRepository.save(programa);
         veiculoService.deletar(veiculo.getIdVeiculo());
+        return programa;
     }
 
     public int atualizarOrcamento(int id_programa_de_viagem, BigDecimal orcamento) {
@@ -68,8 +81,9 @@ public class ProgramaDeViagemService {
     }
 
     @Transactional
-    public ProgramaDeViagem adicionarPorEmail(String email, ProgramaDeViagem programa) {
+    public ProgramaDeViagem adicionarPorEmail(String email, int id_programa) {
         Usuario usuario = usuarioService.findByEmail(email);
+        ProgramaDeViagem programa = findByIdPrograma(id_programa); 
         if (usuario != null) {
             for (Usuario usu_lista : programa.getUsuarios()) {
                 if(usu_lista.getIdUsuario() == usuario.getIdUsuario())
@@ -81,7 +95,9 @@ public class ProgramaDeViagemService {
         return null;
     }
 
-    public ProgramaDeViagem deletarDoGrupo(int id_usuario, ProgramaDeViagem programa) {
+    @Transactional
+    public ProgramaDeViagem deletarDoGrupo(int id_usuario, int id_programa) {
+        ProgramaDeViagem programa = findByIdPrograma(id_programa);
         List<Usuario> usuarios = programa.getUsuarios();
         for (int i = 0; i < usuarios.size(); i++) {
             if (id_usuario == usuarios.get(i).getIdUsuario()) {

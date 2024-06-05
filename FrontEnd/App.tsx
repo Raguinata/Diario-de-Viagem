@@ -19,6 +19,7 @@ import telaAddCronograma from './src/pages/telaAddCronograma';
 import telaVisualizarEvento from './src/pages/telaVisualizarEvento';
 import telaAddParada from './src/pages/telaAddParada';
 import telaAddGasto from './src/pages/telaAddGasto';
+import telaConvidarPessoa from './src/pages/telaConvidarPessoa';
 
 const Stack = createNativeStackNavigator();
 
@@ -99,6 +100,11 @@ const App = () => {
                 <Stack.Screen 
                     name="telaAddGasto" 
                     component={telaAddGasto}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="telaConvidarPessoa" 
+                    component={telaConvidarPessoa}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

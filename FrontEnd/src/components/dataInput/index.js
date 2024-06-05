@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const DateInput = ({ texto, value, onChange, placeholder, containerStyle, labelStyle, inputStyle }) => {
     const [show, setShow] = useState(false);
 
+    const [dateValue, setDateValue] = useState(value);
+
     const onChangeDate = (event, selectedDate) => {
         setShow(false);
-        if (selectedDate) {
-            onChange(formatDate(selectedDate));
+        if (event.type === 'set' && selectedDate) {
+            const formattedDate = formatDate(selectedDate);
+            setDateValue(formattedDate);
+            onChange(formattedDate);
         }
     };
 
@@ -19,18 +23,26 @@ const DateInput = ({ texto, value, onChange, placeholder, containerStyle, labelS
         return `${day}/${month}/${year}`;
     };
 
+
+    const handleTextChange = (text) => {
+        setDateValue(text);
+        onChange(text);
+    };
+
     return (
         <View style={[styles.container, containerStyle]}>
             {texto && <Text style={[styles.label, labelStyle]}>{texto}</Text>}
             <TextInput
-                value={value}
+                value={dateValue}
                 placeholder={placeholder}
                 onFocus={() => setShow(true)}
+                onChangeText={handleTextChange}
                 style={[styles.input, inputStyle]}
             />
             {show && (
                 <DateTimePicker
-                    value={value ? new Date(value) : new Date()}
+
+                    value={dateValue ? new Date(dateValue.split('/').reverse().join('-')) : new Date()}
                     mode="date"
                     display="default"
                     onChange={onChangeDate}

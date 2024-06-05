@@ -13,28 +13,10 @@ import DateInput from '../../components/dataInput';
 const telaAddViagem = () => {
 
     const navigation = useNavigation();
-    const [estados, setEstados] = useState([]);
     const { getItem } = useAsyncStorage("usuario");
     const [nome, setNome] = useState();
     const [data_chegada, setData_chegada] = useState();
     const [data_partida, setData_partida] = useState();
-    const [estado, setEstado] = useState({});
-
-    useEffect(() => {
-        fetchEstados();
-    }, []);
-
-    //Busca os estados no banco de dados
-    const fetchEstados = async () => {
-        try {
-            let res = await fetch(`http://192.168.15.123:8080/estado/`);
-            res = await res.json();
-            setEstados(res);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     const saveProgramaDeViagem = async () => {
         try {
             const usuario = JSON.parse(await getItem());
@@ -44,8 +26,6 @@ const telaAddViagem = () => {
                 dataPartida: data_partida,
                 lider: usuario,
                 usuarios: [usuario],
-                //Quando o Selection for implementado 
-                estado: estados[1]
             }
 
             let res = await fetch(`http://192.168.15.123:8080/programa/cadastro`, {
@@ -83,19 +63,6 @@ const telaAddViagem = () => {
                         value={nome}
                         texto={'Nome da viagem:'}
                         icon={require('../../../assets/images/global/icon-maps.png')}
-                        fontColor={undefined}
-                        inputColor={'white'}
-                        width={320}
-                        height={undefined}
-                    />
-
-                    {/* Mudar o campo input por um Section */}
-                    <Input
-                        placeholder={'Digite um estado do Brasil'}
-                        onChangeText={setEstado}
-                        value={estado}
-                        texto={'Escolha o estado:'}
-                        icon={require('../../../assets/images/global/icon-cep.png')}
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}

@@ -1,55 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Cronograma from "../../components-cronograma/cronograma/index.js"
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import BotaoBranco from '../../botaoBranco';
 
-const roteiro = ({ navigation }) => {
+const roteiro = ({ navigation, roteiros }) => {
+
+    const [cronogramas, setCronogramas] = useState([]);
+
+    const fetchCronogramaByRoteiro = async (roteiro) => {
+        try {
+            let res = await fetch(`http://10.135.146.42:8080/cronograma/por-roteiro`,
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(roteiro)
+                }
+            )
+            if (res.status == 200) {
+                res = await res.json();
+                setCronogramas(res);
+            }
+            return [];
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <>
+            {
+                roteiros.map((roteiro) => {
+                    return (
+                        <View style={styles.container}>
+                            <View style={styles.header}>
+                                <View style={styles.text}>
+                                    <Text style={styles.titulo}>{roteiro.nome}</Text>
+                                </View>
+                                <View style={styles.icons}>
+                                    <TouchableOpacity>
+                                        <Image style={styles.icon} source={require('../../../../assets/images/global/icon-editar.png')} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => navigation.navigate('telaExcluir')}>
+                                        <Image style={styles.icon} source={require('../../../../assets/images/global/icon-lixo.png')} />
+                                    </TouchableOpacity>
+                                </View>
 
-                <View style={styles.text}>
-                    <Text style={styles.titulo}>Nome 1</Text>
-                </View>
-                <View style={styles.icons}>
+                            </View>
 
-                    <TouchableOpacity>
-                        <Image style={styles.icon} source={require('../../../../assets/images/global/icon-editar.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('telaExcluir')}>
-                        <Image style={styles.icon} source={require('../../../../assets/images/global/icon-lixo.png')} />
-                    </TouchableOpacity>
-                </View>
+                            {cronogramas.map((cronograma) => {
+                                return (
+                                    <Cronograma cronograma={cronograma}/>
+                                );
+                            })}
 
-            </View>
 
-            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('telaVisualizarEvento')}>
-                <View >
-                    <Text style={styles.titulos}>Nome</Text>
+                        </View>
+                    );
+                })
+            }
+        </>
 
-                    <View style={styles.containerTitulo}>
-                        <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-data.png')} />
-                        <Text style={styles.subTitulos}>Data: <Text>27/10/2029</Text></Text>
-                    </View>
-                    <View style={styles.containerTitulo}>
-                        <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-maps.png')} />
-                        <Text style={styles.subTitulos}>Localização: <Text>São Paulo</Text></Text>
-                    </View>
-                    <View style={styles.containerTitulo}>
-
-                        <Text style={styles.subTitulos}><Image style={styles.iconCardDes} source={require('../../../../assets/images/global/icon-ponto.png')} />   Descrição: <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum pretium sapien, a ultrices velit interdum non. </Text></Text>
-                    </View>
-
-                </View>
-            </TouchableOpacity>
-
-            <BotaoBranco
-                texto={'Adicionar Cronograma'}
-                onPress={() => navigation.navigate('telaAddCronograma')}
-                estilo={styles.roteiroBotao}
-                icon={require('../../../../assets/images/telaAddDestino/icon-add.png')}
-                navigation={navigation}
-            />
-        </View>
     );
 };
 

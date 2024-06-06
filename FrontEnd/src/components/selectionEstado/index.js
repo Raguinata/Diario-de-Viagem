@@ -10,7 +10,7 @@ const EstadoSelector = () => {
     useEffect(() => {
         const fetchEstados = async () => {
             try {
-                let response = await fetch('http://192.168.15.123:8080/estado/');
+                let response = await fetch('http://10.135.146.42:8080/estado/');
                 let json = await response.json();
                 setEstados(json);
                 setLoading(false);

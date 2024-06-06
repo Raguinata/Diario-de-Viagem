@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import faculdade.pi.cogniventura.model.DTOs.CroRoteCidDTO;
 import faculdade.pi.cogniventura.model.entities.Cronograma;
+import faculdade.pi.cogniventura.model.entities.Roteiro;
 import faculdade.pi.cogniventura.model.services.CronogramaService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +33,13 @@ public class CronogramaController {
     @GetMapping("/{id_programa}")
     public ResponseEntity<List<Cronograma>> findCronogramaByProgramaId(@PathVariable int id_programa) {
         List<Cronograma> cronogramas = cronogramaService.findCronogramaByProgramaId(id_programa);
+        return ResponseEntity.ok().body(cronogramas);
+    }
+
+    //Isso não deveria ser um POST, mas sim um GET
+    @PostMapping("/por-roteiro")
+    public ResponseEntity<List<Cronograma>> findCronogramaByRoteiro(@RequestBody Roteiro roteiro) {
+        List<Cronograma> cronogramas = cronogramaService.findByRoteiro(roteiro);
         return ResponseEntity.ok().body(cronogramas);
     }
 

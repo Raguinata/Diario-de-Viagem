@@ -28,7 +28,7 @@ const telaAddViagem = () => {
                 usuarios: [usuario],
             }
 
-            let res = await fetch(`http://192.168.15.123:8080/programa/cadastro`, {
+            let res = await fetch(`http://10.135.146.42:8080/programa/cadastro`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -36,13 +36,14 @@ const telaAddViagem = () => {
                 body: JSON.stringify(body)
             })
 
-            res = await res.json();
-            alert("cadastro realizado com sucesso!!");
-            navigation.navigate('telaRoteiroViagem', {
-                programa: res,
-                usuario: usuario
-            });
-
+            if (res.status == 200) {
+                res = await res.json();
+                alert("cadastro realizado com sucesso!!");
+                navigation.navigate('telaRoteiroViagem', {
+                    programa: res,
+                    usuario: usuario
+                });
+            }
         } catch (error) {
             console.log(error);
         }
@@ -70,20 +71,20 @@ const telaAddViagem = () => {
                     />
 
                     <View style={styles.inputData}>
-                    <DateInput
-                        texto={'Data de Chegada:'}
-                        value={data_chegada}
-                        onChange={setData_chegada}
-                        placeholder="Selecione a data"
-                        inputStyle={styles.dataInputComponente}
-                    />
-                    <DateInput
-                        texto={'Data de Partida:'}
-                        value={data_partida}
-                        onChange={setData_partida}
-                        placeholder="Selecione a data"
-                        inputStyle={styles.dataInputComponente}
-                    />
+                        <DateInput
+                            texto={'Data de Chegada:'}
+                            value={data_chegada}
+                            onChange={setData_chegada}
+                            placeholder="Selecione a data"
+                            inputStyle={styles.dataInputComponente}
+                        />
+                        <DateInput
+                            texto={'Data de Partida:'}
+                            value={data_partida}
+                            onChange={setData_partida}
+                            placeholder="Selecione a data"
+                            inputStyle={styles.dataInputComponente}
+                        />
                     </View>
 
                     <BotaoBranco

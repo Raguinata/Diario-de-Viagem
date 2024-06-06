@@ -31,7 +31,7 @@ const TelaLogin = ({ navigation }) => {
 
     const login = useCallback(async () => {
         try {
-            return await fetch(`http://192.168.15.123:8080/usuario/login?email=${email}&senha=${senha}`, {
+            return await fetch(`http://10.135.146.42:8080/usuario/login?email=${email}&senha=${senha}`, {
                 method: "POST"
             });
         } catch (error) {

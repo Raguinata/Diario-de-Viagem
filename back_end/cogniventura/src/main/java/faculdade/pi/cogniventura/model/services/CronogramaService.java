@@ -52,4 +52,8 @@ public class CronogramaService {
         cronograma.setCidade(cidade);
         return cronogramaRepository.save(cronograma);
     }
+
+    public List<Cronograma> findByRoteiro(Roteiro roteiro) {
+        return cronogramaRepository.findByRoteiro(roteiro);
+    }
 }

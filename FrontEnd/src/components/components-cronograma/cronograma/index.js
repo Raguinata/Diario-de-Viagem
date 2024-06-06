@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
-const Cronogramas = ({ roteiro }) => {
+
+const Cronogramas = ({ roteiro, navigation }) => {
 
     const [cronogramas, setCronogramas] = useState([]);
 

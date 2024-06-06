@@ -9,7 +9,7 @@ const roteiro = ({ navigation, roteiros }) => {
 
     const fetchCronogramaByRoteiro = async (roteiro) => {
         try {
-            let res = await fetch(`http://10.135.146.42:8080/cronograma/por-roteiro`,
+            let res = await fetch(`http://192.168.15.123:8080/cronograma/por-roteiro`,
                 {
                     method: "POST",
                     headers: {

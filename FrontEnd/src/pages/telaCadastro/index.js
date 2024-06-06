@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ImageBackground, ScrollView, Alert } from 'react-native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import PropTypes from 'prop-types'; // Importa PropTypes para validação de propriedades
+import PropTypes from 'prop-types';
 
 // Componentes personalizados
 import Logo from '../../components/logo';
@@ -27,7 +27,7 @@ const TelaCadastro = ({ navigation }) => {
     const cadastro = useCallback(async () => {
         const body = {
             nome,
-            email,
+            email: email.trim(),
             nascimento,
             senha
         };
@@ -47,7 +47,8 @@ const TelaCadastro = ({ navigation }) => {
     }, [email, senha, nascimento, nome]);
 
     const handleCadastro = useCallback(async () => {
-        if (!validarEmail(email)) {
+        const trimmedEmail = email.trim();
+        if (!validarEmail(trimmedEmail)) {
             Alert.alert("Email inválido", "Por favor, insira um email válido contendo '@' e um domínio.");
             return;
         }
@@ -87,7 +88,7 @@ const TelaCadastro = ({ navigation }) => {
                 <View style={styles.main}>
                     <Input texto="Nome:" value={nome} onChangeText={setNome} />
                     <DateInput texto="Data de Nascimento:" value={nascimento} onChange={setNascimento} placeholder="Selecione a data" />
-                    <Input texto="Email:" value={email} onChangeText={setEmail} keyboardType="email-address" />
+                    <Input texto="Email:" value={email} onChangeText={(text) => setEmail(text.trim())} keyboardType="email-address" />
                     <Input texto="Senha:" value={senha} onChangeText={setSenha} secureTextEntry />
                     <BotaoBranco texto="Cadastrar" onPress={handleCadastro} estilo={styles.botaoCinza} />
                 </View>

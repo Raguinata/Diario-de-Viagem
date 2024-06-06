@@ -7,7 +7,7 @@ import Input from '../../components/input';
 import SelectionEstado from '../../components/selectionEstado';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
-const App = () => {
+const telaAddRoteiro = () => {
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'}/>
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default telaAddRoteiro;

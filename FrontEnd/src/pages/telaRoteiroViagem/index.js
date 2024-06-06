@@ -17,6 +17,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     const [orcamento, setOrcamento] = useState(0);
     const [gasto_total, setGastoTotal] = useState(0);
     const [grupo, setGrupo] = useState([]);
+    const [roteiros, setRoteiros] = useState([]);
     const [veiculos, setVeiculos] = useState([]);
 
     const listaTotalDeGastos = async (id) => {
@@ -29,37 +30,61 @@ const telaRoteiroViagem = ({ navigation, route }) => {
         }
     }
 
+    const fetchRoteiroByPrograma = async () => {
+        try {
+            let res = await fetch(`http://10.135.146.42:8080/roteiro/`,
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(programa)
+                }
+            )
+            if (res.status == 200) {
+                res = await res.json();
+                setRoteiros(res);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const atualizarOrcamento = async (valorAtual) => {
         if (valorAtual < 0) {
             alert("Orçamento não pode ser negativo");
             return;
         }
-
-        let res = await fetch(`http://10.135.146.42:8080/programa/atualizar-orcamento?` +
-            `idProgramaDeViagem=${programa?.idProgramaDeViagem}&orcamento=${valorAtual}`,
-            {
-                method: "PUT"
+        try {
+            let res = await fetch(`http://10.135.146.42:8080/programa/atualizar-orcamento?` +
+                `idProgramaDeViagem=${programa?.idProgramaDeViagem}&orcamento=${valorAtual}`,
+                {
+                    method: "PUT"
+                }
+            )
+            res = await res.json();
+            if (res != 1) {
+                alert("Erro, orçamento não atualizado")
             }
-        )
-        res = await res.json();
-        if (res != 1) {
-            alert("Erro, orçamento não atualizado")
-        }
-        else {
-            setOrcamento(valorAtual);
-            //Isso garante que o programa estaja atualizado após alterar o orçamento
-            let pro_ternario = programa;
-            pro_ternario.orcamento = valorAtual;
-            navigation.setParams({
-                usuario: usuario,
-                programa: pro_ternario
-            })
+            else {
+                setOrcamento(valorAtual);
+                //Isso garante que o programa estaja atualizado após alterar o orçamento
+                let pro_ternario = programa;
+                pro_ternario.orcamento = valorAtual;
+                navigation.setParams({
+                    usuario: usuario,
+                    programa: pro_ternario
+                })
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
     useFocusEffect(
         useCallback(() => {
-            setGrupo(programa?.usuarios ? programa?.usuarios: []);
+            fetchRoteiroByPrograma();
+            setGrupo(programa?.usuarios ? programa?.usuarios : []);
             setVeiculos(programa?.veiculos ? programa?.veiculos : []);
             setOrcamento(programa?.orcamento ? programa?.orcamento : 0);
             listaTotalDeGastos(programa?.idProgramaDeViagem);
@@ -198,7 +223,10 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                             <Text style={styles.titulos}>Roteiros:</Text>
                         </View>
 
-                        <Roteiro navigation={navigation} />
+                        <Roteiro
+                            navigation={navigation}
+                            roteiros={roteiros}
+                        />
 
                         <BotaoBranco
                             texto={'Adicionar roteiro'}

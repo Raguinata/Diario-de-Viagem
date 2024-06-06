@@ -18,4 +18,6 @@ public interface CronogramaRepository extends JpaRepository<Cronograma, Integer>
     List<Cronograma> findCronogramaByProgramaId(int id_programa_de_viagem);
 
     void deleteByRoteiro(Roteiro roteiro);
+
+    List<Cronograma> findByRoteiro(Roteiro roteiro);
 }

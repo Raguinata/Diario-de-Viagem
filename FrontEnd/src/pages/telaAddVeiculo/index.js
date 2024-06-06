@@ -83,7 +83,7 @@ const telaAddVeiculo = ({ route }) => {
 
     const buscarTotasCidades = async () => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/cidade/`);
+            let res = await fetch(`http://10.135.146.42:8080/cidade/`);
             res = await res.json();
             setCidades(res);
         } catch (error) {
@@ -143,7 +143,7 @@ const telaAddVeiculo = ({ route }) => {
             veiculo: atualizar.current ? formatVeiculo(veiculo_atualizar) : formatVeiculo()
         }
         try {
-            let res = await fetch(`http://192.168.15.123:8080/programa/veiculo/adcionaOuAtualiza`, {
+            let res = await fetch(`http://10.135.146.42:8080/programa/veiculo/adcionaOuAtualiza`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'

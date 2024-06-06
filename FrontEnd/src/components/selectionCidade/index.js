@@ -10,7 +10,7 @@ const selectionCidade = () => {
     useEffect(() => {
         const fetchCidades = async () => {
             try {
-                let response = await fetch('http://192.168.15.123:8080/cidade/');
+                let response = await fetch('http://10.135.146.42:8080/cidade/');
                 let json = await response.json();
                 setCidades(json);
                 setLoading(false);

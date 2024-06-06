@@ -22,7 +22,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     const listaTotalDeGastos = async (id) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/gasto/${id}`)
+            let res = await fetch(`http://10.135.146.42:8080/gasto/${id}`)
             res = await res.json();
             setGastoTotal(res);
         } catch (error) {
@@ -227,11 +227,15 @@ const telaRoteiroViagem = ({ navigation, route }) => {
                         <Roteiro
                             navigation={navigation}
                             roteiros={roteiros}
+                            programa={programa}
                         />
 
                         <BotaoBranco
                             texto={'Adicionar roteiro'}
-                            onPress={() => navigation.navigate('telaAddRoteiro')}
+                            onPress={() => navigation.navigate('telaAddRoteiro', {
+                                navigation: navigation,
+                                programa: programa
+                            })}
                             estilo={styles.gpViagemBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                             navigation={navigation}

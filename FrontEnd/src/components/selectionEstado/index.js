@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const EstadoSelector = () => {
+const EstadoSelector = ({ selectedEstado, setSelectedEstado, isSeted }) => {
+
     const [estados, setEstados] = useState([]);
-    const [selectedEstado, setSelectedEstado] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -35,9 +35,11 @@ const EstadoSelector = () => {
                         itemStyle={styles.pickerItem}
                         dropdownIconColor="#000" // Cor da setinha
                     >
-                        <Picker.Item label="Selecione um estado" value="" />
+                        <Picker.Item
+                            label={isSeted ? selectedEstado.nome : "Selecione um estado"}
+                            value={isSeted ? selectedEstado : ""} />
                         {estados.map((estado) => (
-                            <Picker.Item key={estado.idEstado} label={estado.nome} value={estado.idEstado} />
+                            <Picker.Item key={estado.idEstado} label={estado.nome} value={estado} />
                         ))}
                     </Picker>
                 </View>

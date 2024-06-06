@@ -1,32 +1,9 @@
-import React, { useState } from 'react';
-import Cronograma from "../../components-cronograma/cronograma/index.js"
+import React, { useEffect, useState } from 'react';
+import Cronogramas from "../../components-cronograma/cronograma/index.js"
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import BotaoBranco from '../../botaoBranco';
 
 const roteiro = ({ navigation, roteiros, programa }) => {
-
-    const [cronogramas, setCronogramas] = useState([]);
-
-    const fetchCronogramaByRoteiro = async (roteiro) => {
-        try {
-            let res = await fetch(`http://192.168.15.123:8080/cronograma/por-roteiro`,
-                {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(roteiro)
-                }
-            )
-            if (res.status == 200) {
-                res = await res.json();
-                setCronogramas(res);
-            }
-            return [];
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     const deletarRoteiro = async (quero_deletar, id_roteiro) => {
         try {
@@ -70,15 +47,15 @@ const roteiro = ({ navigation, roteiros, programa }) => {
 
                             </View>
 
-                            {cronogramas.map((cronograma) => {
-                                return (
-                                    <Cronograma cronograma={cronograma} />
-                                );
-                            })}
+                            <Cronogramas roteiro={roteiro} />
 
                             <BotaoBranco
                                 texto={'Adicionar Cronograma'}
-                                onPress={() => navigation.navigate('telaAddCronograma')}
+                                onPress={() => navigation.navigate('telaAddCronograma', {
+                                    roteiro: roteiro,
+                                    navigation: navigation,
+                                    programa: programa
+                                })}
                                 estilo={styles.roteiroBotao}
                                 icon={require('../../../../assets/images/telaAddDestino/icon-add.png')}
                                 navigation={navigation}
@@ -88,7 +65,6 @@ const roteiro = ({ navigation, roteiros, programa }) => {
                 })
             }
         </>
-
     );
 };
 
@@ -130,57 +106,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
     },
 
-    iconCard: {
-        width: 15,
-        height: 15,
-    },
-
-    iconCardDes: {
-        marginLeft: 5,
-        marginRight: 5,
-    },
-
     text: {
         fontSize: 20,
         fontWeight: 'bold',
-    },
-
-    card: {
-        width: '90%',
-        backgroundColor: 'white',
-        borderRadius: 20,
-        alignItems: 'center',
-        marginVertical: 5,
-    },
-
-    containerTitulo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '90%',
-    },
-
-    titulos: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        fontFamily: 'Outfit-VariableFont_wght',
-        color: 'black',
-        margin: 10,
-        width: '90%',
-    },
-
-    subTitulos: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        fontFamily: 'Outfit-VariableFont_wght',
-        color: 'black',
-        margin: 10,
-        width: '90%',
-    },
-
-    containerTitulo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '90%',
     },
 
     roteiroBotao: {

@@ -3,7 +3,7 @@ import Cronograma from "../../components-cronograma/cronograma/index.js"
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import BotaoBranco from '../../botaoBranco';
 
-const roteiro = ({ navigation, roteiros }) => {
+const roteiro = ({ navigation, roteiros, programa }) => {
 
     const [cronogramas, setCronogramas] = useState([]);
 
@@ -28,6 +28,20 @@ const roteiro = ({ navigation, roteiros }) => {
         }
     }
 
+    const deletarRoteiro= async (quero_deletar, id_roteiro) => {  
+        try {
+            if (quero_deletar) {
+                let res = await fetch(`http://10.135.146.42:8080/roteiro/${id_roteiro}`,
+                    {
+                        method: "DELETE",
+                    })
+            }
+            navigation.goBack();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <>
             {
@@ -36,13 +50,20 @@ const roteiro = ({ navigation, roteiros }) => {
                         <View style={styles.container}>
                             <View style={styles.header}>
                                 <View style={styles.text}>
-                                    <Text style={styles.titulo}>{roteiro.nome}</Text>
+                                    <Text style={styles.titulo}>Nome: {roteiro.nome}</Text>
+                                    <Text style={styles.titulo}>Estado: {roteiro.estado.uf}</Text>
                                 </View>
                                 <View style={styles.icons}>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => navigation.navigate('telaAddRoteiro', {
+                                        roteiro_atualizar: roteiro,
+                                        navigation: navigation,
+                                        programa: programa
+                                    })}>
                                         <Image style={styles.icon} source={require('../../../../assets/images/global/icon-editar.png')} />
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => navigation.navigate('telaExcluir')}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('telaExcluir',{
+                                        funcDeletar: (quero_deletar) => deletarRoteiro(quero_deletar, roteiro.idRoteiro)
+                                    })}>
                                         <Image style={styles.icon} source={require('../../../../assets/images/global/icon-lixo.png')} />
                                     </TouchableOpacity>
                                 </View>

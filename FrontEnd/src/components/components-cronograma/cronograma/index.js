@@ -22,14 +22,6 @@ const Cronograma = ({ cronograma }) => {
                     </View>
                 </View>
             </TouchableOpacity>
-
-            <BotaoBranco
-                texto={'Adicionar Cronograma'}
-                onPress={() => navigation.navigate('telaAddCronograma')}
-                estilo={styles.roteiroBotao}
-                icon={require('../../../../assets/images/telaAddDestino/icon-add.png')}
-                navigation={navigation}
-            />
         </View>
     );
 }

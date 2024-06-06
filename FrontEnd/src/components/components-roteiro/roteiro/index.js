@@ -28,7 +28,7 @@ const roteiro = ({ navigation, roteiros, programa }) => {
         }
     }
 
-    const deletarRoteiro= async (quero_deletar, id_roteiro) => {  
+    const deletarRoteiro = async (quero_deletar, id_roteiro) => {
         try {
             if (quero_deletar) {
                 let res = await fetch(`http://10.135.146.42:8080/roteiro/${id_roteiro}`,
@@ -61,7 +61,7 @@ const roteiro = ({ navigation, roteiros, programa }) => {
                                     })}>
                                         <Image style={styles.icon} source={require('../../../../assets/images/global/icon-editar.png')} />
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => navigation.navigate('telaExcluir',{
+                                    <TouchableOpacity onPress={() => navigation.navigate('telaExcluir', {
                                         funcDeletar: (quero_deletar) => deletarRoteiro(quero_deletar, roteiro.idRoteiro)
                                     })}>
                                         <Image style={styles.icon} source={require('../../../../assets/images/global/icon-lixo.png')} />
@@ -72,11 +72,17 @@ const roteiro = ({ navigation, roteiros, programa }) => {
 
                             {cronogramas.map((cronograma) => {
                                 return (
-                                    <Cronograma cronograma={cronograma}/>
+                                    <Cronograma cronograma={cronograma} />
                                 );
                             })}
 
-
+                            <BotaoBranco
+                                texto={'Adicionar Cronograma'}
+                                onPress={() => navigation.navigate('telaAddCronograma')}
+                                estilo={styles.roteiroBotao}
+                                icon={require('../../../../assets/images/telaAddDestino/icon-add.png')}
+                                navigation={navigation}
+                            />
                         </View>
                     );
                 })

@@ -22,7 +22,7 @@ const TelaLogin = ({ navigation }) => {
     }, []);
 
     const handleCadastro = useCallback(() => {
-        if (!validarEmail(email)) {
+        if (!validarEmail(email.trim())) {
             Alert.alert("Email inválido", "Por favor, insira um email válido contendo '@' e um domínio.");
             return;
         }
@@ -31,7 +31,7 @@ const TelaLogin = ({ navigation }) => {
 
     const login = useCallback(async () => {
         try {
-            return await fetch(`http://10.135.146.42:8080/usuario/login?email=${email}&senha=${senha}`, {
+            return await fetch(`http://10.135.146.42:8080/usuario/login?email=${email.trim()}&senha=${senha}`, {
                 method: "POST"
             });
         } catch (error) {
@@ -41,7 +41,8 @@ const TelaLogin = ({ navigation }) => {
     }, [email, senha]);
 
     const handleLogin = useCallback(async () => {
-        if (!email || !senha) {
+        const trimmedEmail = email.trim();
+        if (!trimmedEmail || !senha) {
             Alert.alert("Campos obrigatórios", "Por favor, preencha todos os campos.");
             return;
         }
@@ -75,7 +76,7 @@ const TelaLogin = ({ navigation }) => {
                     <Text style={styles.title}>Bem-Vindo(a) de volta!</Text>
                 </View>
                 <View style={styles.main}>
-                    <Input texto="Email:" value={email} onChangeText={setEmail} keyboardType="email-address" />
+                    <Input texto="Email:" value={email} onChangeText={(text) => setEmail(text.trim())} keyboardType="email-address" />
                     <Input texto="Senha:" value={senha} onChangeText={setSenha} secureTextEntry />
                     <Text style={styles.textoEsqueceuSenha}>Esqueceu sua senha?</Text>
                     <BotaoBranco texto="Login" onPress={handleLogin} estilo={styles.botaoCinza} />
@@ -85,7 +86,7 @@ const TelaLogin = ({ navigation }) => {
                     <Icons />
                     <Text>
                         Não tem uma conta?{' '}
-                        <Text style={{ color: 'blue', fontWeight: 'bold' }} onPress={handleCadastro}>Cadastre-se</Text>
+                        <Text style={{ color: 'blue', fontWeight: 'bold' }} onPress={() => navigation.navigate('telaCadastro')}>Cadastre-se</Text>
                     </Text>
                 </View>
             </ScrollView>

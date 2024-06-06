@@ -97,7 +97,7 @@ const TelaCadastro = ({ navigation }) => {
                     <Icons />
                     <Text>
                         Já possui uma conta?{' '}
-                        <Text style={{ color: 'blue', fontWeight: 'bold' }} onPress={() => navigation.navigate('TelaLogin')}>Faça o login</Text>
+                        <Text style={{ color: 'blue', fontWeight: 'bold' }} onPress={() => navigation.navigate('telaLogin')}>Faça o login</Text>
                     </Text>
                 </View>
             </ScrollView>

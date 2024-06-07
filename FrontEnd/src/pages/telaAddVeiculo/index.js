@@ -60,32 +60,38 @@ const telaAddVeiculo = ({ route }) => {
     );
 
     //Seta todos os valores de veiculo, quando a ação é de atualizar
-    autoConfigParaAtualizar = () => {
-        atualizar.current = true
-        //veiculo
+    const autoConfigParaAtualizar = () => {
+        atualizar.current = true;
         setModelo(veiculo_atualizar.modelo);
         setPlaca(veiculo_atualizar.placa);
         setLocadora(veiculo_atualizar.locador);
         setValor(`${veiculo_atualizar.valorAluguel}`);
-        //inicioLocacao
+    
+        // Preenchimento dos dados de retirada
         setRetiradaCep(veiculo_atualizar.inicioLocacao.endereco?.cep?.cep);
         setRetiradaNumero(`${veiculo_atualizar.inicioLocacao.endereco.numero}`);
         setRetiradaLogradouro(veiculo_atualizar.inicioLocacao.endereco.logradouro);
-        setRetiradaCidade(veiculo_atualizar.inicioLocacao.endereco.cidade);
         setRetiradaBairro(veiculo_atualizar.inicioLocacao.endereco.bairro);
         setRetiradaComplemento(veiculo_atualizar.inicioLocacao.endereco?.complemento);
-        setRetiradaData(veiculo_atualizar.inicioLocacao.data.split(" ")[1]);
+        setRetiradaData(veiculo_atualizar.inicioLocacao.data.split(" ")[0]);
         setRetiradaHora(veiculo_atualizar.inicioLocacao.data.split(" ")[1]);
-        //terminoLocacao
+    
+        // Aqui, você precisa preencher a cidade de retirada
+        setRetiradaCidade(veiculo_atualizar.inicioLocacao.endereco.cidade.nome);
+    
+        // Preenchimento dos dados de entrega
         setEntregaCep(veiculo_atualizar.terminoLocacao.endereco?.cep?.cep);
         setEntregaNumero(`${veiculo_atualizar.terminoLocacao.endereco.numero}`);
         setEntregaLogradouro(veiculo_atualizar.terminoLocacao.endereco.logradouro);
-        setEntregaCidade(veiculo_atualizar.terminoLocacao.endereco.cidade);
         setEntregaBairro(veiculo_atualizar.terminoLocacao.endereco.bairro);
         setEntregaComplemento(veiculo_atualizar.terminoLocacao.endereco?.complemento);
         setEntregaData(veiculo_atualizar.terminoLocacao.data.split(" ")[0]);
         setEntregaHora(veiculo_atualizar.terminoLocacao.data.split(" ")[1]);
+    
+        // Aqui, você precisa preencher a cidade de entrega
+        setEntregaCidade(veiculo_atualizar.terminoLocacao.endereco.cidade.nome);
     }
+    
 
     const buscarTotasCidades = async () => {
         try {

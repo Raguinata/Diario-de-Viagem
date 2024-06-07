@@ -33,6 +33,25 @@ const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
             </View>
             <View style={styles.legenda}>
 
+                <View style={styles.conteudoEsquerdo}>
+
+                    <View style={styles.texto}>
+                        <Text style={styles.titulo}>{programa_infos?.nome}</Text>
+                        <Text style={styles.subTitulo}>{programa_infos?.estado?.nome}</Text>
+                        <View style={styles.chegada}>
+                            <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
+                            <Text style={styles.chegadaTexto}>Chegada: {programa_infos?.dataChegada}</Text>
+                        </View>
+                        <View style={styles.chegada}>
+                            <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
+                            <Text style={styles.chegadaTexto}>Partida: {programa_infos?.dataPartida}</Text>
+                        </View>
+                    </View>
+
+                </View>
+
+                <View style={styles.conteudoDireito}>
+
                 <View style={styles.icons}>
                     <TouchableOpacity onPress={() => navigation.navigate('telaAddViagem', {
                         programa_atualizar: programa_infos
@@ -46,19 +65,9 @@ const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
                     </TouchableOpacity>
                 </View>
 
-
-                <View style={styles.texto}>
-                    <Text style={styles.titulo}>{programa_infos?.nome}</Text>
-                    <Text style={styles.subTitulo}>{programa_infos?.estado?.nome}</Text>
-                    <View style={styles.chegada}>
-                        <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
-                        <Text style={styles.chegadaTexto}>Chegada: {programa_infos?.dataChegada}</Text>
-                    </View>
-                    <View style={styles.chegada}>
-                        <Image style={styles.icon} source={require('../../../assets//images/global/icon-data.png')} />
-                        <Text style={styles.chegadaTexto}>Partida: {programa_infos?.dataPartida}</Text>
-                    </View>
                 </View>
+
+                
             </View>
         </TouchableOpacity>
     );
@@ -69,6 +78,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginVertical: 40,
         width: '90%',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#A9A9A9',
@@ -88,7 +98,28 @@ const styles = StyleSheet.create({
     legenda: {
         height: '30%',
         width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
+
+    conteudoEsquerdo: {
+        flex: 4,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    conteudoDireito: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+
+    icons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 10,
+        marginHorizontal: 20,
+    },
+
     texto: {
         marginVertical: 10,
         marginHorizontal: 20,

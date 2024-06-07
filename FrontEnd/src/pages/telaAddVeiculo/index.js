@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOp
 import BotaoBranco from '../../components/botaoBranco';
 import Input from '../../components/input';
 import DataHora from '../../components/dataHora';
-import SelectionCidade from '../../components/selectionCidade';
+
 import { useFocusEffect } from '@react-navigation/native';
 
 

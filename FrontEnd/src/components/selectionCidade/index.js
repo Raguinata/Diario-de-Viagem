@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Image, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const selectionCidade = ({ estado, selectedCidade, setSelectedCidade }) => {
+const selectionCidade = ({ estado, selectedCidade, setSelectedCidade, isSeted }) => {
 
     const [cidades, setCidades] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -10,7 +10,7 @@ const selectionCidade = ({ estado, selectedCidade, setSelectedCidade }) => {
     useEffect(() => {
         const fetchCidades = async () => {
             try {
-                let response = await fetch('http://192.168.15.123:8080/cidade/por-estado',
+                let response = await fetch('http://10.135.146.42:8080/cidade/por-estado',
                     {
                         method: "POST",
                         headers: {
@@ -34,7 +34,6 @@ const selectionCidade = ({ estado, selectedCidade, setSelectedCidade }) => {
                 setLoading(false);
             }
         };
-
         fetchCidades();
     }, []);
 
@@ -49,12 +48,14 @@ const selectionCidade = ({ estado, selectedCidade, setSelectedCidade }) => {
                 <View style={styles.pickerContainer}>
                     <Picker
                         selectedValue={selectedCidade}
-                        onValueChange={(itemValue, itemIndex) => {setSelectedCidade(itemValue)}}
+                        onValueChange={(itemValue, itemIndex) => { setSelectedCidade(itemValue) }}
                         style={styles.picker}
                         itemStyle={styles.pickerItem}
                         dropdownIconColor="#000" // Cor da setinha
                     >
-                        <Picker.Item label="Selecione uma cidade" value="" />
+                        <Picker.Item
+                            label={isSeted ? selectedCidade.nome : "Selecione uma cidade"}
+                            value={isSeted ? selectedCidade : ""} />
                         {cidades.map((cidade) => (
                             <Picker.Item key={cidade.idCidade} label={cidade.nome} value={cidade} />
                         ))}

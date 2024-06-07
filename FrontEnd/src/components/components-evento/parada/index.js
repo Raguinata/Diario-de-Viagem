@@ -28,7 +28,7 @@ const parada = ({ navigation, parada }) => {
                     <Text style={styles.titulos}>Descrição: <Text style={styles.subTitulos}>fgdfgdfg</Text></Text>
                 </View>
                 <View style={styles.informacoes}>
-                    <Text style={styles.titulos}>Horário: <Text style={styles.subTitulos}>fgdfgdfg</Text></Text>
+                    <Text style={styles.titulos}>Horário: <Text style={styles.subTitulos}>{parada.hora}</Text></Text>
                 </View>
             </View>
         </View>

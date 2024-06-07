@@ -6,7 +6,7 @@ const grupoViagem = ({ navigation, usuario, programa }) => {
     const deletarDoGrupo = async (quero_deletar) => {
         try {
             if (quero_deletar) {
-                let res = await fetch(`http://192.168.15.123:8080/programa/grupo/deletar?id_usuario=${usuario.idUsuario}&id_programa=${programa.idProgramaDeViagem}`,
+                let res = await fetch(`http://10.135.146.42:8080/programa/grupo/deletar?id_usuario=${usuario.idUsuario}&id_programa=${programa.idProgramaDeViagem}`,
                     {
                         method: "DELETE",
                     })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
@@ -8,15 +8,31 @@ import InputDescricao from '../../components/inputDescricao';
 import SelectionCidade from '../../components/selectionCidade';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Alert } from 'react-native';
 import DateInput from '../../components/dataInput';
+import { useFocusEffect } from '@react-navigation/native';
 
 const telaAddCronograma = ({ route }) => {
 
-    const { roteiro, navigation, programa } = route.params;
+    const { roteiro, navigation, programa, cronograma_atualizar } = route.params;
 
+    const atualizar = useRef(false);
     const [nome, setNome] = useState();
     const [cidade, setCidade] = useState();
     const [data, setData] = useState();
     const [descricao, setDescricao] = useState();
+
+    useFocusEffect(
+        useCallback(() => {
+            cronograma_atualizar ? autoConfig() : atualizar.current = false;
+        }, [route.params])
+    );
+
+    const autoConfig = () => {
+        atualizar.current = true;
+        setNome(cronograma_atualizar.nome);
+        setCidade(cronograma_atualizar.cidade);
+        setData(cronograma_atualizar.data);
+        setDescricao(cronograma_atualizar.descricao);
+    }
 
     const saveOrMergeCronograma = async () => {
         let cronogramaDTO = {
@@ -28,8 +44,10 @@ const telaAddCronograma = ({ route }) => {
                 descricao: descricao
             }
         }
+        if (atualizar.current)
+            cronogramaDTO.cronograma["idCronograma"] = cronograma_atualizar.idCronograma;
         try {
-            let res = await fetch(`http://192.168.15.123:8080/cronograma/adicionar-atualizar`,
+            let res = await fetch(`http://10.135.146.42:8080/cronograma/adicionar-atualizar`,
                 {
                     method: "PUT",
                     headers: {
@@ -38,12 +56,10 @@ const telaAddCronograma = ({ route }) => {
                     body: JSON.stringify(cronogramaDTO)
                 }
             )
-            res.status == 200 ? navigation.navigate("telaRoteiroViagem", {programa: programa}) : Alert.alert("Erro ao asicionar cronograma")
+            res.status == 200 ? navigation.navigate("telaRoteiroViagem", { programa: programa }) : Alert.alert("Erro ao asicionar cronograma")
         } catch (error) {
             console.log(error)
         }
-
-
     }
 
     return (
@@ -54,7 +70,8 @@ const telaAddCronograma = ({ route }) => {
                     <View style={styles.iconVoltar}>
                         <IconVoltar />
                     </View>
-                    <BotaoBranco texto={'Adicionar Cronograma'} onPress={undefined} estilo={undefined} icon={undefined} />
+                    <BotaoBranco texto={atualizar.current ? 'Editar Cronograma' : 'Adicionar Cronograma'}
+                        onPress={undefined} estilo={undefined} icon={undefined} />
                     <Input
                         placeholder={'Digite o nome do evento'}
                         onChangeText={setNome}
@@ -68,6 +85,7 @@ const telaAddCronograma = ({ route }) => {
                     />
 
                     <SelectionCidade
+                        isSeted={atualizar.current}
                         estado={roteiro.estado}
                         selectedCidade={cidade}
                         setSelectedCidade={setCidade}
@@ -86,7 +104,9 @@ const telaAddCronograma = ({ route }) => {
                         onChangeText={setDescricao}
                         placeholder={'Digite uma descrição do evento'} />
 
-                    <BotaoBranco texto={'Salvar Evento'} onPress={saveOrMergeCronograma} estilo={undefined} icon={undefined} />
+                    <BotaoBranco texto={atualizar.current ? 'Atualizar Cronograma' : 'Salvar Evento'}
+                        onPress={saveOrMergeCronograma}
+                        estilo={undefined} icon={undefined} />
 
                 </View>
             </ScrollView>

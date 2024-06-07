@@ -48,7 +48,7 @@ const roteiro = ({ navigation, roteiros, programa }) => {
 
                             </View>
 
-                            <Cronogramas roteiro={roteiro} navigation={navigation} />
+                            <Cronogramas roteiro={roteiro} navigation={navigation} programa={programa} />
 
                             <BotaoBranco
                                 texto={'Adicionar Cronograma'}

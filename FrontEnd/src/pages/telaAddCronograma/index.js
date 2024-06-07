@@ -47,7 +47,7 @@ const telaAddCronograma = ({ route }) => {
         if (atualizar.current)
             cronogramaDTO.cronograma["idCronograma"] = cronograma_atualizar.idCronograma;
         try {
-            let res = await fetch(`http://10.135.146.42:8080/cronograma/adicionar-atualizar`,
+            let res = await fetch(`http://192.168.15.123:8080/cronograma/adicionar-atualizar`,
                 {
                     method: "PUT",
                     headers: {

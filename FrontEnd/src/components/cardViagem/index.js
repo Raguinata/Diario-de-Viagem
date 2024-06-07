@@ -38,11 +38,12 @@ const getRandomImage = () => {
 };
 
 const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
+    const randomImage = getRandomImage();
 
     const deletarPrograma = async (quero_deletar) => {
         try {
             if (quero_deletar) {
-                await fetch(`http://10.135.146.42:8080/programa/`,
+                await fetch(`http://192.168.15.123:8080/programa/`,
                     {
                         method: "DELETE",
                         headers: {
@@ -64,7 +65,7 @@ const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
                 usuario: usuario_infos
             })}>
             <View style={styles.imagemView}>
-                <Image style={styles.imagem} source={require('../../../assets/images/estados/SP.png')} />
+                <Image style={styles.imagem} source={randomImage} />
                 <View style={styles.overlay}></View>
             </View>
             <View style={styles.legenda}>

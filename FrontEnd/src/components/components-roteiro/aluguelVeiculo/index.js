@@ -6,8 +6,18 @@ const aluguelVeiculo = ({ navigation, veiculos, programa }) => {
     const cepAtribuido = (cep) => cep ? cep : "Não atribuido";
 
     const formatEndereco = (endereco) => {
-        return `${endereco?.bairro}; ${endereco?.numero} ${endereco?.cidade?.nome} - ${endereco?.cidade?.estado?.uf} CEP - ${cepAtribuido(endereco?.cep?.cep)}`
+        if (!endereco || !endereco.cidade) {
+            return "Endereço não disponível";
+        }
+    
+        const cidade = endereco.cidade;
+        const nomeCidade = cidade.nome || "Nome da Cidade não disponível";
+        const estado = cidade.estado || {};
+        const uf = estado.uf || "UF não disponível";
+    
+        return `${endereco?.bairro}; ${endereco?.numero} ${nomeCidade} - ${uf} CEP - ${cepAtribuido(endereco?.cep?.cep)}`
     }
+    
 
     const deletarVeiculo= async (quero_deletar, veiculo) => {
         let body = {

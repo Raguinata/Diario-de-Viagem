@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const parada = ({ navigation }) => {
+const parada = ({ navigation, parada }) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>

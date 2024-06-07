@@ -5,7 +5,9 @@ import IconVoltar from '../../components/icon-voltar';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 const telaExcluir = ({ route }) => {
+
     const { funcDeletar } = route.params;
+    
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'} />

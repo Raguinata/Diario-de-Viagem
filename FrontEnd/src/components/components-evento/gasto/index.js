@@ -1,28 +1,45 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const gasto = ({ navigation }) => {
+const gasto = ({ navigation, gasto, cronograma }) => {
+
+    const deletarGasto = async (quero_deletar) => {
+        try {
+            if(quero_deletar)
+                await fetch(`http://10.135.146.42:8080/gasto/${gasto.idGasto}`, {method: "DELETE"});
+            navigation.goBack();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.titleAndIcons}>
                     <Text style={styles.titulo} numberOfLines={1}>
-                        Refeição
+                        {gasto.nome}
                     </Text>
                     <View style={styles.icons}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('telaAddGasto', {
+                            navigation: navigation,
+                            cronograma: cronograma,
+                            gasto_atualizar: gasto
+                        })}>
                             <Image style={styles.icon} source={require('../../../../assets/images/global/icon-editar.png')} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('telaExcluir')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('telaExcluir', {
+                            funcDeletar: deletarGasto
+                        })}>
                             <Image style={styles.icon} source={require('../../../../assets/images/global/icon-lixo.png')} />
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.informacoes}>
-                    <Text style={styles.titulos}>Descrição: <Text style={styles.subTitulos}>fgdfgdfg</Text></Text>
+                    <Text style={styles.titulos}>Descrição: <Text style={styles.subTitulos}>{gasto?.descricao}</Text></Text>
                 </View>
                 <View style={styles.informacoes}>
-                    <Text style={styles.titulos}>Custo: <Text style={styles.subTitulos}>fgdfgdfg</Text></Text>
+                    <Text style={styles.titulos}>Custo: <Text style={styles.subTitulos}>{gasto?.valor}</Text></Text>
                 </View>
             </View>
         </View>
@@ -113,9 +130,9 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
 
-    informacoes: { 
+    informacoes: {
         width: '100%',
-        alignItems: 'flex-start', 
+        alignItems: 'flex-start',
 
     },
 });

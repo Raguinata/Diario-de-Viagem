@@ -41,7 +41,6 @@ const DateInput = ({ texto, value, onChange, placeholder, containerStyle, labelS
             />
             {show && (
                 <DateTimePicker
-
                     value={dateValue ? new Date(dateValue.split('/').reverse().join('-')) : new Date()}
                     mode="date"
                     display="default"

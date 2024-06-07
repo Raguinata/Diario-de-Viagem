@@ -53,9 +53,11 @@ const Cronogramas = ({ roteiro, navigation, programa }) => {
                                 navigation: navigation
                             })}>
                                 <View >
-
-                                    <View style={styles.icons}>
+                                    <View style={styles.containerTituloPrincipal}>
                                         <Text style={styles.titulos}>{cronograma.nome}</Text>
+
+                                        <View style={styles.icons}>
+                                        
                                         <TouchableOpacity onPress={() => navigation.navigate('telaAddCronograma', {
                                             cronograma_atualizar: cronograma,
                                             roteiro: roteiro,
@@ -70,6 +72,8 @@ const Cronogramas = ({ roteiro, navigation, programa }) => {
                                             <Image style={styles.icon} source={require('../../../../assets/images/global/icon-lixo.png')} />
                                         </TouchableOpacity>
                                     </View>
+                                    </View>
+                                    
 
                                     <View style={styles.containerTitulo}>
                                         <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-data.png')} />
@@ -81,7 +85,8 @@ const Cronogramas = ({ roteiro, navigation, programa }) => {
                                     </View>
 
                                     <View style={styles.containerTitulo}>
-                                        <Text style={styles.subTitulos}><Image style={styles.iconCardDes} source={require('../../../../assets/images/global/icon-ponto.png')} />
+                                    <Image style={styles.iconCard} source={require('../../../../assets/images/global/icon-descricao.png')} />
+                                        <Text style={styles.subTitulos}>
                                             Descrição: <Text>{cronograma.descricao}</Text>
                                         </Text>
                                     </View>
@@ -98,6 +103,19 @@ const Cronogramas = ({ roteiro, navigation, programa }) => {
 
 const styles = StyleSheet.create({
 
+    containerTituloPrincipal: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '80%',
+        justifyContent: 'space-between',
+    },
+
+    icons: {
+        flexDirection: 'row',
+        
+        
+    },
+
     iconCard: {
         width: 15,
         height: 15,
@@ -109,7 +127,7 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        width: '90%',
+        width: '98%',
         backgroundColor: 'white',
         borderRadius: 20,
         alignItems: 'center',

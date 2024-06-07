@@ -23,7 +23,7 @@ const telaPerfil = ({ route, navigation }) => {
             <View style={styles.conteudo}>
                 <View style={styles.containerPerfil}>
                     <View>
-                        <Image source={require('../../../assets/images/global/header-icon.png')} style={{ width: 102, height: 102, borderRadius: 50 }} />
+                        <Image source={require('../../../assets/images/global/header-icon.png')} style={{ width: 160, height: 160, borderRadius: 50 }} />
                     </View>
 
                     <View style={styles.informacaoPerfil}>
@@ -71,15 +71,15 @@ const styles = StyleSheet.create({
     containerPerfil: {
         flex: 1,
         width: '100%',
-        flexDirection: 'row',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         justifyContent: 'space-around',
         marginVertical: 20,
     },
 
     informacaoPerfil: {
         justifyContent: 'center',
-        height: 102,
+        alignItems: 'center',
+        
 
     },
 
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'black',
         textAlign: 'left',
+        
     },
 });
 

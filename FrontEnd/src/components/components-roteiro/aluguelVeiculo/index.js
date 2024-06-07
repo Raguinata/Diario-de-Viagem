@@ -6,7 +6,7 @@ const aluguelVeiculo = ({ navigation, veiculos, programa }) => {
     const cepAtribuido = (cep) => cep ? cep : "Não atribuido";
 
     const formatEndereco = (endereco) => {
-        return `${endereco?.bairro};${endereco?.numero} ${endereco?.cidade?.nome} - ${endereco?.cidade?.estado?.uf} CEP - ${cepAtribuido(endereco?.cep?.cep)}`
+        return `${endereco?.bairro}; ${endereco?.numero} ${endereco?.cidade?.nome} - ${endereco?.cidade?.estado?.uf} CEP - ${cepAtribuido(endereco?.cep?.cep)}`
     }
 
     const deletarVeiculo= async (quero_deletar, veiculo) => {
@@ -16,7 +16,7 @@ const aluguelVeiculo = ({ navigation, veiculos, programa }) => {
         }
         try {
             if (quero_deletar) {
-                let res = await fetch(`http://10.135.146.42:8080/programa/veiculo/delete`,
+                let res = await fetch(`http://192.168.15.123:8080/programa/veiculo/delete`,
                     {
                         method: "DELETE",
                         headers: {

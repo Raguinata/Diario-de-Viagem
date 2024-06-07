@@ -9,6 +9,7 @@ const roteiro = ({ navigation, roteiros, programa }) => {
         try {
             if (quero_deletar) {
                 await fetch(`http://10.135.146.42:8080/roteiro/${id_roteiro}`,
+
                     {
                         method: "DELETE",
                     })

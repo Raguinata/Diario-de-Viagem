@@ -2,6 +2,25 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
+
+    const deletarPrograma = async (quero_deletar) => {
+        try {
+            if (quero_deletar) {
+                await fetch(`http://10.135.146.42:8080/programa/`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(programa_infos)
+                    })
+            }
+            navigation.goBack();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <TouchableOpacity style={styles.conteudo}
             onPress={() => navigation.navigate('telaRoteiroViagem', {
@@ -13,6 +32,21 @@ const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
                 <View style={styles.overlay}></View>
             </View>
             <View style={styles.legenda}>
+
+                <View style={styles.icons}>
+                    <TouchableOpacity onPress={() => navigation.navigate('telaAddViagem', {
+                        programa_atualizar: programa_infos
+                    })}>
+                        <Image style={styles.icon} source={require('../../../assets/images/global/icon-editar.png')} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('telaExcluir', {
+                        funcDeletar: deletarPrograma
+                    })}>
+                        <Image style={styles.icon} source={require('../../../assets/images/global/icon-lixo.png')} />
+                    </TouchableOpacity>
+                </View>
+
+
                 <View style={styles.texto}>
                     <Text style={styles.titulo}>{programa_infos?.nome}</Text>
                     <Text style={styles.subTitulo}>{programa_infos?.estado?.nome}</Text>

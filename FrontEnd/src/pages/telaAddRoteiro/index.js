@@ -6,7 +6,7 @@ import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
 import SelectionEstado from '../../components/selectionEstado';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Alert } from 'react-native';
-import { useFocusEffect } from 'expo-router';
+import { useFocusEffect } from '@react-navigation/native';
 
 const telaAddRoteiro = ({ route }) => {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const parada = ({ navigation }) => {
+const parada = ({ navigation, parada }) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -28,7 +28,7 @@ const parada = ({ navigation }) => {
                     <Text style={styles.titulos}>Descrição: <Text style={styles.subTitulos}>fgdfgdfg</Text></Text>
                 </View>
                 <View style={styles.informacoes}>
-                    <Text style={styles.titulos}>Horário: <Text style={styles.subTitulos}>fgdfgdfg</Text></Text>
+                    <Text style={styles.titulos}>Horário: <Text style={styles.subTitulos}>{parada.hora}</Text></Text>
                 </View>
             </View>
         </View>

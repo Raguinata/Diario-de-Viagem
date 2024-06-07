@@ -43,6 +43,12 @@ public class ProgramaDeViagemController {
         return ResponseEntity.ok().body(programa);
     }
 
+    @DeleteMapping("/")
+    public ResponseEntity<Void> deleteByPrograma (@RequestBody ProgramaDeViagem programa) {
+        programaDeViagemService.deleteByPrograma(programa);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/cadastro")
     public ResponseEntity<ProgramaDeViagem> cadastro(@RequestBody ProgramaDeViagem programaDeViagem) {
         programaDeViagem = programaDeViagemService.cadastro(programaDeViagem);

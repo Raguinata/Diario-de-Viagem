@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const AddDestino = ({ navigation }) => {
     return (
-        <TouchableOpacity style={styles.conteudo} onPress={() => navigation.navigate('telaAddViagem')}>
+        <TouchableOpacity style={styles.conteudo} onPress={() => navigation.navigate('telaAddViagem', {})}>
             <Image source={require('../../../assets/images/telaAddDestino/icon-add.png')} style={{ width: 70, height: 70 }} />
             <Text style={styles.titulo}>Adicionar novo destino!</Text>
         </TouchableOpacity>

@@ -1,22 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
 import InputDescricao from '../../components/inputDescricao';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, SectionList } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, SectionList, Alert } from 'react-native';
 import DateInput from '../../components/dataInput';
 
-const telaAddViagem = () => {
+const telaAddViagem = ({ route }) => {
 
+    const { programa_atualizar } = route.params;
+    
+    const atualizar = useRef(false);
     const navigation = useNavigation();
     const { getItem } = useAsyncStorage("usuario");
     const [nome, setNome] = useState();
     const [data_chegada, setData_chegada] = useState();
     const [data_partida, setData_partida] = useState();
+
+    useFocusEffect(
+        useCallback(() => {
+            route.params.programa_atualizar ? autoCompletePrograma() : atualizar.current = false
+        }, [route.params])
+    );
+
+    autoCompletePrograma = () => {
+        atualizar.current = true;
+        setNome(programa_atualizar.nome);
+        setData_chegada(programa_atualizar.dataChegada);
+        setData_partida(programa_atualizar.dataPartida);
+    }
+
     const saveProgramaDeViagem = async () => {
         try {
             const usuario = JSON.parse(await getItem());
@@ -28,6 +45,9 @@ const telaAddViagem = () => {
                 usuarios: [usuario],
             }
 
+            if (atualizar.current)
+                body["idProgramaDeViagem"] = programa_atualizar.idProgramaDeViagem;
+
             let res = await fetch(`http://10.135.146.42:8080/programa/cadastro`, {
                 method: "POST",
                 headers: {
@@ -38,7 +58,7 @@ const telaAddViagem = () => {
 
             if (res.status == 200) {
                 res = await res.json();
-                alert("cadastro realizado com sucesso!!");
+                Alert.alert("Salvar programa", "realizado com sucesso!!");
                 navigation.navigate('telaRoteiroViagem', {
                     programa: res,
                     usuario: usuario
@@ -57,7 +77,8 @@ const telaAddViagem = () => {
                     <View style={styles.iconVoltar}>
                         <IconVoltar />
                     </View>
-                    <BotaoBranco texto={'Novo Programa'} onPress={undefined} estilo={undefined} icon={undefined} />
+                    <BotaoBranco texto={atualizar.current ? 'Editar Programa' : 'Novo Programa'}
+                        onPress={undefined} estilo={undefined} icon={undefined} />
                     <Input
                         placeholder={'Digite o nome da sua viagem'}
                         onChangeText={setNome}
@@ -88,7 +109,8 @@ const telaAddViagem = () => {
                     </View>
 
                     <BotaoBranco
-                        texto={'Adicionar Destino'} onPress={saveProgramaDeViagem}
+                        texto={atualizar.current ? 'Atualizar Destino' : 'Adicionar Destino'}
+                        onPress={saveProgramaDeViagem}
                         estilo={undefined} icon={undefined} />
 
                 </View>

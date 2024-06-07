@@ -12,12 +12,6 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const telaAddVeiculo = ({ route }) => {
 
-    const obterIdCidadePorNome = (nomeCidade) => {
-        const cidadeEncontrada = cidades.find(cidade => cidade.nome === nomeCidade);
-        return cidadeEncontrada ? cidadeEncontrada.idCidade : null;
-    }
-
-
     //Flag para verificar o tipo da ação, se é atualizar ou criar, o endpoint é o mesmo
     const atualizar = useRef(false);
 
@@ -60,38 +54,32 @@ const telaAddVeiculo = ({ route }) => {
     );
 
     //Seta todos os valores de veiculo, quando a ação é de atualizar
-    const autoConfigParaAtualizar = () => {
-        atualizar.current = true;
+    autoConfigParaAtualizar = () => {
+        atualizar.current = true
+        //veiculo
         setModelo(veiculo_atualizar.modelo);
         setPlaca(veiculo_atualizar.placa);
         setLocadora(veiculo_atualizar.locador);
         setValor(`${veiculo_atualizar.valorAluguel}`);
-    
-        // Preenchimento dos dados de retirada
+        //inicioLocacao
         setRetiradaCep(veiculo_atualizar.inicioLocacao.endereco?.cep?.cep);
         setRetiradaNumero(`${veiculo_atualizar.inicioLocacao.endereco.numero}`);
         setRetiradaLogradouro(veiculo_atualizar.inicioLocacao.endereco.logradouro);
+        setRetiradaCidade(veiculo_atualizar.inicioLocacao.endereco.cidade);
         setRetiradaBairro(veiculo_atualizar.inicioLocacao.endereco.bairro);
         setRetiradaComplemento(veiculo_atualizar.inicioLocacao.endereco?.complemento);
-        setRetiradaData(veiculo_atualizar.inicioLocacao.data.split(" ")[0]);
+        setRetiradaData(veiculo_atualizar.inicioLocacao.data.split(" ")[1]);
         setRetiradaHora(veiculo_atualizar.inicioLocacao.data.split(" ")[1]);
-    
-        // Aqui, você precisa preencher a cidade de retirada
-        setRetiradaCidade(veiculo_atualizar.inicioLocacao.endereco.cidade.nome);
-    
-        // Preenchimento dos dados de entrega
+        //terminoLocacao
         setEntregaCep(veiculo_atualizar.terminoLocacao.endereco?.cep?.cep);
         setEntregaNumero(`${veiculo_atualizar.terminoLocacao.endereco.numero}`);
         setEntregaLogradouro(veiculo_atualizar.terminoLocacao.endereco.logradouro);
+        setEntregaCidade(veiculo_atualizar.terminoLocacao.endereco.cidade);
         setEntregaBairro(veiculo_atualizar.terminoLocacao.endereco.bairro);
         setEntregaComplemento(veiculo_atualizar.terminoLocacao.endereco?.complemento);
         setEntregaData(veiculo_atualizar.terminoLocacao.data.split(" ")[0]);
         setEntregaHora(veiculo_atualizar.terminoLocacao.data.split(" ")[1]);
-    
-        // Aqui, você precisa preencher a cidade de entrega
-        setEntregaCidade(veiculo_atualizar.terminoLocacao.endereco.cidade.nome);
     }
-    
 
     const buscarTotasCidades = async () => {
         try {
@@ -143,7 +131,7 @@ const telaAddVeiculo = ({ route }) => {
                     cep: {
                         cep: retirada_cep
                     },
-                    cidade: cidades.find(cidade => cidade.nome === retirada_cidade) // Busca a cidade pelo nome
+                    cidade: cidades[1]
                 }
             },
             terminoLocacao: {
@@ -156,22 +144,22 @@ const telaAddVeiculo = ({ route }) => {
                     cep: {
                         cep: entrega_cep
                     },
-                    cidade: cidades.find(cidade => cidade.nome === entrega_cidade) // Busca a cidade pelo nome
+                    cidade: cidades[0]
                 }
             }
         }
-    
-        if (veiculo_atualizar) {
+
+        //TALVEZ CEP BUG AQUI, CASO UM CEP JÁ EXISTENTE SEJÁ REENVIADO SEM O ID
+        if(veiculo_atualizar){
             body["idVeiculo"] = veiculo_atualizar.idVeiculo;
             body.inicioLocacao["idInicioLocacao"] = veiculo_atualizar.inicioLocacao.idInicioLocacao;
             body.inicioLocacao.endereco["idEndereco"] = veiculo_atualizar.inicioLocacao.endereco.idEndereco;
             body.terminoLocacao["idTerminoLocacao"] = veiculo_atualizar.terminoLocacao.idTerminoLocacao;
             body.terminoLocacao.endereco["idEndereco"] = veiculo_atualizar.terminoLocacao.endereco.idEndereco;
         }
-    
+
         return body;
     }
-    
 
     const saveOrMerge = async () => {
         let body = {
@@ -194,15 +182,6 @@ const telaAddVeiculo = ({ route }) => {
             console.log(error);
         }
     }
-
-    const handleRetiradaCidadeChange = (nomeCidade) => {
-        setRetiradaCidade(nomeCidade);
-    }
-
-    const handleEntregaCidadeChange = (nomeCidade) => {
-        setEntregaCidade(nomeCidade);
-    }
-
 
 
     return (
@@ -313,14 +292,12 @@ const telaAddVeiculo = ({ route }) => {
                         icon={require('../../../assets/images/global/icon-cidade.png')}
                         texto={'Cidade:'}
                         placeholder={'Digite a Cidade'}
-                        onChangeText={handleRetiradaCidadeChange}
+                        onChangeText={setRetiradaCidade}
                         value={retirada_cidade}
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined}
-                        marginBottom={undefined}
-                    />
+                        height={undefined} marginBottom={undefined} />
 
                     <Input
                         icon={require('../../../assets/images/global/icon-complemento.png')}
@@ -382,19 +359,17 @@ const telaAddVeiculo = ({ route }) => {
                         height={undefined} marginBottom={undefined} />
 
                     <View style={styles.viewDoisInputs}>
-
-                        <Input
-                            icon={require('../../../assets/images/global/icon-cidade.png')}
-                            texto={'Cidade:'}
-                            placeholder={'Digite a Cidade'}
-                            onChangeText={handleEntregaCidadeChange}
-                            value={entrega_cidade}
-                            fontColor={undefined}
-                            inputColor={'white'}
-                            width={320}
-                            height={undefined}
-                            marginBottom={undefined}
-                        />
+                        
+                    <Input
+                        icon={require('../../../assets/images/global/icon-cidade.png')}
+                        texto={'Cidade:'}
+                        placeholder={'Digite a Cidade'}
+                        onChangeText={setEntregaCidade}
+                        value={entrega_cidade}
+                        fontColor={undefined}
+                        inputColor={'white'}
+                        width={320}
+                        height={undefined} marginBottom={undefined} />
 
                     </View>
 

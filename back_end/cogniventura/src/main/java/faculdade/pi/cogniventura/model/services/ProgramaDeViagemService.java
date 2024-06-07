@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import faculdade.pi.cogniventura.model.DTOs.ProgramaVeiculoDTO;
 import faculdade.pi.cogniventura.model.entities.ProgramaDeViagem;
+import faculdade.pi.cogniventura.model.entities.Roteiro;
 import faculdade.pi.cogniventura.model.entities.Usuario;
 import faculdade.pi.cogniventura.model.entities.Veiculo;
 import faculdade.pi.cogniventura.model.repository.ProgramaDeViagemRepository;
@@ -25,6 +26,9 @@ public class ProgramaDeViagemService {
 
     @Autowired
     VeiculoService veiculoService;
+
+    @Autowired
+    RoteiroService roteiroService;
 
     public ProgramaDeViagem cadastro(ProgramaDeViagem programaDeViagem) {
         return programaDeViagemRepository.save(programaDeViagem);
@@ -111,5 +115,22 @@ public class ProgramaDeViagemService {
     public ProgramaDeViagem findByIdPrograma(int id_programa) {
         Optional<ProgramaDeViagem> programa = programaDeViagemRepository.findById(id_programa);
         return programa.orElse(null);
+    }
+
+    //Não é nada performático e está pessimo
+    @Transactional
+    public void deleteByPrograma(ProgramaDeViagem programa) {
+        List<Veiculo> veiculos = programa.getVeiculos();
+        List<Roteiro> roteiros = roteiroService.findByPrograma(programa);
+        programa.setUsuarios(null);
+        programa.setVeiculos(null);
+        programaDeViagemRepository.save(programa);
+        for(Veiculo veiculo: veiculos) {
+            veiculoService.deletar(veiculo.getIdVeiculo());
+        }   
+        for (Roteiro roteiro: roteiros) {
+            roteiroService.deleteByid(roteiro.getIdRoteiro());
+        }
+        programaDeViagemRepository.deleteById(programa.getIdProgramaDeViagem());
     }
 }

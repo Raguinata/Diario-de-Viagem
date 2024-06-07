@@ -83,13 +83,37 @@ const telaAddVeiculo = ({ route }) => {
 
     const buscarTotasCidades = async () => {
         try {
-            let res = await fetch(`http://10.135.146.42:8080/cidade/`);
+            let res = await fetch(`http://192.168.15.123:8080/cidade/`);
             res = await res.json();
             setCidades(res);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
+
+    const buscarInformacoesCEP = async (cep, setLogradouro, setBairro, setCidade) => {
+        try {
+            let res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            res = await res.json();
+            setLogradouro(res.logradouro);
+            setBairro(res.bairro);
+            setCidade(res.localidade);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // Função para buscar informações do CEP de retirada
+    const handleRetiradaCEPChange = (cep) => {
+        setRetiradaCep(cep);
+        buscarInformacoesCEP(cep, setRetiradaLogradouro, setRetiradaBairro, setRetiradaCidade);
+    };
+
+    // Função para buscar informações do CEP de entrega
+    const handleEntregaCEPChange = (cep) => {
+        setEntregaCep(cep);
+        buscarInformacoesCEP(cep, setEntregaLogradouro, setEntregaBairro, setEntregaCidade);
+    };
 
     const formatVeiculo = (veiculo_atualizar) => {
         let body = {
@@ -143,7 +167,7 @@ const telaAddVeiculo = ({ route }) => {
             veiculo: atualizar.current ? formatVeiculo(veiculo_atualizar) : formatVeiculo()
         }
         try {
-            let res = await fetch(`http://10.135.146.42:8080/programa/veiculo/adcionaOuAtualiza`, {
+            let res = await fetch(`http://192.168.15.123:8080/programa/veiculo/adcionaOuAtualiza`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
@@ -223,7 +247,7 @@ const telaAddVeiculo = ({ route }) => {
                             icon={require('../../../assets/images/global/icon-cep.png')}
                             texto={'CEP:'}
                             placeholder={'CEP do local de retirada'}
-                            onChangeText={setRetiradaCep}
+                            onChangeText={handleRetiradaCEPChange}
                             value={retirada_cep}
                             fontColor={undefined}
                             inputColor={'white'}
@@ -264,7 +288,16 @@ const telaAddVeiculo = ({ route }) => {
                         width={320}
                         height={undefined} marginBottom={undefined} />
 
-                    <SelectionCidade value={retirada_cidade}/>
+                    <Input
+                        icon={require('../../../assets/images/global/icon-cidade.png')}
+                        texto={'Cidade:'}
+                        placeholder={'Digite a Cidade'}
+                        onChangeText={setRetiradaCidade}
+                        value={retirada_cidade}
+                        fontColor={undefined}
+                        inputColor={'white'}
+                        width={320}
+                        height={undefined} marginBottom={undefined} />
 
                     <Input
                         icon={require('../../../assets/images/global/icon-complemento.png')}
@@ -284,7 +317,7 @@ const telaAddVeiculo = ({ route }) => {
                             icon={require('../../../assets/images/global/icon-cep.png')}
                             texto={'CEP:'}
                             placeholder={'CEP do local de entrega'}
-                            onChangeText={setEntregaCep}
+                            onChangeText={handleEntregaCEPChange}
                             value={entrega_cep}
                             fontColor={undefined}
                             inputColor={'white'}
@@ -327,7 +360,17 @@ const telaAddVeiculo = ({ route }) => {
 
                     <View style={styles.viewDoisInputs}>
                         
-                        <SelectionCidade value={entrega_cidade}/>
+                    <Input
+                        icon={require('../../../assets/images/global/icon-cidade.png')}
+                        texto={'Cidade:'}
+                        placeholder={'Digite a Cidade'}
+                        onChangeText={setEntregaCidade}
+                        value={entrega_cidade}
+                        fontColor={undefined}
+                        inputColor={'white'}
+                        width={320}
+                        height={undefined} marginBottom={undefined} />
+
                     </View>
 
                     <Input

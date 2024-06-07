@@ -28,7 +28,7 @@ const telaAddViagem = () => {
                 usuarios: [usuario],
             }
 
-            let res = await fetch(`http://192.168.15.123:8080/programa/cadastro`, {
+            let res = await fetch(`http://10.135.146.42:8080/programa/cadastro`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

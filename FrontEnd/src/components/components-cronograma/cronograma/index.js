@@ -38,7 +38,10 @@ const Cronogramas = ({ roteiro, navigation }) => {
                 cronogramas.map((cronograma) => {
                     return (
                         <View>
-                            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('telaVisualizarEvento')}>
+                            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('telaVisualizarEvento',{
+                                cronograma: cronograma,
+                                navigation: navigation
+                            })}>
                                 <View >
                                     <Text style={styles.titulos}>{cronograma.nome}</Text>
                                     <View style={styles.containerTitulo}>

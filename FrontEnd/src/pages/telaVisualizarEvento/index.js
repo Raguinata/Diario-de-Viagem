@@ -1,20 +1,57 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import Thumb from '../../components/components-evento/thumb';
 import Parada from '../../components/components-evento/parada';
 import Gasto from '../../components/components-evento/gasto';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, Alert } from 'react-native';
 import BotaoBranco from '../../components/botaoBranco';
+import { useFocusEffect } from '@react-navigation/native';
 
-const telaVisualizarEvento = ( { navigation } ) => {
+const telaVisualizarEvento = ({ route }) => {
+
+    const { cronograma, navigation } = route.params;
+
+    const [gastos, setGastos] = useState([]);
+    const [paradas, setParadas] = useState([]);
+
+    const buscarPorCronograma = async (tabela) => {
+        try {
+            let res = await fetch(`http://10.135.146.42:8080/${tabela}/busca-por-cronograma`,
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cronograma)
+                }
+            )
+            if (res.status == 200) {
+                return await res.json();
+            }
+            else {
+                Alert.alert("Erro ao buscar por cronograma");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+            buscarPorCronograma("gasto").then((gastos) => setGastos(gastos));
+            buscarPorCronograma("parada").then((paradas) => setParadas(paradas));
+        }, [route.params])
+    );
+
+
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'} />
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
 
-                    <Thumb />
+                    <Thumb cronograma={cronograma} />
 
                     <View style={styles.paradas}>
                         <View style={styles.containerTitulo}>
@@ -22,10 +59,13 @@ const telaVisualizarEvento = ( { navigation } ) => {
                             <Text style={styles.titulos}>Paradas:</Text>
                         </View>
 
-                        <Image style={styles.imagemMaps} source={require('../../../assets/images/telaVisualizarEvento/maps.png')}/>
+                        <Image style={styles.imagemMaps} source={require('../../../assets/images/telaVisualizarEvento/maps.png')} />
 
-                        <Parada/>
-                        <Parada/>
+                        {paradas.map((parada) => {
+                            return (
+                                <Parada parada={parada} navigation={navigation} />
+                            );
+                        })}
 
                         <BotaoBranco
                             texto={'Adicionar parada'}
@@ -42,12 +82,18 @@ const telaVisualizarEvento = ( { navigation } ) => {
                             <Text style={styles.titulos}>Gastos:</Text>
                         </View>
 
-                        <Gasto/>
-                        <Gasto/>
+                        {gastos.map((gasto) => {
+                            return (
+                                <Gasto gasto={gasto} navigation={navigation} cronograma={cronograma} />
+                            );
+                        })}
 
                         <BotaoBranco
                             texto={'Adicionar gasto'}
-                            onPress={() => navigation.navigate('telaAddGasto')}
+                            onPress={() => navigation.navigate('telaAddGasto', {
+                                cronograma: cronograma,
+                                navigation: navigation
+                            })}
                             estilo={styles.visualizarEventoBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                             navigation={navigation}

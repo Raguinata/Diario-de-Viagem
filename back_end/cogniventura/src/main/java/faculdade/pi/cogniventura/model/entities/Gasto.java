@@ -22,7 +22,7 @@ public class Gasto {
     @Column(name = "id_gasto")
     private int idGasto;
 
-    @Column(name = "valor", precision = 10, scale = 2)
+    @Column(name = "valor", precision = 10, scale = 2, nullable = false)
     private BigDecimal valor;
 
     @Column(name = "descricao", columnDefinition = "TEXT")

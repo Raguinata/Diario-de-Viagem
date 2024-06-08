@@ -127,11 +127,12 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        width: '98%',
+        width: '95%',
         backgroundColor: 'white',
         borderRadius: 20,
         alignItems: 'center',
         marginVertical: 5,
+        padding: 10,
     },
 
     containerTitulo: {
@@ -162,6 +163,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '90%',
+    },
+
+    icon: {
+        width: 15,
+        height: 15,
+        marginHorizontal: 5,
     },
 
 });

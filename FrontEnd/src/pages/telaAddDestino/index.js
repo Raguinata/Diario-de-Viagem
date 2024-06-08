@@ -84,11 +84,11 @@ const TelaAddDestino = ({ navigation, route }) => {
 
             </ScrollView>
             <View style={styles.pagination}>
-                <TouchableOpacity onPress={handlePrevious}>
+                <TouchableOpacity style={styles.botao} onPress={handlePrevious}>
                     <Text style={styles.paginationText}>Anterior</Text>
                 </TouchableOpacity>
                 <Text style={styles.paginationText}>{currentIndex + 1} / {programas?.length + 1}</Text>
-                <TouchableOpacity onPress={handleNext}>
+                <TouchableOpacity style={styles.botao} onPress={handleNext}>
                     <Text style={styles.paginationText}>Próximo</Text>
                 </TouchableOpacity>
             </View>
@@ -118,6 +118,12 @@ const styles = StyleSheet.create({
     paginationText: {
         fontSize: 16,
         color: 'black',
+    },
+
+    botao: {
+        backgroundColor: '#A9A9A9',
+        padding: 10,
+        borderRadius: 20,
     },
 });
 

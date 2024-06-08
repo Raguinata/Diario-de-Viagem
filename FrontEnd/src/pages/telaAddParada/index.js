@@ -11,13 +11,22 @@ import BotaoBranco from '../../components/botaoBranco';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import IconVoltar from '../../components/icon-voltar';
 
-const telaAddParada = () => {
+const telaAddParada = ({ route }) => {
     const [location, setLocation] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [eventName, setEventName] = useState('');
     const [eventDescription, setEventDescription] = useState('');
     const [eventTime, setEventTime] = useState('');
     const [formData, setFormData] = useState({});
+
+    const { cronograma, navigation, parada_atualizar } = route.params;
+    const atualizar = useRef(false);
+
+    useFocusEffect(
+        useCallback(() => {
+            route.params.parada_atualizar ? autoConfig() : atualizar.current = false;
+        }, [route.params])
+    );
 
     useEffect(() => {
         const requestLocationPermission = async () => {
@@ -43,20 +52,51 @@ const telaAddParada = () => {
         requestLocationPermission();
     }, []);
 
+    const autoConfig = () => {
+        atualizar.current = true;
+        setHora(parada_atualizar.hora);
+    }
+
+    const saveOrMergeParada = async () => {
+        let body = {
+            cronograma: cronograma,
+            parada: {
+                hora: eventTime
+            },
+            evento: {
+                infos: JSON.stringify(selectedPlace)
+            }
+        }
+        if(atualizar.current){
+            body.parada["idParada"] = parada_atualizar.idParada;
+            body.evento["idEvento"] = parada_atualizar.evento.idEvento;
+        }
+        try {
+            let res = await fetch(`http://192.168.15.123:8080/parada/adicionar-atualizar`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+            if (res.status == 200) {
+                Alert.alert("Parada", "A parada foi salvada com sucesso!")
+                navigation.navigate("telaVisualizarEvento", {
+                    cronograma: cronograma,
+                    navigation: navigation
+                });
+            }
+            else {
+                Alert.alert("Erro em parada", "Erro ao salvar parada");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
     const onPlaceSelected = (data, details) => {
         setSelectedPlace(details);
         setEventName(details?.name || data.description);
-    };
-
-    const handleSave = () => {
-        const data = {
-            eventName,
-            eventDescription,
-            eventTime,
-            placeDetails: selectedPlace
-        };
-        setFormData(data);
-        console.log('Dados salvos:', data);
     };
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -70,7 +110,8 @@ const telaAddParada = () => {
                     <IconVoltar />
                 </View>
     
-                <BotaoBranco texto={'Adicionar Parada'} onPress={undefined} estilo={undefined} icon={undefined} />
+                <BotaoBranco texto={atualizar.current ? 'Editar Parada' : 'Adicionar Parada'} 
+                onPress={undefined} estilo={undefined} icon={undefined} />
     
                 <Input
                     icon={require('../../../assets/images/global/icon-emoji.png')}
@@ -101,7 +142,8 @@ const telaAddParada = () => {
                     placeholder={'00:00'}
                 />
     
-                <BotaoBranco texto={'Salvar Evento'} onPress={handleSave} estilo={undefined} icon={undefined} />
+                <BotaoBranco texto={atualizar.current ? 'Atualizar Parada' : 'Salvar Parada'} 
+                    onPress={saveOrMergeParada} estilo={undefined} icon={undefined} />
 
                 {selectedPlace && (
                     <View style={styles.placeDetails}>

@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const TimeInputCustom = ({ texto, value, onChange, placeholder, inputStyle }) => {
+const TimeInputParada = ({ texto, value, onChange, placeholder, inputStyle }) => {
     const [show, setShow] = useState(false);
+    const [localTime, setLocalTime] = useState(value || '');
 
     const onChangeTime = (event, selectedTime) => {
         setShow(false);
         if (selectedTime) {
-            onChange(formatTime(selectedTime));
+            const formattedTime = formatTime(selectedTime);
+            setLocalTime(formattedTime);
+            if (onChange) {
+                onChange(formattedTime);
+            }
         }
     };
 
@@ -21,19 +26,18 @@ const TimeInputCustom = ({ texto, value, onChange, placeholder, inputStyle }) =>
     return (
         <View style={styles.container}>
             <View style={styles.titulo}>
-            <Image source={require('../../../assets/images/global/icon-relogio.png')} style={styles.icon} />
-            {texto && <Text style={styles.label}>{texto}</Text>}
+                <Image source={require('../../../assets/images/global/icon-relogio.png')} style={styles.icon} />
+                {texto && <Text style={styles.label}>{texto}</Text>}
             </View>
             <TextInput
-                value={value}
+                value={localTime}
                 placeholder={placeholder}
                 onFocus={() => setShow(true)}
                 style={[styles.input, inputStyle]}
             />
-            
             {show && (
                 <DateTimePicker
-                    value={value ? new Date(value) : new Date()}
+                    value={localTime ? new Date(`1970-01-01T${localTime}:00`) : new Date()}
                     mode="time"
                     display="default"
                     onChange={onChangeTime}
@@ -48,19 +52,15 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginVertical: 15,
     },
-
     titulo: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 10,
     },
-
     icon: {
         width: 15,
         height: 15,
-        
     },
-
     label: {
         fontSize: 14,
         marginBottom: 5,
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TimeInputCustom;
+export default TimeInputParada;

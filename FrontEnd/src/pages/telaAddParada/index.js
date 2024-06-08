@@ -1,112 +1,169 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Platform, ScrollView, Image } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { request, PERMISSIONS } from 'react-native-permissions';
+import Geolocation from '@react-native-community/geolocation';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
+import Input from '../../components/input';
+import TimeInputParada from '../../components/timeInputParada';
 import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
-import Input from '../../components/input';
-import InputDescricao from '../../components/inputDescricao';
-import { View, StyleSheet, ScrollView, Alert } from 'react-native';
-import TimeInputParada from '../../components/timeInputParada'
-import { useFocusEffect } from '@react-navigation/native';
 
-const telaAddParada = ({ route }) => {
+const App = () => {
+    const [location, setLocation] = useState(null);
+    const [selectedPlace, setSelectedPlace] = useState(null);
+    const [eventName, setEventName] = useState('');
+    const [eventDescription, setEventDescription] = useState('');
+    const [eventTime, setEventTime] = useState('');
+    const [formData, setFormData] = useState({});
 
-    const { cronograma, navigation, parada_atualizar } = route.params;
-    const [hora, setHora] = useState();
-    const atualizar = useRef(false);
-
-    useFocusEffect(
-        useCallback(() => {
-            route.params.parada_atualizar ? autoConfig() : atualizar.current = false;
-        }, [route.params])
-    );
-
-    const autoConfig = () => {
-        atualizar.current = true;
-        setHora(parada_atualizar.hora);
-    }
-
-    const saveOrMergeParada = async () => {
-        let body = {
-            cronograma: cronograma,
-            parada: {
-                hora: hora
-            },
-            evento: {
-                infos: "{}"
+    useEffect(() => {
+        const requestLocationPermission = async () => {
+            let response;
+            if (Platform.OS === 'android') {
+                response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+            } else {
+                response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
             }
-        }
-        if(atualizar.current){
-            body.parada["idParada"] = parada_atualizar.idParada;
-            body.evento["idEvento"] = parada_atualizar.evento.idEvento;
-        }
-        try {
-            let res = await fetch(`http://192.168.15.123:8080/parada/adicionar-atualizar`, {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            })
-            if (res.status == 200) {
-                Alert.alert("Parada", "A parada foi salvada com sucesso!")
-                navigation.navigate("telaVisualizarEvento", {
-                    cronograma: cronograma,
-                    navigation: navigation
-                });
+            if (response === 'granted') {
+                Geolocation.getCurrentPosition(
+                    position => {
+                        setLocation(position.coords);
+                        console.log('Localização atual:', position.coords);
+                    },
+                    error => {
+                        console.log(error);
+                    },
+                    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+                );
             }
-            else {
-                Alert.alert("Erro em parada", "Erro ao salvar parada");
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
+        };
+        requestLocationPermission();
+    }, []);
+
+    const onPlaceSelected = (data, details) => {
+        setSelectedPlace(details);
+        setEventName(details?.name || data.description);
+    };
+
+    const handleSave = () => {
+        const data = {
+            eventName,
+            eventDescription,
+            eventTime,
+            placeDetails: selectedPlace
+        };
+        setFormData(data);
+        console.log('Dados salvos:', data);
+    };
 
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'} />
-            <ScrollView style={styles.conteudoScroll}>
-                <View style={styles.conteudo}>
-                    <View style={styles.iconVoltar}>
+            <View style={styles.conteudoScroll}>
+
+            <View style={styles.iconVoltar}>
                         <IconVoltar />
-                    </View>
-                    <BotaoBranco texto={atualizar.current ? 'Editar Parada' : 'Adicionar Parada'}
-                        onPress={undefined} estilo={undefined} icon={undefined} />
-                    
-                    <Input
-                        placeholder={'Digite um evento que deseja visitar'}
-                        onChangeText={undefined}
-                        value={undefined}
-                        texto={'Pesquisar por evento:'}
-                        icon={require('../../../assets/images/global/icon-maps.png')}
+            </View>
+                
+                <BotaoBranco texto={'Adicionar Parada'} onPress={undefined} estilo={undefined} icon={undefined} />
+
+                <Input
+
+                        icon={require('../../../assets/images/global/icon-emoji.png')}
+                        texto={'Nome do Evento:'}
+                        placeholder={'Digite o nome do evento'}
+                        onChangeText={setEventName}
+                        value={eventName}
                         fontColor={undefined}
                         inputColor={'white'}
                         width={320}
-                        height={undefined}
+                        height={undefined} marginBottom={undefined} />
+
+<View style={styles.containerTitulo}>
+                                        <Image style={styles.iconCard} source={require('../../../assets/images/global/icon-maps.png')} />
+                                        <Text style={styles.subTitulos}>Cidade:</Text>
+                                    </View>
+
+                                    
+                <View style={styles.autocompleteContainer}>
+                    
+                    <GooglePlacesAutocomplete
+                        placeholder="Pesquisar local"
+                        onPress={(data, details = null) => {
+                            onPlaceSelected(data, details);
+                        }}
+                        query={{
+                            key: 'AIzaSyDRdO3SHS-Oiq570P30cA4e5CvQ3AgEJwA',
+                            language: 'pt-br',
+                            location: location ? `${location.latitude},${location.longitude}` : null,
+                            radius: 500,
+                        }}
+                        currentLocation={true}
+                        currentLocationLabel="Localização atual"
+                        fetchDetails={true}
+                        styles={{
+                            textInputContainer: {
+                                backgroundColor: 'rgba(0,0,0,0)',
+                                borderTopWidth: 0,
+                                borderBottomWidth: 0,
+                            },
+                            textInput: {
+                                backgroundColor: '#FFFFFF',
+                                borderRadius: 100,
+                                paddingVertical: 5,
+                                paddingHorizontal: 10,
+                                fontSize: 12,
+                                borderWidth: 1,
+                                borderColor: '#DDDDDD',
+                            },
+                            listView: {
+                                backgroundColor: '#FFFFFF',
+                                borderRadius: 5,
+                                elevation: 2,
+                            },
+                        }}
+                        debounce={200}
+                        nearbyPlacesAPI="GooglePlacesSearch"
+                        enablePoweredByContainer={false}
+                        suppressDefaultStyles={false}
+                    />
+                </View>
+
+                <TimeInputParada
+                        texto={'Hora do Evento:'}
+                        value={eventTime}
+                        onChange={setEventTime}
+                        placeholder={'00:00'}
                     />
 
-                    <View style={styles.input}>
-                        <TimeInputParada
-                            texto={'Hora'}
-                            value={hora}
-                            onChange={setHora}
-                            placeholder="Hora"
-                            inputStyle={styles.dataInputComponente}
-                        />
+                <BotaoBranco texto={'Salvar Evento'} onPress={handleSave} estilo={undefined} icon={undefined} />
+        
+    
+                {/* {selectedPlace && (
+                    <View style={styles.placeDetails}>
+                        <Text style={styles.detailTitle}>Detalhes do Local Selecionado</Text>
+                        <Text>Nome: {selectedPlace.name}</Text>
+                        <Text>Endereço: {selectedPlace.formatted_address}</Text>
+                        <Text>Latitude: {selectedPlace.geometry.location.lat}</Text>
+                        <Text>Longitude: {selectedPlace.geometry.location.lng}</Text>
                     </View>
-
-                    <BotaoBranco texto={atualizar.current ? 'Atualizar Parada' : 'Salvar Parada'}
-                        onPress={saveOrMergeParada} estilo={undefined} icon={undefined} />
-
-                </View>
-            </ScrollView>
+                )}*/}
+                
+            </View>
             <Footer />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+
+    iconVoltar: {
+        width: '100%',
+        marginTop: 10,
+    },
+
     container: {
         flex: 1,
         justifyContent: 'space-between',
@@ -114,41 +171,78 @@ const styles = StyleSheet.create({
         backgroundColor: '#4c4c4c',
     },
 
-    input: {
-        width: 105,
-        height: 40,
-        marginBottom: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#D9D9D9',
-    },
-
     conteudoScroll: {
-        flex: 1,
         marginVertical: 40,
         width: '90%',
         backgroundColor: '#D9D9D9',
         borderRadius: 20,
-    },
-
-    conteudo: {
-        flex: 1,
-        width: '100%',
-        marginVertical: 20,
         alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
     },
 
-    titulo: {
-        fontSize: 32,
-        color: 'black',
-        fontFamily: 'Outfit-VariableFont_wght',
+    title: {
+        fontSize: 24,
         fontWeight: 'bold',
+        marginBottom: 16,
         textAlign: 'center',
     },
+    input: {
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 12,
+        fontSize: 16,
+    },
+    autocompleteContainer: {
+        flex: 1,
+        width: 320,
+        borderRadius: 8,
+        marginBottom: 16,
+    },
+    button: {
+        backgroundColor: '#007bff',
+        padding: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    placeDetails: {
+        backgroundColor: '#f8f8f8',
+        padding: 16,
+        borderRadius: 8,
+        marginTop: 16,
+    },
+    detailTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 8,
+    },
 
-    iconVoltar: {
-        width: '100%',
+    containerTitulo: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '80%',
+    },
+
+    iconCard: {
+        width: 15,
+        height: 15,
+    },
+
+    subTitulos: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        fontFamily: 'Outfit-VariableFont_wght',
+        color: 'black',
+        margin: 10,
+        width: '90%',
     },
 });
 
-export default telaAddParada;
+export default App;

@@ -7,6 +7,7 @@ import Input from '../../components/input';
 import InputDescricao from '../../components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import TimeInputCustom from '../../components/timeInputParada';
 
 const telaAddGasto = ({ route }) => {
 

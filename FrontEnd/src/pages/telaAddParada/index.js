@@ -8,6 +8,7 @@ import Footer from '../../components/footer';
 import Input from '../../components/input';
 import TimeInputParada from '../../components/timeInputParada';
 import BotaoBranco from '../../components/botaoBranco';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import IconVoltar from '../../components/icon-voltar';
 
 const App = () => {
@@ -58,41 +59,70 @@ const App = () => {
         console.log('Dados salvos:', data);
     };
 
+    const [modalVisible, setModalVisible] = useState(false);
+
     return (
         <View style={styles.container}>
             <Header titulo={'Minhas Viagens'} />
-            <View style={styles.conteudoScroll}>
-
-            <View style={styles.iconVoltar}>
-                        <IconVoltar />
-            </View>
-                
+            <ScrollView style={styles.conteudoScroll} contentContainerStyle={styles.contentContainer}>
+                <View style={styles.conteudo}>
+                <View style={styles.iconVoltar}>
+                    <IconVoltar />
+                </View>
+    
                 <BotaoBranco texto={'Adicionar Parada'} onPress={undefined} estilo={undefined} icon={undefined} />
-
+    
                 <Input
+                    icon={require('../../../assets/images/global/icon-emoji.png')}
+                    texto={'Nome do Evento:'}
+                    placeholder={'Digite o nome do evento'}
+                    onChangeText={setEventName}
+                    value={eventName}
+                    fontColor={undefined}
+                    inputColor={'white'}
+                    width={320}
+                    height={undefined}
+                    marginBottom={undefined}
+                />
+    
+                <View style={styles.containerTitulo}>
+                    <Image style={styles.iconCard} source={require('../../../assets/images/global/icon-maps.png')} />
+                    <Text style={styles.subTitulos}>Lugar:</Text>
+                </View>
+    
+                <TouchableOpacity style={styles.lugar} onPress={() => setModalVisible(true)}>
+                    <Text style={styles.selectPlaceText}>Selecionar Lugar</Text>
+                </TouchableOpacity>
+    
+                <TimeInputParada
+                    texto={'Hora do Evento:'}
+                    value={eventTime}
+                    onChange={setEventTime}
+                    placeholder={'00:00'}
+                />
+    
+                <BotaoBranco texto={'Salvar Evento'} onPress={handleSave} estilo={undefined} icon={undefined} />
 
-                        icon={require('../../../assets/images/global/icon-emoji.png')}
-                        texto={'Nome do Evento:'}
-                        placeholder={'Digite o nome do evento'}
-                        onChangeText={setEventName}
-                        value={eventName}
-                        fontColor={undefined}
-                        inputColor={'white'}
-                        width={320}
-                        height={undefined} marginBottom={undefined} />
-
-<View style={styles.containerTitulo}>
-                                        <Image style={styles.iconCard} source={require('../../../assets/images/global/icon-maps.png')} />
-                                        <Text style={styles.subTitulos}>Cidade:</Text>
-                                    </View>
-
-                                    
-                <View style={styles.autocompleteContainer}>
-                    
+                {selectedPlace && (
+                    <View style={styles.placeDetails}>
+                        <Text style={styles.detailTitle}>Detalhes do Local Selecionado</Text>
+                        <Text>Nome: {selectedPlace.name}</Text>
+                        <Text>Endereço: {selectedPlace.formatted_address}</Text>
+                        <Text>Latitude: {selectedPlace.geometry.location.lat}</Text>
+                        <Text>Longitude: {selectedPlace.geometry.location.lng}</Text>
+                    </View>
+                )}
+                </View>
+            </ScrollView>
+            <Footer />
+    
+            {modalVisible && (
+                <View style={styles.modal}>
                     <GooglePlacesAutocomplete
                         placeholder="Pesquisar local"
                         onPress={(data, details = null) => {
                             onPlaceSelected(data, details);
+                            setModalVisible(false);
                         }}
                         query={{
                             key: 'AIzaSyDRdO3SHS-Oiq570P30cA4e5CvQ3AgEJwA',
@@ -108,6 +138,7 @@ const App = () => {
                                 backgroundColor: 'rgba(0,0,0,0)',
                                 borderTopWidth: 0,
                                 borderBottomWidth: 0,
+                                width: '90%',
                             },
                             textInput: {
                                 backgroundColor: '#FFFFFF',
@@ -130,40 +161,40 @@ const App = () => {
                         suppressDefaultStyles={false}
                     />
                 </View>
-
-                <TimeInputParada
-                        texto={'Hora do Evento:'}
-                        value={eventTime}
-                        onChange={setEventTime}
-                        placeholder={'00:00'}
-                    />
-
-                <BotaoBranco texto={'Salvar Evento'} onPress={handleSave} estilo={undefined} icon={undefined} />
-        
-    
-                {/* {selectedPlace && (
-                    <View style={styles.placeDetails}>
-                        <Text style={styles.detailTitle}>Detalhes do Local Selecionado</Text>
-                        <Text>Nome: {selectedPlace.name}</Text>
-                        <Text>Endereço: {selectedPlace.formatted_address}</Text>
-                        <Text>Latitude: {selectedPlace.geometry.location.lat}</Text>
-                        <Text>Longitude: {selectedPlace.geometry.location.lng}</Text>
-                    </View>
-                )}*/}
-                
-            </View>
-            <Footer />
+            )}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
 
-    iconVoltar: {
-        width: '100%',
-        marginTop: 10,
+    lugar: {
+        width: 320,
+        height: 40,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
+    modal: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    selectPlaceText: {
+        color: 'black',
+        textDecorationLine: 'underline',
+    },
+
+    iconVoltar: {
+        width: '100%',
+    },
     container: {
         flex: 1,
         justifyContent: 'space-between',
@@ -172,15 +203,25 @@ const styles = StyleSheet.create({
     },
 
     conteudoScroll: {
-        marginVertical: 40,
+        flex: 1,
         width: '90%',
+        maxHeight: '75%',
+        minHeight: 270,
         backgroundColor: '#D9D9D9',
         borderRadius: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
     },
 
+    conteudo: {
+        flex: 1,
+        width: '100%',
+        marginVertical: 20,
+        alignItems: 'center',
+    },
+
+    contentContainer: {
+        alignItems: 'center',
+        paddingVertical: 20,
+    },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -196,7 +237,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     autocompleteContainer: {
-        flex: 1,
         width: 320,
         borderRadius: 8,
         marginBottom: 16,
@@ -223,18 +263,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 8,
     },
-
     containerTitulo: {
         flexDirection: 'row',
         alignItems: 'center',
         width: '80%',
     },
-
     iconCard: {
         width: 15,
         height: 15,
     },
-
     subTitulos: {
         fontSize: 14,
         fontWeight: 'bold',

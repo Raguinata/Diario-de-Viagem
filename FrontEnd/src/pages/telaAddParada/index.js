@@ -1,64 +1,103 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
 import InputDescricao from '../../components/inputDescricao';
-import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert } from 'react-native';
+import TimeInput from '../../components/timeInput'
+import { useFocusEffect } from '@react-navigation/native';
 
-const App = () => {
+const telaAddParada = ({ route }) => {
+
+    const { cronograma, navigation, parada_atualizar } = route.params;
+    const [hora, setHora] = useState();
+    const atualizar = useRef(false);
+
+    useFocusEffect(
+        useCallback(() => {
+            route.params.parada_atualizar ? autoConfig() : atualizar.current = false;
+        }, [route.params])
+    );
+
+    const autoConfig = () => {
+        atualizar.current = true;
+        setHora(parada_atualizar.hora);
+    }
+
+    const saveOrMergeParada = async () => {
+        let body = {
+            cronograma: cronograma,
+            parada: {
+                hora: hora
+            },
+            evento: {
+                infos: "{}"
+            }
+        }
+        if(atualizar.current){
+            body.parada["idParada"] = parada_atualizar.idParada;
+            body.evento["idEvento"] = parada_atualizar.evento.idEvento;
+        }
+        try {
+            let res = await fetch(`http://10.135.146.42:8080/parada/adicionar-atualizar`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+            if (res.status == 200) {
+                Alert.alert("Parada", "A parada foi salvada com sucesso!")
+                navigation.navigate("telaVisualizarEvento", {
+                    cronograma: cronograma,
+                    navigation: navigation
+                });
+            }
+            else {
+                Alert.alert("Erro em parada", "Erro ao salvar parada");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <Header titulo={'Minhas Viagens'}/>
+            <Header titulo={'Minhas Viagens'} />
             <ScrollView style={styles.conteudoScroll}>
                 <View style={styles.conteudo}>
                     <View style={styles.iconVoltar}>
-                        <IconVoltar/>
+                        <IconVoltar />
                     </View>
-                    <BotaoBranco texto={'Adicionar Parada'} onPress={undefined} estilo={undefined} icon={undefined}  />
-                    <Input
-                        placeholder={'Digite o nome do evento'}
-                        onChangeText={undefined}
-                        value={undefined} 
-                        texto={'Nome da parada:'}
-                        icon={require('../../../assets/images/global/icon-lapis.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
-                        width={320}
-                        height={undefined}                                            
-                        />
-
+                    <BotaoBranco texto={atualizar.current ? 'Editar Parada' : 'Adicionar Parada'}
+                        onPress={undefined} estilo={undefined} icon={undefined} />
+                    
                     <Input
                         placeholder={'Digite um evento que deseja visitar'}
                         onChangeText={undefined}
-                        value={undefined} 
+                        value={undefined}
                         texto={'Pesquisar por evento:'}
-                        icon={require('../../../assets/images/global/icon-maps.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
+                        icon={require('../../../assets/images/global/icon-maps.png')}
+                        fontColor={undefined}
+                        inputColor={'white'}
                         width={320}
-                        height={undefined}                                           
-                        />
+                        height={undefined}
+                    />
 
-                    <InputDescricao 
-                    value={undefined} 
-                    onChangeText={undefined} 
-                    placeholder={'Digite uma descrição do evento'} />
-                    
-                    <Input
-                        placeholder={'00:00'}
-                        onChangeText={undefined}
-                        value={undefined} 
-                        texto={'Hora:'}
-                        icon={require('../../../assets/images/global/icon-relogio.png')} 
-                        fontColor={undefined} 
-                        inputColor={'white'} 
-                        width={320}
-                        height={undefined}                                           
+                    <View style={styles.input}>
+                        <TimeInput
+                            texto={'Hora'}
+                            value={hora}
+                            onChange={setHora}
+                            placeholder="Hora"
+                            inputStyle={styles.dataInputComponente}
                         />
+                    </View>
 
-                    <BotaoBranco texto={'Salvar Parada'} onPress={undefined} estilo={undefined} icon={undefined}  />
+                    <BotaoBranco texto={atualizar.current ? 'Atualizar Parada' : 'Salvar Parada'}
+                        onPress={saveOrMergeParada} estilo={undefined} icon={undefined} />
 
                 </View>
             </ScrollView>
@@ -73,6 +112,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#4c4c4c',
+    },
+
+    input: {
+        width: 105,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
     conteudoScroll: {
@@ -103,4 +149,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default telaAddParada;

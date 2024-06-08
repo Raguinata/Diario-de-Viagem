@@ -8,7 +8,7 @@ const roteiro = ({ navigation, roteiros, programa }) => {
     const deletarRoteiro = async (quero_deletar, id_roteiro) => {
         try {
             if (quero_deletar) {
-                await fetch(`http://192.168.15.123:8080/roteiro/${id_roteiro}`,
+                await fetch(`http://10.135.146.42:8080/roteiro/${id_roteiro}`,
 
                     {
                         method: "DELETE",

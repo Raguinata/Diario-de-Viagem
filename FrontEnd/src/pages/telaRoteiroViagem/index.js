@@ -22,7 +22,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     const listaTotalDeGastos = async (id) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/gasto/${id}`)
+            let res = await fetch(`http://10.135.146.42:8080/gasto/${id}`)
             res = await res.json();
             console.log(res)
             setGastoTotal(res);
@@ -33,7 +33,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     const fetchRoteiroByPrograma = async () => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/roteiro/`,
+            let res = await fetch(`http://10.135.146.42:8080/roteiro/`,
                 {
                     method: "POST",
                     headers: {
@@ -57,7 +57,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
             return;
         }
         try {
-            let res = await fetch(`http://192.168.15.123:8080/programa/atualizar-orcamento?` +
+            let res = await fetch(`http://10.135.146.42:8080/programa/atualizar-orcamento?` +
                 `idProgramaDeViagem=${programa?.idProgramaDeViagem}&orcamento=${valorAtual}`,
                 {
                     method: "PUT"

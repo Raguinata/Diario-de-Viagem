@@ -2,6 +2,17 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const parada = ({ navigation, parada }) => {
+
+    const deletarParada = async (quero_deletar) => {
+        try {
+            if (quero_deletar)
+                await fetch(`http://10.135.146.42:8080/parada/${parada.idParada}`, { method: "DELETE" });
+            navigation.goBack();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -10,13 +21,16 @@ const parada = ({ navigation, parada }) => {
                         Parada: <Text>ddddddddddddddddddddddddddddddddddddddd</Text>
                     </Text>
                     <View style={styles.icons}>
-                        <TouchableOpacity>
-                            <Image style={styles.icon} source={require('../../../../assets/images/global/icon-copia.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('telaAddParada', {
+                            cronograma: parada.cronograma,
+                            navigation: navigation,
+                            parada_atualizar: parada
+                        })}>
                             <Image style={styles.icon} source={require('../../../../assets/images/global/icon-editar.png')} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('telaExcluir')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('telaExcluir', {
+                            funcDeletar: deletarParada
+                        })}>
                             <Image style={styles.icon} source={require('../../../../assets/images/global/icon-lixo.png')} />
                         </TouchableOpacity>
                     </View>
@@ -116,9 +130,9 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
 
-    informacoes: { 
+    informacoes: {
         width: '100%',
-        alignItems: 'flex-start', 
+        alignItems: 'flex-start',
 
     },
 });

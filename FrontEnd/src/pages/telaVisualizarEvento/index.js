@@ -17,7 +17,7 @@ const telaVisualizarEvento = ({ route }) => {
 
     const buscarPorCronograma = async (tabela) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/${tabela}/busca-por-cronograma`,
+            let res = await fetch(`http://10.135.146.42:8080/${tabela}/busca-por-cronograma`,
                 {
                     method: "POST",
                     headers: {
@@ -69,7 +69,10 @@ const telaVisualizarEvento = ({ route }) => {
 
                         <BotaoBranco
                             texto={'Adicionar parada'}
-                            onPress={() => navigation.navigate('telaAddParada')}
+                            onPress={() => navigation.navigate('telaAddParada', {
+                                cronograma: cronograma,
+                                navigation: navigation
+                            })}
                             estilo={styles.visualizarEventoBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                             navigation={navigation}

@@ -12,7 +12,7 @@ const Cronogramas = ({ roteiro, navigation, programa }) => {
     const deletarCronograma = async (quero_deletar, id_cronograma) => {
         try {
             if(quero_deletar)
-                await fetch(`http://10.135.146.42:8080/cronograma/${id_cronograma}`, {method: "DELETE"});
+                await fetch(`http://192.168.15.123:8080/cronograma/${id_cronograma}`, {method: "DELETE"});
             navigation.goBack();
         } catch (error) {
             console.log(error)
@@ -21,7 +21,7 @@ const Cronogramas = ({ roteiro, navigation, programa }) => {
 
     const fetchCronogramaByRoteiro = async (roteiro) => {
         try {
-            let res = await fetch(`http://10.135.146.42:8080/cronograma/por-roteiro`,
+            let res = await fetch(`http://192.168.15.123:8080/cronograma/por-roteiro`,
                 {
                     method: "POST",
                     headers: {

@@ -6,7 +6,7 @@ import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
 import InputDescricao from '../../components/inputDescricao';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
-import TimeInput from '../../components/timeInput'
+import TimeInputParada from '../../components/timeInputParada'
 import { useFocusEffect } from '@react-navigation/native';
 
 const telaAddParada = ({ route }) => {
@@ -41,7 +41,7 @@ const telaAddParada = ({ route }) => {
             body.evento["idEvento"] = parada_atualizar.evento.idEvento;
         }
         try {
-            let res = await fetch(`http://10.135.146.42:8080/parada/adicionar-atualizar`, {
+            let res = await fetch(`http://192.168.15.123:8080/parada/adicionar-atualizar`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ const telaAddParada = ({ route }) => {
                     />
 
                     <View style={styles.input}>
-                        <TimeInput
+                        <TimeInputParada
                             texto={'Hora'}
                             value={hora}
                             onChange={setHora}
@@ -117,8 +117,10 @@ const styles = StyleSheet.create({
     input: {
         width: 105,
         height: 40,
+        marginBottom: 40,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#D9D9D9',
     },
 
     conteudoScroll: {

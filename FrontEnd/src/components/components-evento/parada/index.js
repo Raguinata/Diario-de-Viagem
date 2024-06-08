@@ -6,7 +6,7 @@ const parada = ({ navigation, parada }) => {
     const deletarParada = async (quero_deletar) => {
         try {
             if (quero_deletar)
-                await fetch(`http://10.135.146.42:8080/parada/${parada.idParada}`, { method: "DELETE" });
+                await fetch(`http://192.168.15.123:8080/parada/${parada.idParada}`, { method: "DELETE" });
             navigation.goBack();
         } catch (error) {
             console.log(error)

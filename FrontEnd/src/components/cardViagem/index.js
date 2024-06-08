@@ -43,7 +43,7 @@ const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
     const deletarPrograma = async (quero_deletar) => {
         try {
             if (quero_deletar) {
-                await fetch(`http://10.135.146.42:8080/programa/`,
+                await fetch(`http://192.168.15.123:8080/programa/`,
                     {
                         method: "DELETE",
                         headers: {

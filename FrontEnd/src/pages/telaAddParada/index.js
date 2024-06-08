@@ -11,7 +11,7 @@ import BotaoBranco from '../../components/botaoBranco';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import IconVoltar from '../../components/icon-voltar';
 
-const App = () => {
+const telaAddParada = () => {
     const [location, setLocation] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [eventName, setEventName] = useState('');
@@ -282,4 +282,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default telaAddParada;

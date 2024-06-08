@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Platform, ScrollView, Image } from 'react-native';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Platform, ScrollView, Image, Alert } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { request, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
@@ -10,11 +10,11 @@ import TimeInputParada from '../../components/timeInputParada';
 import BotaoBranco from '../../components/botaoBranco';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import IconVoltar from '../../components/icon-voltar';
+import { useFocusEffect } from '@react-navigation/native';
 
 const telaAddParada = ({ route }) => {
     const [location, setLocation] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
-    const [eventName, setEventName] = useState('');
     const [eventDescription, setEventDescription] = useState('');
     const [eventTime, setEventTime] = useState('');
     const [formData, setFormData] = useState({});
@@ -54,7 +54,8 @@ const telaAddParada = ({ route }) => {
 
     const autoConfig = () => {
         atualizar.current = true;
-        setHora(parada_atualizar.hora);
+        setEventTime(parada_atualizar.hora);
+        setSelectedPlace(JSON.parse(parada_atualizar.evento.infos));
     }
 
     const saveOrMergeParada = async () => {
@@ -96,7 +97,6 @@ const telaAddParada = ({ route }) => {
     
     const onPlaceSelected = (data, details) => {
         setSelectedPlace(details);
-        setEventName(details?.name || data.description);
     };
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -112,19 +112,6 @@ const telaAddParada = ({ route }) => {
     
                 <BotaoBranco texto={atualizar.current ? 'Editar Parada' : 'Adicionar Parada'} 
                 onPress={undefined} estilo={undefined} icon={undefined} />
-    
-                <Input
-                    icon={require('../../../assets/images/global/icon-emoji.png')}
-                    texto={'Nome do Evento:'}
-                    placeholder={'Digite o nome do evento'}
-                    onChangeText={setEventName}
-                    value={eventName}
-                    fontColor={undefined}
-                    inputColor={'white'}
-                    width={320}
-                    height={undefined}
-                    marginBottom={undefined}
-                />
     
                 <View style={styles.containerTitulo}>
                     <Image style={styles.iconCard} source={require('../../../assets/images/global/icon-maps.png')} />

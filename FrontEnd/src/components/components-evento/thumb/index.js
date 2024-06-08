@@ -1,12 +1,50 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 
+const imagePaths = [
+    require('../../../../assets/images/estados/AC.png'),
+    require('../../../../assets/images/estados/AL.png'),
+    require('../../../../assets/images/estados/AP.png'),
+    require('../../../../assets/images/estados/AM.png'),
+    require('../../../../assets/images/estados/BA.png'),
+    require('../../../../assets/images/estados/CE.png'),
+    require('../../../../assets/images/estados/DF.png'),
+    require('../../../../assets/images/estados/ES.png'),
+    require('../../../../assets/images/estados/GO.png'),
+    require('../../../../assets/images/estados/MA.png'),
+    require('../../../../assets/images/estados/MT.png'),
+    require('../../../../assets/images/estados/MS.png'),
+    require('../../../../assets/images/estados/MG.png'),
+    require('../../../../assets/images/estados/PA.png'),
+    require('../../../../assets/images/estados/PB.png'),
+    require('../../../../assets/images/estados/PR.png'),
+    require('../../../../assets/images/estados/PE.png'),
+    require('../../../../assets/images/estados/PI.png'),
+    require('../../../../assets/images/estados/RJ.png'),
+    require('../../../../assets/images/estados/RN.png'),
+    require('../../../../assets/images/estados/RS.png'),
+    require('../../../../assets/images/estados/RO.png'),
+    require('../../../../assets/images/estados/RR.png'),
+    require('../../../../assets/images/estados/SC.png'),
+    require('../../../../assets/images/estados/SP.png'),
+    require('../../../../assets/images/estados/SE.png'),
+    require('../../../../assets/images/estados/TO.png')
+    // Adicione mais caminhos de imagens conforme necessário
+];
+
+const getRandomImage = () => {
+    const randomIndex = Math.floor(Math.random() * imagePaths.length);
+    return imagePaths[randomIndex];
+};
+
 const thumb = ({ cronograma }) => {
+
+    const randomImage = getRandomImage();
     return (
         <View style={styles.conteudo}>
             <View style={styles.imagemView}>
                 <ImageBackground
-                    source={require('../../../../assets/images/estados/SP.png')}
+                    source={randomImage}
                     style={styles.imagemFundo}
                     imageStyle={styles.imagem}>
                 </ImageBackground>

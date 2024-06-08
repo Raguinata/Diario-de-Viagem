@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TimeInputParada = ({ texto, value, onChange, placeholder, inputStyle }) => {
     const [show, setShow] = useState(false);
     const [localTime, setLocalTime] = useState(value || '');
+
+    useEffect(() => {
+        if (value) {
+            setLocalTime(value);
+        }
+    }, [value]);
 
     const onChangeTime = (event, selectedTime) => {
         setShow(false);

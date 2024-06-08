@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Platform, ScrollView, Image, Alert } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -24,7 +25,11 @@ const telaAddParada = ({ route }) => {
 
     useFocusEffect(
         useCallback(() => {
-            route.params.parada_atualizar ? autoConfig() : atualizar.current = false;
+            if (route.params.parada_atualizar) {
+                autoConfig();
+            } else {
+                atualizar.current = false;
+            }
         }, [route.params])
     );
 
@@ -68,7 +73,7 @@ const telaAddParada = ({ route }) => {
                 infos: JSON.stringify(selectedPlace)
             }
         }
-        if(atualizar.current){
+        if (atualizar.current) {
             body.parada["idParada"] = parada_atualizar.idParada;
             body.evento["idEvento"] = parada_atualizar.evento.idEvento;
         }
@@ -80,8 +85,8 @@ const telaAddParada = ({ route }) => {
                 },
                 body: JSON.stringify(body)
             })
-            if (res.status == 200) {
-                Alert.alert("Parada", "A parada foi salvada com sucesso!")
+            if (res.status === 200) {
+                Alert.alert("Parada", "A parada foi salva com sucesso!")
                 navigation.navigate("telaVisualizarEvento", {
                     cronograma: cronograma,
                     navigation: navigation
@@ -94,7 +99,7 @@ const telaAddParada = ({ route }) => {
             console.log(error);
         }
     }
-    
+
     const onPlaceSelected = (data, details) => {
         setSelectedPlace(details);
     };
@@ -106,45 +111,45 @@ const telaAddParada = ({ route }) => {
             <Header titulo={'Minhas Viagens'} />
             <ScrollView style={styles.conteudoScroll} contentContainerStyle={styles.contentContainer}>
                 <View style={styles.conteudo}>
-                <View style={styles.iconVoltar}>
-                    <IconVoltar />
-                </View>
-    
-                <BotaoBranco texto={atualizar.current ? 'Editar Parada' : 'Adicionar Parada'} 
-                onPress={undefined} estilo={undefined} icon={undefined} />
-    
-                <View style={styles.containerTitulo}>
-                    <Image style={styles.iconCard} source={require('../../../assets/images/global/icon-maps.png')} />
-                    <Text style={styles.subTitulos}>Lugar:</Text>
-                </View>
-    
-                <TouchableOpacity style={styles.lugar} onPress={() => setModalVisible(true)}>
-                    <Text style={styles.selectPlaceText}>Selecionar Lugar</Text>
-                </TouchableOpacity>
-    
-                <TimeInputParada
-                    texto={'Hora do Evento:'}
-                    value={eventTime}
-                    onChange={setEventTime}
-                    placeholder={'00:00'}
-                />
-    
-                <BotaoBranco texto={atualizar.current ? 'Atualizar Parada' : 'Salvar Parada'} 
-                    onPress={saveOrMergeParada} estilo={undefined} icon={undefined} />
-
-                {selectedPlace && (
-                    <View style={styles.placeDetails}>
-                        <Text style={styles.detailTitle}>Detalhes do Local Selecionado</Text>
-                        <Text>Nome: {selectedPlace.name}</Text>
-                        <Text>Endereço: {selectedPlace.formatted_address}</Text>
-                        <Text>Latitude: {selectedPlace.geometry.location.lat}</Text>
-                        <Text>Longitude: {selectedPlace.geometry.location.lng}</Text>
+                    <View style={styles.iconVoltar}>
+                        <IconVoltar />
                     </View>
-                )}
+
+                    <BotaoBranco texto={atualizar.current ? 'Editar Parada' : 'Adicionar Parada'} 
+                    onPress={undefined} estilo={undefined} icon={undefined} />
+
+                    <View style={styles.containerTitulo}>
+                        <Image style={styles.iconCard} source={require('../../../assets/images/global/icon-maps.png')} />
+                        <Text style={styles.subTitulos}>Lugar:</Text>
+                    </View>
+
+                    <TouchableOpacity style={styles.lugar} onPress={() => setModalVisible(true)}>
+                        <Text style={styles.selectPlaceText}>Selecionar Lugar</Text>
+                    </TouchableOpacity>
+
+                    <TimeInputParada
+                        texto={'Hora do Evento:'}
+                        value={eventTime}
+                        onChange={setEventTime}
+                        placeholder={'00:00'}
+                    />
+
+                    <BotaoBranco texto={atualizar.current ? 'Atualizar Parada' : 'Salvar Parada'} 
+                        onPress={saveOrMergeParada} estilo={undefined} icon={undefined} />
+
+                    {selectedPlace && (
+                        <View style={styles.placeDetails}>
+                            <Text style={styles.detailTitle}>Detalhes do Local Selecionado</Text>
+                            <Text>Nome: {selectedPlace.name}</Text>
+                            <Text>Endereço: {selectedPlace.formatted_address}</Text>
+                            <Text>Latitude: {selectedPlace.geometry.location.lat}</Text>
+                            <Text>Longitude: {selectedPlace.geometry.location.lng}</Text>
+                        </View>
+                    )}
                 </View>
             </ScrollView>
             <Footer />
-    
+
             {modalVisible && (
                 <View style={styles.modal}>
                     <GooglePlacesAutocomplete
@@ -194,6 +199,7 @@ const telaAddParada = ({ route }) => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
 

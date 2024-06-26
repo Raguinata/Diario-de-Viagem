@@ -1,6 +1,6 @@
 package faculdade.pi.cogniventura.model.entities;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -26,10 +26,9 @@ public class Parada {
     @Column(name = "id_parada")
     private int idParada;
 
-    @JsonFormat(pattern = "HH:mm:ss")
-    @Temporal(TemporalType.TIME)
+    @JsonFormat(pattern = "HH:mm")
     @Column(name = "hora", nullable = false)
-    private Time hora;
+    private LocalTime hora;
 
     @ManyToOne
     @JoinColumn(name = "id_cronograma", referencedColumnName = "id_cronograma", nullable = false)

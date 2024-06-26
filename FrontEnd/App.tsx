@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { LogBox } from 'react-native';
 
 // Imports das telas
 import telaInicial from './src/pages/telaInicial';
@@ -22,6 +23,9 @@ import telaAddGasto from './src/pages/telaAddGasto';
 import telaConvidarPessoa from './src/pages/telaConvidarPessoa';
 
 const Stack = createNativeStackNavigator();
+
+// Ignorar todos os warnings
+LogBox.ignoreAllLogs(true);
 
 const App = () => {
     return (

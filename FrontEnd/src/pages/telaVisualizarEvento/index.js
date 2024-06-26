@@ -69,7 +69,10 @@ const telaVisualizarEvento = ({ route }) => {
 
                         <BotaoBranco
                             texto={'Adicionar parada'}
-                            onPress={() => navigation.navigate('telaAddParada')}
+                            onPress={() => navigation.navigate('telaAddParada', {
+                                cronograma: cronograma,
+                                navigation: navigation
+                            })}
                             estilo={styles.visualizarEventoBotao}
                             icon={require('../../../assets/images/telaAddDestino/icon-add.png')}
                             navigation={navigation}

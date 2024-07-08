@@ -8,6 +8,7 @@ import InputDescricao from '../../components/inputDescricao';
 import SelectionCidade from '../../components/selectionCidade';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Alert } from 'react-native';
 import DateInput from '../../components/dataInput';
+import Config from 'react-native-config';
 import { useFocusEffect } from '@react-navigation/native';
 
 const telaAddCronograma = ({ route }) => {
@@ -19,6 +20,7 @@ const telaAddCronograma = ({ route }) => {
     const [cidade, setCidade] = useState();
     const [data, setData] = useState();
     const [descricao, setDescricao] = useState();
+    const apiUrl = Config.API_URL;
 
     useFocusEffect(
         useCallback(() => {
@@ -47,7 +49,7 @@ const telaAddCronograma = ({ route }) => {
         if (atualizar.current)
             cronogramaDTO.cronograma["idCronograma"] = cronograma_atualizar.idCronograma;
         try {
-            let res = await fetch(`http://192.168.15.123:8080/cronograma/adicionar-atualizar`,
+            let res = await fetch(`${apiUrl}/cronograma/adicionar-atualizar`,
                 {
                     method: "PUT",
                     headers: {

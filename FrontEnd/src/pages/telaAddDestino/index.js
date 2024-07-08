@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import AddDestino from '../../components/addDestino';
+import Config from 'react-native-config';
 import CardViagem from '../../components/cardViagem';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -13,6 +14,7 @@ const TelaAddDestino = ({ navigation, route }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [programas, setProgramas] = useState([]);
     const [usuario, setUsuario] = useState({});
+    const apiUrl = Config.API_URL;
 
     const handleScroll = (event) => {
         const contentOffsetX = event.nativeEvent.contentOffset.x;
@@ -36,7 +38,7 @@ const TelaAddDestino = ({ navigation, route }) => {
 
     const fetchProgramas = async (id) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/programa/listar/${id}`)
+            let res = await fetch(`${apiUrl}/programa/listar/${id}`)
             res = await res.json();
             setProgramas(res);
         } catch (error) {

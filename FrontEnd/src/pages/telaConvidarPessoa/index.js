@@ -5,12 +5,14 @@ import BotaoBranco from '../../components/botaoBranco';
 import IconVoltar from '../../components/icon-voltar';
 import Input from '../../components/input';
 import { KeyboardAvoidingView } from 'react-native';
+import Config from 'react-native-config';
 // import InputDescricao from './src/components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 
 const telaConvidarPessoa = ({ route }) => {
 
     const [email, setEmail] = useState('');
+    const apiUrl = Config.API_URL;
 
     const handleSetInfos = async () => {
         const infos = await route.params;
@@ -20,7 +22,7 @@ const telaConvidarPessoa = ({ route }) => {
     const adicionarAoGrupo = async () => {
         handleSetInfos().then(async ({ programa, navigation }) => {
             try {
-                let res = await fetch(`http://192.168.15.123:8080/programa/grupo/adicionar-por-email?email=${email}&id_programa=${programa.idProgramaDeViagem}`, {
+                let res = await fetch(`${apiUrl}/programa/grupo/adicionar-por-email?email=${email}&id_programa=${programa.idProgramaDeViagem}`, {
                     method: "PUT",
                 })
                 if (res.status == 204) {

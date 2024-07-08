@@ -6,6 +6,7 @@ import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOp
 import BotaoBranco from '../../components/botaoBranco';
 import Input from '../../components/input';
 import DataHora from '../../components/dataHora';
+import Config from 'react-native-config';
 
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -17,6 +18,7 @@ const telaAddVeiculo = ({ route }) => {
         return cidadeEncontrada ? cidadeEncontrada.idCidade : null;
     }
 
+    const apiUrl = Config.API_URL;
 
     //Flag para verificar o tipo da ação, se é atualizar ou criar, o endpoint é o mesmo
     const atualizar = useRef(false);
@@ -95,7 +97,7 @@ const telaAddVeiculo = ({ route }) => {
 
     const buscarTotasCidades = async () => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/cidade/`);
+            let res = await fetch(`${apiUrl}/cidade/`);
             res = await res.json();
             setCidades(res);
         } catch (error) {
@@ -179,7 +181,7 @@ const telaAddVeiculo = ({ route }) => {
             veiculo: atualizar.current ? formatVeiculo(veiculo_atualizar) : formatVeiculo()
         }
         try {
-            let res = await fetch(`http://192.168.15.123:8080/programa/veiculo/adcionaOuAtualiza`, {
+            let res = await fetch(`${apiUrl}/programa/veiculo/adcionaOuAtualiza`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'

@@ -7,6 +7,7 @@ import Gasto from '../../components/components-evento/gasto';
 import { View, Text, StyleSheet, ScrollView, Image, Alert } from 'react-native';
 import BotaoBranco from '../../components/botaoBranco';
 import { useFocusEffect } from '@react-navigation/native';
+import Config from 'react-native-config';
 
 const telaVisualizarEvento = ({ route }) => {
 
@@ -14,10 +15,11 @@ const telaVisualizarEvento = ({ route }) => {
 
     const [gastos, setGastos] = useState([]);
     const [paradas, setParadas] = useState([]);
+    const apiUrl = Config.API_URL;
 
     const buscarPorCronograma = async (tabela) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/${tabela}/busca-por-cronograma`,
+            let res = await fetch(`${apiUrl}/${tabela}/busca-por-cronograma`,
                 {
                     method: "POST",
                     headers: {

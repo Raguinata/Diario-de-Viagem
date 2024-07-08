@@ -1,12 +1,15 @@
 import React from 'react';
+import Config from 'react-native-config';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const gasto = ({ navigation, gasto, cronograma }) => {
 
+    const apiUrl = Config.API_URL;
+
     const deletarGasto = async (quero_deletar) => {
         try {
             if(quero_deletar)
-                await fetch(`http://192.168.15.123:8080/gasto/${gasto.idGasto}`, {method: "DELETE"});
+                await fetch(`${apiUrl}/gasto/${gasto.idGasto}`, {method: "DELETE"});
             navigation.goBack();
         } catch (error) {
             console.log(error)

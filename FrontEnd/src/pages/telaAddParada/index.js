@@ -12,6 +12,7 @@ import BotaoBranco from '../../components/botaoBranco';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import IconVoltar from '../../components/icon-voltar';
 import { useFocusEffect } from '@react-navigation/native';
+import Config from 'react-native-config';
 
 const telaAddParada = ({ route }) => {
     const [location, setLocation] = useState(null);
@@ -19,6 +20,7 @@ const telaAddParada = ({ route }) => {
     const [eventDescription, setEventDescription] = useState('');
     const [eventTime, setEventTime] = useState('');
     const [formData, setFormData] = useState({});
+    const apiUrl = Config.API_URL;
 
     const { cronograma, navigation, parada_atualizar } = route.params;
     const atualizar = useRef(false);
@@ -78,7 +80,7 @@ const telaAddParada = ({ route }) => {
             body.evento["idEvento"] = parada_atualizar.evento.idEvento;
         }
         try {
-            let res = await fetch(`http://192.168.15.123:8080/parada/adicionar-atualizar`, {
+            let res = await fetch(`${apiUrl}/parada/adicionar-atualizar`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'

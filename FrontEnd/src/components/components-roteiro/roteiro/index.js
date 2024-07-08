@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import Config from 'react-native-config';
 import Cronogramas from "../../components-cronograma/cronograma/index.js"
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import BotaoBranco from '../../botaoBranco';
 
 const roteiro = ({ navigation, roteiros, programa }) => {
 
+    const apiUrl = Config.API_URL;
+
     const deletarRoteiro = async (quero_deletar, id_roteiro) => {
         try {
             if (quero_deletar) {
-                await fetch(`http://192.168.15.123:8080/roteiro/${id_roteiro}`,
+                await fetch(`${apiUrl}/roteiro/${id_roteiro}`,
 
                     {
                         method: "DELETE",

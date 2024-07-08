@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ImageBackground, ScrollView, Alert } from 'react-native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import Config from 'react-native-config';
 import PropTypes from 'prop-types'; // Importa PropTypes para validação de propriedades
 
 // Componentes personalizados
@@ -15,6 +16,7 @@ const TelaLogin = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const { setItem } = useAsyncStorage("usuario");
+    const apiUrl = Config.API_URL;
 
     const validarEmail = useCallback((email) => {
         const regex = /\S+@\S+\.\S+/;
@@ -31,7 +33,7 @@ const TelaLogin = ({ navigation }) => {
 
     const login = useCallback(async () => {
         try {
-            return await fetch(`http://192.168.15.123:8080/usuario/login?email=${email.trim()}&senha=${senha}`, {
+            return await fetch(`${apiUrl}/usuario/login?email=${email.trim()}&senha=${senha}`, {
                 method: "POST"
             });
         } catch (error) {

@@ -9,6 +9,7 @@ import Roteiro from '../../components/components-roteiro/roteiro';
 import ContatosEmergencia from '../../components/components-roteiro/contatosEmergencia';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import Config from 'react-native-config';
 
 const telaRoteiroViagem = ({ navigation, route }) => {
 
@@ -19,10 +20,11 @@ const telaRoteiroViagem = ({ navigation, route }) => {
     const [grupo, setGrupo] = useState([]);
     const [roteiros, setRoteiros] = useState([]);
     const [veiculos, setVeiculos] = useState([]);
+    const apiUrl = Config.API_URL;
 
     const listaTotalDeGastos = async (id) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/gasto/${id}`)
+            let res = await fetch(`${apiUrl}/gasto/${id}`)
             res = await res.json();
             console.log(res)
             setGastoTotal(res);
@@ -33,7 +35,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
 
     const fetchRoteiroByPrograma = async () => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/roteiro/`,
+            let res = await fetch(`${apiUrl}/roteiro/`,
                 {
                     method: "POST",
                     headers: {
@@ -57,7 +59,7 @@ const telaRoteiroViagem = ({ navigation, route }) => {
             return;
         }
         try {
-            let res = await fetch(`http://192.168.15.123:8080/programa/atualizar-orcamento?` +
+            let res = await fetch(`${apiUrl}/programa/atualizar-orcamento?` +
                 `idProgramaDeViagem=${programa?.idProgramaDeViagem}&orcamento=${valorAtual}`,
                 {
                     method: "PUT"

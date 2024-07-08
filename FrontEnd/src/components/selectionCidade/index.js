@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Config from 'react-native-config';
 import { View, Text, StyleSheet, ActivityIndicator, Image, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
@@ -6,11 +7,12 @@ const selectionCidade = ({ estado, selectedCidade, setSelectedCidade, isSeted })
 
     const [cidades, setCidades] = useState([]);
     const [loading, setLoading] = useState(true);
+    const apiUrl = Config.API_URL;
 
     useEffect(() => {
         const fetchCidades = async () => {
             try {
-                let response = await fetch('http://192.168.15.123:8080/cidade/por-estado',
+                let response = await fetch('${apiUrl}/cidade/por-estado',
                     {
                         method: "POST",
                         headers: {

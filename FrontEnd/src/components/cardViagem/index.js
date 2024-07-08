@@ -1,4 +1,5 @@
 import React from 'react';
+import Config from 'react-native-config';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const imagePaths = [
@@ -43,7 +44,8 @@ const CardViagem = ({ navigation, programa_infos, usuario_infos }) => {
     const deletarPrograma = async (quero_deletar) => {
         try {
             if (quero_deletar) {
-                await fetch(`http://192.168.15.123:8080/programa/`,
+                const apiUrl = Config.API_URL;
+                await fetch(`${apiUrl}/programa/`,
                     {
                         method: "DELETE",
                         headers: {

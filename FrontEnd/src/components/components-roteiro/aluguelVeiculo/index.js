@@ -1,7 +1,10 @@
 import React from 'react';
+import Config from 'react-native-config';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const aluguelVeiculo = ({ navigation, veiculos, programa }) => {
+
+    const apiUrl = Config.API_URL;
 
     const cepAtribuido = (cep) => cep ? cep : "Não atribuido";
 
@@ -26,7 +29,7 @@ const aluguelVeiculo = ({ navigation, veiculos, programa }) => {
         }
         try {
             if (quero_deletar) {
-                let res = await fetch(`http://192.168.15.123:8080/programa/veiculo/delete`,
+                let res = await fetch(`${apiUrl}/programa/veiculo/delete`,
                     {
                         method: "DELETE",
                         headers: {

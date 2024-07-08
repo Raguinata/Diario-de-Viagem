@@ -7,6 +7,7 @@ import Input from '../../components/input';
 import InputDescricao from '../../components/inputDescricao';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import Config from 'react-native-config';
 import TimeInputCustom from '../../components/timeInputParada';
 
 const telaAddGasto = ({ route }) => {
@@ -18,6 +19,7 @@ const telaAddGasto = ({ route }) => {
     const [nome, setNome] = useState();
     const [valor, setValor] = useState(0);
     const [descricao, setDescricao] = useState();
+    const apiUrl = Config.API_URL;
 
     useFocusEffect(
         useCallback(() => {
@@ -44,7 +46,7 @@ const telaAddGasto = ({ route }) => {
         if (atualizar.current)
             body.gasto["idGasto"] = gasto_atualizar.idGasto;
         try {
-            let res = await fetch(`http://192.168.15.123:8080/gasto/adicionar-atualizar`,
+            let res = await fetch(`${apiUrl}/gasto/adicionar-atualizar`,
                 {
                     method: "PUT",
                     headers: {

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import Config from 'react-native-config';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const Parada = ({ navigation, parada }) => {
     const [evento, setEvento] = useState({});
 
+    const apiUrl = Config.API_URL;
+
     const deletarParada = async (quero_deletar) => {
         try {
             if (quero_deletar) {
-                await fetch(`http://192.168.15.123:8080/parada/${parada.idParada}`, { method: "DELETE" });
+                await fetch(`${apiUrl}/parada/${parada.idParada}`, { method: "DELETE" });
             }
             navigation.goBack();
         } catch (error) {

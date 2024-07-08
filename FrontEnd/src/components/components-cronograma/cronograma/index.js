@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
+import Config from 'react-native-config';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 
 const Cronogramas = ({ roteiro, navigation, programa }) => {
+
+    const apiUrl = Config.API_URL;
 
     const [cronogramas, setCronogramas] = useState([]);
 
@@ -12,7 +15,7 @@ const Cronogramas = ({ roteiro, navigation, programa }) => {
     const deletarCronograma = async (quero_deletar, id_cronograma) => {
         try {
             if(quero_deletar)
-                await fetch(`http://192.168.15.123:8080/cronograma/${id_cronograma}`, {method: "DELETE"});
+                await fetch(`${apiUrl}/cronograma/${id_cronograma}`, {method: "DELETE"});
             navigation.goBack();
         } catch (error) {
             console.log(error)
@@ -21,7 +24,7 @@ const Cronogramas = ({ roteiro, navigation, programa }) => {
 
     const fetchCronogramaByRoteiro = async (roteiro) => {
         try {
-            let res = await fetch(`http://192.168.15.123:8080/cronograma/por-roteiro`,
+            let res = await fetch(`${apiUrl}/cronograma/por-roteiro`,
                 {
                     method: "POST",
                     headers: {

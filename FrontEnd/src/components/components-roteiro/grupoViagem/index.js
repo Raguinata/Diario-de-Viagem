@@ -1,12 +1,15 @@
 import React from 'react';
+import Config from 'react-native-config';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const grupoViagem = ({ navigation, usuario, programa }) => {
 
+    const apiUrl = Config.API_URL;
+
     const deletarDoGrupo = async (quero_deletar) => {
         try {
             if (quero_deletar) {
-                let res = await fetch(`http://192.168.15.123:8080/programa/grupo/deletar?id_usuario=${usuario.idUsuario}&id_programa=${programa.idProgramaDeViagem}`,
+                let res = await fetch(`${apiUrl}/programa/grupo/deletar?id_usuario=${usuario.idUsuario}&id_programa=${programa.idProgramaDeViagem}`,
                     {
                         method: "DELETE",
                     })

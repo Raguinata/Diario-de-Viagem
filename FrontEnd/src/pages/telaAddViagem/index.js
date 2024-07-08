@@ -9,6 +9,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, SectionList, Alert } from 'react-native';
 import DateInput from '../../components/dataInput';
+import Config from 'react-native-config';
 
 const telaAddViagem = ({ route }) => {
 
@@ -20,6 +21,7 @@ const telaAddViagem = ({ route }) => {
     const [nome, setNome] = useState();
     const [data_chegada, setData_chegada] = useState();
     const [data_partida, setData_partida] = useState();
+    const apiUrl = Config.API_URL;
 
     useFocusEffect(
         useCallback(() => {
@@ -48,7 +50,7 @@ const telaAddViagem = ({ route }) => {
             if (atualizar.current)
                 body["idProgramaDeViagem"] = programa_atualizar.idProgramaDeViagem;
 
-            let res = await fetch(`http://192.168.15.123:8080/programa/cadastro`, {
+            let res = await fetch(`${apiUrl}/programa/cadastro`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

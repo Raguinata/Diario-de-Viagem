@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Config from 'react-native-config';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
@@ -6,11 +7,12 @@ const EstadoSelector = ({ selectedEstado, setSelectedEstado, isSeted }) => {
 
     const [estados, setEstados] = useState([]);
     const [loading, setLoading] = useState(true);
+    const apiUrl = Config.API_URL;
 
     useEffect(() => {
         const fetchEstados = async () => {
             try {
-                let response = await fetch('http://192.168.15.123:8080/estado/');
+                let response = await fetch('${apiUrl}/estado/');
                 let json = await response.json();
                 setEstados(json);
                 setLoading(false);

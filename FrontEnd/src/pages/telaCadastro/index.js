@@ -18,6 +18,7 @@ const TelaCadastro = ({ navigation }) => {
     const [nascimento, setNascimento] = useState('');
     const [nome, setNome] = useState('');
     const { setItem } = useAsyncStorage("usuario");
+    
 
     const validarEmail = useCallback((email) => {
         const regex = /\S+@\S+\.\S+/;
@@ -33,7 +34,7 @@ const TelaCadastro = ({ navigation }) => {
         };
 
         try {
-            return await fetch('http://192.168.15.123:8080/usuario/cadastro', {
+            return await fetch(`${apiUrl}/usuario/cadastro`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

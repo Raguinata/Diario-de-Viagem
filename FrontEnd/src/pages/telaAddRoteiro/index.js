@@ -7,6 +7,7 @@ import Input from '../../components/input';
 import SelectionEstado from '../../components/selectionEstado';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import Config from 'react-native-config';
 
 const telaAddRoteiro = ({ route }) => {
 
@@ -17,6 +18,7 @@ const telaAddRoteiro = ({ route }) => {
 
     const [nome, setNome] = useState("");
     const [estado, setEstado] = useState({});
+    const apiUrl = Config.API_URL;
 
     useFocusEffect(
         useCallback(() => {
@@ -43,7 +45,7 @@ const telaAddRoteiro = ({ route }) => {
             body.roteiro["idRoteiro"] = roteiro_atualizar.idRoteiro
         }
         try {
-            let res = await fetch(`http://192.168.15.123:8080/roteiro/adicionar-atualizar`,
+            let res = await fetch(`${apiUrl}/roteiro/adicionar-atualizar`,
                 {
                     method: "PUT",
                     headers: {

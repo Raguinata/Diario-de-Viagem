@@ -16,6 +16,8 @@
   * [Banco de Dados](#banco-de-dados)
 - [Video Demosntrativo do Projeto](#video-demosntrativo-do-projeto)
 - [Documentação](#documentação)
+- [Padrões de Commits](#padrões-de-commits)
+- [Contribuições](#contribuições)
 - [Cosiderações Finais](#cosiderações-finais)
 
 # Diário de Viagem
@@ -78,6 +80,10 @@ https://www.youtube.com/watch?v=NRpqziOZdz4
 
 https://github.com/user-attachments/files/16113341/Documentacao.-.PI.pdf
 
+# Padrões de Commits
+
+https://github.com/iuricode/padroes-de-commits
+
 # Contribuições
 
 [Raguinata](https://github.com/Raguinata)
@@ -102,7 +108,3 @@ pois era onde havia mais margem para erros, e o prazo de um mês tornou tudo mai
 desafiador. Apesar disso, conseguimos implementar um ótimo trabalho e estamos 
 muito satisfeitos com os resultados. Se tivéssemos mais tempo, poderíamos até 
 expandir nosso MVP. 
-
-
-
-<h4>Padrões de commits: https://github.com/iuricode/padroes-de-commits</h4>

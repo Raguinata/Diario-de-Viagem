@@ -14,6 +14,9 @@
   * [FrontEnd](#frontend)
   * [BackEnd](#backend)
   * [Banco de Dados](#banco-de-dados)
+- [Video Demosntrativo do Projeto](#video-demosntrativo-do-projeto)
+- [Documentação](#documentação)
+- [Cosiderações Finais](#cosiderações-finais)
 
 # Diário de Viagem
 
@@ -67,8 +70,39 @@ forma mais inteligente, conveniente e econômica.
   ## Banco de Dados
   - <h3><img width="60" alt="Logo Sass" src="https://i.imgur.com/SZ9t17a.png" align="alt"/> MySQL</h3>
 
-<h2>Documentação:</h2>
-<p>https://github.com/user-attachments/files/16113341/Documentacao.-.PI.pdf</p>
+# Video Demosntrativo do Projeto
+
+https://www.youtube.com/watch?v=NRpqziOZdz4
+
+# Documentação
+
+https://github.com/user-attachments/files/16113341/Documentacao.-.PI.pdf
+
+# Contribuições
+
+[Raguinata](https://github.com/Raguinata)
+[RodrigoWiizz](https://github.com/RodrigoWiizz)
+[TLFracaro](https://github.com/TLFracaro)
+
+# Cosiderações Finais
+
+Quando iniciamos o projeto, já tínhamos uma ideia do que queríamos, mas para 
+chegar ao produto final, precisamos passar por etapas cruciais no desenvolvimento 
+da ideia, como entender as necessidades dos usuários. Foi nessa etapa que pudemos 
+identificar algumas das dificuldades enfrentadas por nossos usuários. Após realizar a 
+pesquisa, conseguimos extrair insights e percebemos que já havíamos identificado 
+muitos deles anteriormente, mas também descobrimos várias outras questões que 
+não tínhamos considerado. Depois de entender as dificuldades, pudemos consolidar 
+nossas ideias e começar a idealizar e gerar um protótipo que abordasse essas 
+questões. No entanto, tivemos que lidar com uma limitação: o tempo. As etapas de 
+planejamento e prototipagem levaram três meses, restando-nos apenas um mês para 
+desenvolver, testar e implementar, já que escolhemos um sistema de informação 
+funcional. Essa parte foi considerada pela equipe como a mais trabalhosa do projeto, 
+pois era onde havia mais margem para erros, e o prazo de um mês tornou tudo mais 
+desafiador. Apesar disso, conseguimos implementar um ótimo trabalho e estamos 
+muito satisfeitos com os resultados. Se tivéssemos mais tempo, poderíamos até 
+expandir nosso MVP. 
+
 
 
 <h4>Padrões de commits: https://github.com/iuricode/padroes-de-commits</h4>

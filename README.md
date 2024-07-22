@@ -89,6 +89,8 @@ https://github.com/iuricode/padroes-de-commits
 [Raguinata](https://github.com/Raguinata)
 [RodrigoWiizz](https://github.com/RodrigoWiizz)
 [TLFracaro](https://github.com/TLFracaro)
+[deniseomelo](https://github.com/deniseomelo)
+[ArthurDourad](https://github.com/ArthurDourad)
 
 # Cosiderações Finais
 

@@ -72,7 +72,7 @@ forma mais inteligente, conveniente e econômica.
   ## Banco de Dados
   - <h3><img width="60" alt="Logo Sass" src="https://i.imgur.com/SZ9t17a.png" align="alt"/> MySQL</h3>
 
-# Video Demosntrativo do Projeto
+# Video Demonstrativo do Projeto
 
 https://www.youtube.com/watch?v=NRpqziOZdz4
 
@@ -92,7 +92,7 @@ https://github.com/iuricode/padroes-de-commits
 [deniseomelo](https://github.com/deniseomelo)
 [ArthurDourad](https://github.com/ArthurDourad)
 
-# Cosiderações Finais
+# Considerações Finais
 
 Quando iniciamos o projeto, já tínhamos uma ideia do que queríamos, mas para 
 chegar ao produto final, precisamos passar por etapas cruciais no desenvolvimento 
